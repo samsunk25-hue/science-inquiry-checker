@@ -3,7 +3,8 @@
 const fs = require('fs');
 
 const html = fs.readFileSync(__dirname + '/index.html', 'utf8');
-const CURVE_MARK = 'M600 232Q650 228 700 198';   // 측정값 곡선의 시작 부분
+// 측정값 곡선은 좌표가 자주 바뀌므로, 곡선만 쓰는 그러데이션 참조로 확인합니다.
+const CURVE_MARK = "fill='url(#fg)'";
 const m = html.match(/property="og:image" content="data:image\/svg\+xml,([^"]+)"/);
 if (!m) { console.log('og:image를 찾지 못했습니다.'); process.exit(1); }
 

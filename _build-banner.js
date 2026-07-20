@@ -4,7 +4,10 @@ const fs = require('fs');
 const FILE = __dirname + '/index.html';
 
 const HEART = "M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z";
-const CURVE = "M600 232Q650 228 700 198Q750 168 780 136Q820 96 860 88Q885 82 900 74";
+
+// 왼쪽에 삼각플라스크, 오른쪽에 측정값 곡선.
+// 제목 글자는 x560 언저리에서 끝나므로 그 오른쪽만 씁니다.
+const CURVE = "M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70";
 
 // c = { grid, line, area, circle, heart, heart2, liquid, edge, bubble, cheek }
 function banner(c) {
@@ -20,24 +23,24 @@ function banner(c) {
     `</linearGradient>`,
     `</defs>`,
     `<rect width='1200' height='260' fill='url(#bg)'/>`,
-    `<circle cx='1035' cy='96' r='96' fill='${c.circle}' fill-opacity='${c.circleOp}'/>`,
-    // 측정값 곡선
-    `<path d='${CURVE}V260H600Z' fill='url(#fg)'/>`,
+    `<circle cx='822' cy='118' r='84' fill='${c.circle}' fill-opacity='${c.circleOp}'/>`,
+    // 오른쪽 — 측정값 곡선
+    `<path d='${CURVE}V260H905Z' fill='url(#fg)'/>`,
     `<path d='${CURVE}' fill='none' stroke='${c.line}' stroke-width='2.4' stroke-opacity='${c.lineOp}' stroke-linecap='round'/>`,
     `<g fill='${c.line}' fill-opacity='${c.dotOp}'>`,
-    `<circle cx='600' cy='232' r='4'/><circle cx='700' cy='198' r='4'/><circle cx='780' cy='136' r='4'/>`,
-    `<circle cx='860' cy='88' r='4'/><circle cx='900' cy='74' r='4'/>`,
+    `<circle cx='905' cy='216' r='4'/><circle cx='975' cy='186' r='4'/><circle cx='1036' cy='130' r='4'/>`,
+    `<circle cx='1100' cy='86' r='4'/><circle cx='1146' cy='70' r='4'/>`,
     `</g>`,
     // 하트
     `<g fill='${c.heart}' fill-opacity='${c.heartOp}'>`,
-    `<g transform='translate(918,24) rotate(-16) scale(.42)'><path d='${HEART}'/></g>`,
-    `<g transform='translate(1152,172) rotate(14) scale(.4)'><path d='${HEART}'/></g>`,
+    `<g transform='translate(738,30) rotate(-16) scale(.4)'><path d='${HEART}'/></g>`,
+    `<g transform='translate(886,198) rotate(14) scale(.36)'><path d='${HEART}'/></g>`,
     `</g>`,
     `<g fill='${c.heart2}' fill-opacity='${c.heart2Op}'>`,
-    `<g transform='translate(1124,32) rotate(22) scale(.34)'><path d='${HEART}'/></g>`,
+    `<g transform='translate(890,34) rotate(22) scale(.32)'><path d='${HEART}'/></g>`,
     `</g>`,
-    // 삼각플라스크
-    `<g transform='translate(958,42) scale(2.85)'>`,
+    // 왼쪽 — 삼각플라스크
+    `<g transform='translate(760,60) scale(2.35)'>`,
     `<path d='M14.3 36H33.7L37.5 45.5A4.5 4.5 0 0 1 33.4 52H14.6A4.5 4.5 0 0 1 10.5 45.5Z' fill='${c.liquid}'/>`,
     `<circle cx='17' cy='48' r='1.3' fill='#FFFFFF' fill-opacity='${c.bubble}'/>`,
     `<circle cx='24' cy='50' r='1' fill='#FFFFFF' fill-opacity='${c.bubble}'/>`,
