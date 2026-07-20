@@ -2,7 +2,7 @@
 // 앱 파일에서 정규식 정의부를 그대로 읽어와 실제 학생 답안 예시로 시험합니다.
 const fs = require('fs');
 
-const html = fs.readFileSync(__dirname + '/inquiry-plan-checker.html', 'utf8');
+const html = fs.readFileSync(__dirname + '/index.html', 'utf8');
 
 function grab(re, name) {
   const m = html.match(re);
