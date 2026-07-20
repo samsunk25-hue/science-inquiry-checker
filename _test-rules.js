@@ -126,5 +126,34 @@ console.log('\n[ 변인 칸에 서술문을 쓴 경우 ]');
   line(got === want, want ? '문장' : '값', t.slice(0, 26), got ? '문장으로 감지' : '값으로 통과');
 });
 
+// ── 비속어 · 줄임말 필터 ────────────────────────────────
+eval(grab(/var PROFANITY = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'PROFANITY'));
+eval(grab(/var JAMO = \/.*?\/;/, 'JAMO'));
+eval(grab(/var SLANG = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'SLANG'));
+
+const flagged = t => PROFANITY.test(t) ? 'bad' : (JAMO.test(t) || SLANG.test(t)) ? 'slang' : null;
+
+console.log('\n[ 과학 용어 — 걸리면 안 되는 것 ]');
+[
+  '개의 체온을 측정한다',            // 개(dog)
+  '강아지 새끼의 무게를 잰다',        // 새끼(offspring)
+  '원자핵의 구조를 관찰한다',         // 핵
+  '세포핵을 현미경으로 본다',
+  '물이 넘어가는 양을 잰다',          // 넘
+  '미친 듯이 빠르게 흐른다',          // 미친 (단독)
+  '개나리의 개화 시기를 비교한다'
+].forEach(t => {
+  const f = flagged(t);
+  line(!f, '정상', t.slice(0, 24), f ? `← ${f}으로 잘못 잡음` : '');
+});
+
+console.log('\n[ 비속어 — 잡아야 하는 것 ]');
+['시발 뭐야', 'ㅅㅂ 안됨', '병신같은 실험', '존나 어렵다', '개새끼', '닥쳐']
+  .forEach(t => line(flagged(t) === 'bad', '비속어', t, flagged(t) === 'bad' ? '' : '← 놓침'));
+
+console.log('\n[ 줄임말 · 채팅 말투 — 잡아야 하는 것 ]');
+['ㅋㅋㅋ 재밌음', 'ㅇㅇ 맞음', '걍 대충 함', '개꿀임', 'ㄹㅇ 신기함', 'ㅠㅠ 힘들어']
+  .forEach(t => line(flagged(t) === 'slang', '줄임말', t, flagged(t) === 'slang' ? '' : '← 놓침'));
+
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
 process.exit(fail === 0 ? 0 : 1);

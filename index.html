@@ -875,6 +875,13 @@
   .caution p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); }
   .caution p + p { margin-top: 8px; }
   .caution b { color: var(--ink); }
+  .caution-act {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+  .caution-act button { min-width: 92px; }
 
   @keyframes cautionIn {
     from { opacity: 0; transform: translate(-50%, -46%) scale(.95); }
@@ -912,7 +919,8 @@
   }
 
   @media print {
-    .panel-actions, .toast, .privacy, .rail, .nav, .picks { display: none !important; }
+    .panel-actions, .toast, .privacy, .rail, .nav, .picks,
+    .caution, .cheer, .confetti { display: none !important; }
     body { background: #fff; }
     .grid { grid-template-columns: 1fr; }
     .card, .panel > .card { box-shadow: none; }
@@ -1135,10 +1143,14 @@
   <small>하트를 눌러 보세요</small>
 </div>
 
-<div class="caution" id="caution" hidden>
-  <p><b>여기까지는 “형식” 점검입니다.</b></p>
+<div class="caution" id="caution" hidden role="dialog" aria-labelledby="cautionTitle">
+  <p id="cautionTitle"><b>여기까지는 “형식” 점검입니다.</b></p>
   <p>탐구 계획이 <b>과학적으로 타당한지</b>는 이 점검표가 판단하지 못합니다.
      실험을 시작하기 전에 선생님과 함께 확인하세요.</p>
+  <div class="caution-act">
+    <button type="button" id="cautionCancel" hidden>취소</button>
+    <button type="button" class="primary" id="cautionOk">알겠어요</button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1295,6 +1307,33 @@
     '편하|편리|유용|쓸모|안전|재미|인기'
   ].join('|'));
 
+  // ── 글쓰기 태도 검사 ─────────────────────────────────────────
+  // 탐구 계획서는 여러 사람이 읽는 공식 문서입니다.
+  // 과학 용어와 겹치는 말은 일부러 뺐습니다.
+  //   · '새끼'  → 강아지 새끼처럼 생물 실험에서 정상적으로 씁니다
+  //   · '핵'    → 원자핵·세포핵
+  //   · '개'    → 개의 체온처럼 실험 대상이 될 수 있습니다
+  // 그래서 앞뒤가 붙은 형태만 잡습니다.
+  var PROFANITY = new RegExp([
+    '시발|씨발|시팔|씨팔|ㅅㅂ|시1발',
+    '병신|븅신|ㅂㅅ',
+    '지랄|ㅈㄹ',
+    '좆|존나|존내|졸라',
+    '개새|개자식|새끼야|미친놈|미친년',
+    '썅|쌍놈|엿먹|닥쳐|꺼져|뒤져|디져',
+    '찐따|또라이|돌아이|호구|븽신'
+  ].join('|'));
+
+  // 자음·모음만 늘어놓은 채팅 말투 (ㅋㅋ, ㅇㅇ, ㅠㅠ, ㄷㄷ)
+  var JAMO = /[ㄱ-ㅎ]{2,}|[ㅏ-ㅣ]{2,}/;
+
+  var SLANG = new RegExp([
+    '걍|넘나|넘넘|짱|쩐다|쩔어|개꿀|꿀잼|존잼|노잼',
+    '핵꿀|핵노잼|핵인싸|개좋|개많|개싫|개힘들|개웃',
+    'ㄹㅇ|실화냐|어쩔티비|저쩔|갑분|낄끼|인싸|아싸',
+    '뭐임|각임|인정\\?|ㅇㅈ|ㅇㅋ|ㄱㄱ|ㄴㄴ|ㅊㅋ|ㄱㅅ|ㅈㅅ'
+  ].join('|'));
+
   // NOTVAR = 변인이 아니라 '문장'을 적은 경우
   //   · 탐구 주제:  물의 양에 따른 식물의 성장 / 온도와 반응 속도의 관계
   //   · 서술문:     체지방량(kg)이 줄어든다.  ← 변인이 아니라 가설
@@ -1313,8 +1352,21 @@
       };
     }
 
+    // 비속어와 채팅 말투는 어느 칸에 있든 같은 기준으로 짚어 줍니다.
+    function checkWriting(add, fields) {
+      fields.forEach(function (f) {
+        var v = d[f];
+        if (!v) return;
+        if (PROFANITY.test(v))
+          add('danger', '<strong>바른 말로 고쳐 주세요.</strong> 탐구 계획서는 선생님과 친구들이 함께 읽는 글입니다.', f);
+        else if (JAMO.test(v) || SLANG.test(v))
+          add('ask', '줄임말이나 채팅 말투가 섞여 있습니다. 다른 사람이 읽고 그대로 따라 할 수 있도록 <b>문장으로</b> 고쳐 볼까요?', f);
+      });
+    }
+
     /* --- 주제 --- */
     var tp = [], addT = mk(tp, 'topic');
+    checkWriting(addT, ['topic']);
     if (!d.topic) {
       addT('todo', '탐구 주제를 아직 쓰지 않았습니다.');
     } else {
@@ -1339,6 +1391,7 @@
 
     /* --- 가설 --- */
     var h = [], addH = mk(h, 'hypothesis');
+    checkWriting(addH, ['hypothesis']);
     if (!d.hypothesis) {
       addH('todo', '가설을 아직 쓰지 않았습니다.');
     } else {
@@ -1379,6 +1432,7 @@
     /* --- 변인 --- */
     // 변인의 첫째 조건: 재거나 정할 수 있는 '값'일 것.
     var v = [], addV = mk(v, null);
+    checkWriting(addV, ['iv', 'dv', 'cv']);
 
     // 조작 변인 — 내가 값을 정해서 다르게 만들 수 있는가?
     if (!d.iv) {
@@ -1461,6 +1515,7 @@
 
     /* --- 설계 --- */
     var s = [], addS = mk(s, 'procedure');
+    checkWriting(addS, ['materials', 'procedure']);
     if (!d.materials) addS('todo', '준비물을 아직 쓰지 않았습니다.', 'materials');
     else if (!/\d/.test(d.materials))
       addS('ask', '준비물에 개수나 크기가 없습니다. 몇 개, 몇 mL짜리인지 적어 볼까요?', 'materials');
@@ -1527,6 +1582,7 @@
     var CLEANUP = /(정리|정돈|청소|치운|치우|폐기|버린|버리|씻|반납|반환|제자리|원래 ?자리|원위치|닦|끈다|끄고|잠근다)/;
 
     var safe = [], addF = mk(safe, 'safety');
+    checkWriting(addF, ['safety']);
     if (!d.materials && !d.procedure) {
       addF('todo', '준비물과 과정을 쓰면 위험 요소를 확인해 드립니다.', null);
     } else if (!hits.length) {
@@ -1962,26 +2018,58 @@
   // 점검 안내 — 하트를 터뜨렸을 때, 그리고 저장·제출할 때마다 다시 보여 줍니다.
   // 형식 점검을 통과한 것이 '과학적으로 맞다'는 뜻으로 굳어지지 않게 하려는 것입니다.
   var cautionTimer = null;
+  var pendingAction = null;
 
-  function showCaution() {
+  // action을 넘기면 '확인'을 눌러야 그 일이 시작됩니다.
+  // 넘기지 않으면 읽고 닫기만 하는 안내가 됩니다.
+  function showCaution(action, okLabel) {
     var box = document.getElementById('caution');
+    var ok = document.getElementById('cautionOk');
+    var cancel = document.getElementById('cautionCancel');
+
+    pendingAction = action || null;
+    ok.textContent = action ? (okLabel || '확인하고 저장') : '알겠어요';
+    cancel.hidden = !action;
+
     box.hidden = false;
     clearTimeout(cautionTimer);
-    cautionTimer = setTimeout(hideCaution, 7000);
-    // 하트를 누른 pointerdown 뒤에 곧바로 click이 이어지므로,
-    // 닫기 감지는 한 박자 늦게 붙여야 뜨자마자 사라지지 않습니다.
-    setTimeout(function () {
-      document.addEventListener('click', hideOnClick, true);
-    }, 80);
+
+    if (action) {
+      // 저장 여부를 스스로 정해야 하므로 저절로 닫히지 않습니다.
+      setTimeout(function () { ok.focus(); }, 60);
+    } else {
+      cautionTimer = setTimeout(hideCaution, 7000);
+      // 하트를 누른 pointerdown 뒤에 곧바로 click이 이어지므로,
+      // 닫기 감지는 한 박자 늦게 붙여야 뜨자마자 사라지지 않습니다.
+      setTimeout(function () {
+        document.addEventListener('click', hideOnClick, true);
+      }, 80);
+    }
   }
 
   function hideCaution() {
     document.getElementById('caution').hidden = true;
     clearTimeout(cautionTimer);
+    pendingAction = null;
     document.removeEventListener('click', hideOnClick, true);
   }
 
-  function hideOnClick() { hideCaution(); }
+  function hideOnClick(e) {
+    if (document.getElementById('caution').contains(e.target)) return;
+    hideCaution();
+  }
+
+  document.getElementById('cautionOk').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var run = pendingAction;
+    hideCaution();
+    if (run) run();
+  });
+
+  document.getElementById('cautionCancel').addEventListener('click', function (e) {
+    e.stopPropagation();
+    hideCaution();
+  });
 
   function celebrate(hasRisk) {
     var cheer = document.getElementById('cheer');
@@ -2320,13 +2408,17 @@
     if (!blank) setTimeout(showCaution, 500);
   }
 
-  document.getElementById('btnPrint2').addEventListener('click', function () { window.print(); });
+  document.getElementById('btnPrint2').addEventListener('click', function () {
+    showCaution(function () { window.print(); }, '확인하고 인쇄');
+  });
 
+  // 내려받기 전에 안내를 먼저 보여 주고, '확인'을 눌러야 저장합니다.
   document.getElementById('btnExport').addEventListener('click', function () {
     var kind = document.getElementById('fmt').value;
-    saveReport(kind);
-    toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
-    setTimeout(showCaution, 500);
+    showCaution(function () {
+      saveReport(kind);
+      toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
+    }, '확인하고 저장');
   });
 
   buildPicks();
