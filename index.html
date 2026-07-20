@@ -839,7 +839,10 @@
             <button class="primary" type="button" id="btnExport">저장</button>
           </div>
           <button type="button" id="btnPrint2">인쇄 / PDF로 저장</button>
-          <p class="panel-note">계획서 전문과 점검 결과가 <b>하나의 파일</b>로 저장됩니다. 저장된 파일을 선생님께 제출하세요.</p>
+          <p class="panel-note">
+            작성 내용은 <b>이 기기에 자동 저장</b>됩니다. 선생님께 제출할 때만
+            계획서 전문과 점검 결과를 <b>하나의 파일</b>로 내려받으세요.
+          </p>
         </div>
       </div>
     </aside>
@@ -1667,7 +1670,7 @@
     document.getElementById('navPos').textContent = (step + 1) + ' / ' + STEPS.length;
 
     var next = document.getElementById('next');
-    next.textContent = (step === STEPS.length - 1) ? '제출용 파일 저장' : '다음 →';
+    next.textContent = (step === STEPS.length - 1) ? '완료' : '다음 →';
 
     render();
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1692,10 +1695,28 @@
   document.getElementById('prev').addEventListener('click', function () { goto(step - 1); });
   document.getElementById('next').addEventListener('click', function () {
     if (step < STEPS.length - 1) { goto(step + 1); return; }
-    var kind = document.getElementById('fmt').value;
-    saveReport(kind);
-    toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
+    finish();
   });
+
+  // 마지막 단계의 '완료' — 이 기기에 저장하고, 남은 항목이 있으면 알려 줍니다.
+  function finish() {
+    save();
+
+    var r = analyze();
+    var left = 0, risky = 0, blank = 0;
+    r.groups.forEach(function (g) {
+      g.items.forEach(function (i) {
+        if (i[0] === 'ask') left++;
+        else if (i[0] === 'danger') risky++;
+        else if (i[0] === 'todo') blank++;
+      });
+    });
+
+    if (blank) toast('저장했습니다. 아직 쓰지 않은 항목이 ' + blank + '개 있습니다.');
+    else if (risky) toast('저장했습니다. 안전 항목 ' + risky + '개는 선생님 확인이 필요합니다.');
+    else if (left) toast('저장했습니다. 더 생각해 볼 항목이 ' + left + '개 남아 있습니다.');
+    else toast('저장했습니다. 모든 항목을 통과했습니다.');
+  }
 
   document.getElementById('btnPrint2').addEventListener('click', function () { window.print(); });
 
