@@ -500,9 +500,27 @@
     border-radius: 3px;
     font-weight: 700;
   }
-  .ex-row.good .ex-tag { background: var(--ok-soft); color: var(--ok); }
+  .ex-row.form .ex-tag { background: var(--accent-soft); color: var(--accent-ink); }
   .ex-row.weak .ex-tag { background: var(--warn-soft); color: var(--warn); }
-  .ex-row.weak { color: var(--ink-faint); text-decoration: line-through 1px; text-decoration-color: var(--line-strong); }
+  .ex-row.weak > span:last-child {
+    color: var(--ink-faint);
+    text-decoration: line-through 1px;
+    text-decoration-color: var(--line-strong);
+  }
+
+  /* [빈칸] — 학생이 직접 채워야 할 자리 */
+  .ex-row.form em {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 1px 7px;
+    margin: 0 1px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px dashed var(--line-strong);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
   .ex-why {
     margin: 2px 0 0;
     font-size: 12.5px;
@@ -1370,25 +1388,37 @@
   var FEW   = '적다|적습니다|적을수록|적어진|적어집|적어져';
 
   var ADJ_RULES = [
+    // 몸무게·체지방량은 앞에 글자가 붙는 합성어이므로 먼저 확인합니다.
+    // 물리의 '질량이 크다'는 올바른 표현이라 여기에 넣지 않았습니다.
+    { n: '몸무게|체중|체지방량|지방량|근육량', wrong: BIG + '|' + SMALL,
+      ok: '늘어난다 · 줄어든다', why: '늘고 주는 것' },
     { n: '양|량|개수|갯수|횟수|번수', wrong: BIG + '|' + SMALL,
-      ok: '많다 · 적다', why: '세는 것' },
+      ok: '많다 · 적다', why: '세는 것',
+      // '모양·태양·영양·다양·해양'의 양은 세는 말이 아닙니다.
+      // '질량이 크다'는 물리에서 올바른 표현이므로 '질'도 함께 뺍니다.
+      block: '모태영다해음질' },
     { n: '크기|부피|면적|넓이|굵기|두께', wrong: MANY + '|' + FEW,
       ok: '크다 · 작다', why: '재는 것' },
     { n: '온도|농도|습도|압력|밀도', wrong: BIG + '|' + SMALL + '|' + MANY + '|' + FEW,
       ok: '높다 · 낮다', why: '높낮이로 나타내는 것' },
-    { n: '길이|거리|폭', wrong: BIG + '|' + SMALL + '|' + MANY + '|' + FEW,
+    { n: '길이|거리|폭|높이', wrong: BIG + '|' + SMALL + '|' + MANY + '|' + FEW,
       ok: '길다 · 짧다', why: '길이로 나타내는 것' }
   ].map(function (r) {
-    // 앞에 '의'나 공백이 와야 합니다. '모양이 크다'의 '양'을 잡지 않기 위해서입니다.
-    r.re = new RegExp('(?:^|[\\s의(])(' + r.n + ')[이가]\\s*(?:더\\s*)?(' + r.wrong + ')');
+    r.re = new RegExp('(' + r.n + ')[이가]\\s*(?:더\\s*)?(' + r.wrong + ')', 'g');
     return r;
   });
 
   function adjectiveIssue(text) {
     if (!text) return null;
     for (var i = 0; i < ADJ_RULES.length; i++) {
-      var m = text.match(ADJ_RULES[i].re);
-      if (m) return { n: m[1], bad: m[2], ok: ADJ_RULES[i].ok, why: ADJ_RULES[i].why };
+      var r = ADJ_RULES[i], m;
+      r.re.lastIndex = 0;
+      while ((m = r.re.exec(text)) !== null) {
+        // 한 글자 명사는 앞글자를 살펴 다른 낱말의 일부인지 가려냅니다.
+        var before = m.index > 0 ? text.charAt(m.index - 1) : '';
+        if (r.block && m[1].length === 1 && r.block.indexOf(before) !== -1) continue;
+        return { n: m[1], bad: m[2], ok: r.ok, why: r.why };
+      }
     }
     return null;
   }
@@ -2285,31 +2315,34 @@
   // 잘 쓴 예와 아쉬운 예를 나란히 보여 줍니다. 규칙을 설명하는 것보다
   // 두 문장을 견주어 보는 편이 학생에게 빨리 와닿습니다.
 
+  // 완성된 문장을 보여 주면 학생이 그대로 옮겨 적게 됩니다.
+  // 그래서 '잘 쓴 예' 자리에는 답이 아니라 빈칸이 있는 틀만 둡니다.
+  // 반대로 '아쉬운 예'는 구체적이어도 됩니다. 베껴도 손해가 아니니까요.
   var EXAMPLES = {
     's-topic': {
-      good: '운동 시간이 길수록 체지방량이 더 많이 줄어들까?',
+      form: '[바꾸는 것]에 따라 [재는 것]이 달라질까?',
       weak: '운동에 대해 알아보기',
       why: '무엇을 바꿔서 무엇을 알아볼지가 드러나야 합니다.'
     },
     's-hypo': {
-      good: '운동 시간이 길면 체지방량이 감소한다.',
-      weak: '운동을 하면 몸이 좋아진다.',
+      form: '[바꾸는 것]이 ~하면 [재는 것]이 [늘어난다 / 줄어든다].',
+      weak: '몸이 좋아진다.',
       why: '“좋아진다”는 잴 수 없습니다. 늘어나는지 줄어드는지가 있어야 합니다.'
     },
     's-var': {
-      good: '바꾼다 · 하루 운동 시간(0/1/2/3시간)　잰다 · 체지방량(kg)　고정 · 식사량, 수면 시간, 성별',
+      form: '바꾼다 · [값의 이름]([값 3~4개])　잰다 · [값의 이름]([단위])　고정 · [같게 둘 조건들]',
       weak: '바꾼다 · 운동　잰다 · 건강',
       why: '“건강”은 잴 수 없습니다. 단위를 붙일 수 있는 값이어야 합니다.'
     },
     's-design': {
-      good: '3. 체지방을 운동 전후로 3회 측정해 평균을 낸다.',
-      weak: '3. 체지방을 측정한다.',
-      why: '언제 · 몇 번 재는지가 있어야 다른 사람이 따라 할 수 있습니다.'
+      form: '[번호]. [무엇]을 [어떤 도구]로 [몇 번] 재어 평균을 낸다.',
+      weak: '3. 그냥 측정한다.',
+      why: '무엇을 · 어떤 도구로 · 몇 번 재는지가 있어야 다른 사람이 따라 할 수 있습니다.'
     },
     's-safety': {
-      good: '· 시작 전 준비운동을 한다.　· 몸에 이상을 느끼면 즉시 멈춘다.',
+      form: '· [예상되는 위험] → [무엇을 착용하거나 어떻게 행동할지]',
       weak: '· 조심한다.',
-      why: '무엇을 착용하고 어떻게 행동할지가 구체적이어야 합니다.'
+      why: '위험만 적지 말고 대비책까지 짝을 지어 적어야 합니다.'
     }
   };
 
@@ -2322,22 +2355,26 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'ex-toggle';
-      btn.textContent = '예시 보기';
+      btn.textContent = '힌트';
       btn.setAttribute('aria-expanded', 'false');
-      head.appendChild(btn);
+      // 제목 바로 옆(왼쪽)에 둡니다.
+      head.insertBefore(btn, head.querySelector('h2').nextSibling);
+
+      // [빈칸]은 학생이 채울 자리입니다. 답이 아니라 틀만 보여 줍니다.
+      var form = ex.form.replace(/\[([^\]]+)\]/g, '<em>$1</em>');
 
       var box = document.createElement('div');
       box.className = 'ex';
       box.hidden = true;
       box.innerHTML =
-        '<p class="ex-row good"><span class="ex-tag">이렇게</span>' + ex.good + '</p>' +
-        '<p class="ex-row weak"><span class="ex-tag">아쉬워요</span>' + ex.weak + '</p>' +
+        '<p class="ex-row form"><span class="ex-tag">이런 틀로</span><span>' + form + '</span></p>' +
+        '<p class="ex-row weak"><span class="ex-tag">아쉬워요</span><span>' + ex.weak + '</span></p>' +
         '<p class="ex-why">' + ex.why + '</p>';
       card.querySelector('.card-body').insertBefore(box, card.querySelector('.card-body').firstChild);
 
       btn.addEventListener('click', function () {
         box.hidden = !box.hidden;
-        btn.textContent = box.hidden ? '예시 보기' : '예시 닫기';
+        btn.textContent = box.hidden ? '힌트' : '힌트 닫기';
         btn.setAttribute('aria-expanded', box.hidden ? 'false' : 'true');
       });
     });
