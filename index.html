@@ -1,0 +1,1503 @@
+<title>이대로 실험해도 될까? · 탐구 계획서 점검표</title>
+
+<meta name="description" content="중학교 과학 탐구 계획서를 실험 전에 스스로 점검합니다. 변인이 잴 수 있는 값인지, 과정이 구체적인지, 위험한 것은 없는지 짚어 주지만 답을 대신 써 주지는 않습니다.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="중학교 과학 탐구">
+<meta property="og:title" content="이대로 실험해도 될까?">
+<meta property="og:description" content="변인·측정·안전을 실험 전에 스스로 점검하는 탐구 계획서 도우미. 답을 알려주지 않고 질문으로 짚어 줍니다.">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'%3E%3Crect width='1200' height='630' fill='%23F4F6F7'/%3E%3Crect x='0' y='0' width='14' height='630' fill='%230D6E77'/%3E%3Ctext x='96' y='250' font-family='Malgun Gothic,sans-serif' font-size='40' fill='%230D6E77'%3E%EC%A4%91%ED%95%99%EA%B5%90 %EA%B3%BC%ED%95%99 %ED%83%90%EA%B5%AC%3C/text%3E%3Ctext x='96' y='360' font-family='Malgun Gothic,sans-serif' font-size='86' font-weight='bold' fill='%2314181B'%3E%EC%9D%B4%EB%8C%80%EB%A1%9C %EC%8B%A4%ED%97%98%ED%95%B4%EB%8F%84 %EB%90%A0%EA%B9%8C%3F%3C/text%3E%3Ctext x='96' y='440' font-family='Malgun Gothic,sans-serif' font-size='36' fill='%2355606A'%3E%EB%B3%80%EC%9D%B8 %C2%B7 %EC%B8%A1%EC%A0%95 %C2%B7 %EC%95%88%EC%A0%84 %EC%A0%90%EA%B2%80%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  :root {
+    color-scheme: light;
+    --ground:      #F4F6F7;
+    --surface:     #FFFFFF;
+    --surface-2:   #EDF0F2;
+    --ink:         #14181B;
+    --ink-soft:    #55606A;
+    --ink-faint:   #8A949D;
+    --line:        #DCE1E5;
+    --line-strong: #C3CBD1;
+    --accent:      #0D6E77;
+    --accent-ink:  #084A50;
+    --accent-soft: #E0EEEF;
+    --warn:        #8F5400;
+    --warn-soft:   #FAF0DD;
+    --danger:      #A22633;
+    --danger-soft: #FBE8EA;
+    --ok:          #256B4E;
+    --ok-soft:     #E2F0E9;
+    --shadow:      0 1px 2px rgba(20,24,27,.06), 0 8px 24px -12px rgba(20,24,27,.18);
+
+    --sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+            system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --mono: ui-monospace, SFMono-Regular, 'Cascadia Mono', Consolas,
+            'D2Coding', 'Malgun Gothic', monospace;
+
+    /* 제목 배경 — 실험 노트의 모눈 위에 측정값이 흐르는 곡선.
+       공유 미리보기(og:image)와 같은 그림입니다. */
+    --banner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='300' preserveAspectRatio='xMaxYMid slice'%3E%3Cdefs%3E%3Cpattern id='g' width='24' height='24' patternUnits='userSpaceOnUse'%3E%3Cpath d='M24 0H0v24' fill='none' stroke='%230D6E77' stroke-width='.6' stroke-opacity='.13'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%230D6E77' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%230D6E77' stop-opacity='.16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='300' fill='url(%23g)'/%3E%3Cpath d='M700 300V200q40-6 80-46t80-92 80-26 80-14 100 8v270z' fill='url(%23f)'/%3E%3Cpath d='M700 200q40-6 80-46t80-92 80-26 80-14 100 8' fill='none' stroke='%230D6E77' stroke-width='2.5' stroke-opacity='.55'/%3E%3Cg fill='%230D6E77' fill-opacity='.6'%3E%3Ccircle cx='780' cy='154' r='4.5'/%3E%3Ccircle cx='860' cy='62' r='4.5'/%3E%3Ccircle cx='940' cy='36' r='4.5'/%3E%3Ccircle cx='1020' cy='22' r='4.5'/%3E%3Ccircle cx='1120' cy='30' r='4.5'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --ground:      #101315;
+      --surface:     #181C1F;
+      --surface-2:   #21262A;
+      --ink:         #E7EBED;
+      --ink-soft:    #A3ADB5;
+      --ink-faint:   #737D85;
+      --line:        #2B3135;
+      --line-strong: #3C444A;
+      --accent:      #4FB3BC;
+      --accent-ink:  #8FD4DA;
+      --accent-soft: #163033;
+      --warn:        #D9A254;
+      --warn-soft:   #2E2416;
+      --danger:      #E8848F;
+      --danger-soft: #331A1D;
+      --ok:          #6FBE97;
+      --ok-soft:     #16281F;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+      --banner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='300' preserveAspectRatio='xMaxYMid slice'%3E%3Cdefs%3E%3Cpattern id='g' width='24' height='24' patternUnits='userSpaceOnUse'%3E%3Cpath d='M24 0H0v24' fill='none' stroke='%234FB3BC' stroke-width='.6' stroke-opacity='.16'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%234FB3BC' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%234FB3BC' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='300' fill='url(%23g)'/%3E%3Cpath d='M700 300V200q40-6 80-46t80-92 80-26 80-14 100 8v270z' fill='url(%23f)'/%3E%3Cpath d='M700 200q40-6 80-46t80-92 80-26 80-14 100 8' fill='none' stroke='%234FB3BC' stroke-width='2.5' stroke-opacity='.6'/%3E%3Cg fill='%234FB3BC' fill-opacity='.7'%3E%3Ccircle cx='780' cy='154' r='4.5'/%3E%3Ccircle cx='860' cy='62' r='4.5'/%3E%3Ccircle cx='940' cy='36' r='4.5'/%3E%3Ccircle cx='1020' cy='22' r='4.5'/%3E%3Ccircle cx='1120' cy='30' r='4.5'/%3E%3C/g%3E%3C/svg%3E");
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground:      #101315;
+    --surface:     #181C1F;
+    --surface-2:   #21262A;
+    --ink:         #E7EBED;
+    --ink-soft:    #A3ADB5;
+    --ink-faint:   #737D85;
+    --line:        #2B3135;
+    --line-strong: #3C444A;
+    --accent:      #4FB3BC;
+    --accent-ink:  #8FD4DA;
+    --accent-soft: #163033;
+    --warn:        #D9A254;
+    --warn-soft:   #2E2416;
+    --danger:      #E8848F;
+    --danger-soft: #331A1D;
+    --ok:          #6FBE97;
+    --ok-soft:     #16281F;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    --banner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='300' preserveAspectRatio='xMaxYMid slice'%3E%3Cdefs%3E%3Cpattern id='g' width='24' height='24' patternUnits='userSpaceOnUse'%3E%3Cpath d='M24 0H0v24' fill='none' stroke='%234FB3BC' stroke-width='.6' stroke-opacity='.16'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%234FB3BC' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%234FB3BC' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='300' fill='url(%23g)'/%3E%3Cpath d='M700 300V200q40-6 80-46t80-92 80-26 80-14 100 8v270z' fill='url(%23f)'/%3E%3Cpath d='M700 200q40-6 80-46t80-92 80-26 80-14 100 8' fill='none' stroke='%234FB3BC' stroke-width='2.5' stroke-opacity='.6'/%3E%3Cg fill='%234FB3BC' fill-opacity='.7'%3E%3Ccircle cx='780' cy='154' r='4.5'/%3E%3Ccircle cx='860' cy='62' r='4.5'/%3E%3Ccircle cx='940' cy='36' r='4.5'/%3E%3Ccircle cx='1020' cy='22' r='4.5'/%3E%3Ccircle cx='1120' cy='30' r='4.5'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --ground:      #F4F6F7;
+    --surface:     #FFFFFF;
+    --surface-2:   #EDF0F2;
+    --ink:         #14181B;
+    --ink-soft:    #55606A;
+    --ink-faint:   #8A949D;
+    --line:        #DCE1E5;
+    --line-strong: #C3CBD1;
+    --accent:      #0D6E77;
+    --accent-ink:  #084A50;
+    --accent-soft: #E0EEEF;
+    --warn:        #8F5400;
+    --warn-soft:   #FAF0DD;
+    --danger:      #A22633;
+    --danger-soft: #FBE8EA;
+    --ok:          #256B4E;
+    --ok-soft:     #E2F0E9;
+    --shadow:      0 1px 2px rgba(20,24,27,.06), 0 8px 24px -12px rgba(20,24,27,.18);
+    --banner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='300' preserveAspectRatio='xMaxYMid slice'%3E%3Cdefs%3E%3Cpattern id='g' width='24' height='24' patternUnits='userSpaceOnUse'%3E%3Cpath d='M24 0H0v24' fill='none' stroke='%230D6E77' stroke-width='.6' stroke-opacity='.13'/%3E%3C/pattern%3E%3ClinearGradient id='f' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%230D6E77' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%230D6E77' stop-opacity='.16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='300' fill='url(%23g)'/%3E%3Cpath d='M700 300V200q40-6 80-46t80-92 80-26 80-14 100 8v270z' fill='url(%23f)'/%3E%3Cpath d='M700 200q40-6 80-46t80-92 80-26 80-14 100 8' fill='none' stroke='%230D6E77' stroke-width='2.5' stroke-opacity='.55'/%3E%3Cg fill='%230D6E77' fill-opacity='.6'%3E%3Ccircle cx='780' cy='154' r='4.5'/%3E%3Ccircle cx='860' cy='62' r='4.5'/%3E%3Ccircle cx='940' cy='36' r='4.5'/%3E%3Ccircle cx='1020' cy='22' r='4.5'/%3E%3Ccircle cx='1120' cy='30' r='4.5'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 24px 80px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  /* 제목 영역 — 공유 미리보기(og:image)와 같은 그림을 배경으로 씁니다.
+     눈금선은 실험 노트의 모눈, 청록 곡선은 측정값의 흐름을 뜻합니다. */
+  .masthead {
+    position: relative;
+    isolation: isolate;
+    padding: 30px 30px 26px;
+    margin-bottom: 28px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    background-color: var(--surface);
+  }
+
+  .masthead::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--banner);
+    background-size: cover;
+    background-position: right center;
+    opacity: .9;
+  }
+
+  .masthead::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: var(--accent);
+    z-index: -1;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 8px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -.035em;
+    line-height: 1.12;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .masthead p {
+    margin: 10px 0 0;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    max-width: 50ch;
+  }
+
+  /* ---------- buttons ---------- */
+
+  button {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: background .12s ease, border-color .12s ease;
+  }
+  button:hover { background: var(--surface-2); border-color: var(--ink-faint); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  :root[data-theme="dark"] button.primary,
+  button.primary { color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    button.primary { color: #062326; }
+  }
+  :root[data-theme="dark"] button.primary { color: #062326; }
+  :root[data-theme="light"] button.primary { color: #fff; }
+  button.primary:hover { filter: brightness(1.08); background: var(--accent); }
+
+  /* ---------- layout ---------- */
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 384px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  @media (max-width: 940px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* ---------- form ---------- */
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .card + .card { margin-top: 20px; }
+
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-head h2 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.015em;
+    margin: 0;
+  }
+
+  .card-head .hint {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  .field > label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .field .sub {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  textarea, input[type="text"] {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    width: 100%;
+    resize: vertical;
+    transition: border-color .12s ease, background .12s ease;
+  }
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  textarea::placeholder, input::placeholder { color: var(--ink-faint); }
+
+  /* 고쳐야 할 칸 — 학생이 쓴 글씨를 빨간색으로 */
+  textarea.needs-fix, input.needs-fix {
+    color: var(--danger);
+    border-color: var(--danger);
+    font-weight: 500;
+  }
+  textarea.needs-fix:focus, input.needs-fix:focus {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px var(--danger-soft);
+  }
+
+  /* the one variable that changes gets the accent rail */
+  .field.is-manipulated {
+    border-left: 3px solid var(--accent);
+    padding-left: 13px;
+    margin-left: -16px;
+  }
+  .field.is-controlled {
+    border-left: 3px solid var(--line-strong);
+    padding-left: 13px;
+    margin-left: -16px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .tag.change { background: var(--accent-soft); color: var(--accent-ink); }
+  .tag.fixed  { background: var(--surface-2); color: var(--ink-soft); }
+  .tag.result { background: var(--surface-2); color: var(--ink-soft); }
+
+  /* controlled-variable chips: visual proof that the rest is held constant */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 22px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .chip-empty { color: var(--ink-faint); font-family: var(--sans); font-size: 12.5px; }
+
+  /* 골라서 추가하는 주의 사항 */
+  .picks { display: flex; flex-direction: column; gap: 12px; }
+  .pick-group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pick-label {
+    width: 100%;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    color: var(--ink-faint);
+    margin-bottom: 1px;
+  }
+  .pick {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 400;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .pick:hover { border-color: var(--accent); color: var(--accent-ink); background: var(--surface); }
+  .pick.on {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .pick.on::before { content: "✓ "; }
+
+  /* the rule that governs all three variables */
+  .rule {
+    margin: 0;
+    padding: 11px 13px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .rule b { color: var(--ink); }
+  .rule span {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-ink);
+  }
+
+  /* ---------- report panel ---------- */
+
+  .panel { position: sticky; top: 20px; }
+  @media (max-width: 940px) { .panel { position: static; } }
+
+  .meter {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .meter-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .meter-top h2 { font-size: 15px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
+  .meter-count {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+  }
+
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface-2);
+    overflow: hidden;
+    display: flex;
+  }
+  .bar span { display: block; height: 100%; transition: width .3s ease; }
+  .bar .seg-ok     { background: var(--ok); }
+  .bar .seg-ask    { background: var(--warn); }
+  .bar .seg-danger { background: var(--danger); }
+
+  .group { border-bottom: 1px solid var(--line); }
+  .group:last-child { border-bottom: 0; }
+
+  .group-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px 8px;
+  }
+  .group-head h3 {
+    font-size: 12px;
+    font-family: var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .items { list-style: none; margin: 0; padding: 0 20px 14px; display: flex; flex-direction: column; gap: 9px; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 9px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .item .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .item.ok     .dot { background: var(--ok); }
+  .item.ask    .dot { background: var(--warn); }
+  .item.todo   .dot { background: var(--line-strong); }
+  .item.danger .dot { background: var(--danger); }
+
+  .item.ok { color: var(--ink-faint); }
+  .item.danger { color: var(--ink); }
+  .item.danger strong { color: var(--danger); font-weight: 700; }
+
+  .safety-banner {
+    margin: 0 20px 14px;
+    padding: 11px 13px;
+    border-radius: 6px;
+    background: var(--danger-soft);
+    border-left: 3px solid var(--danger);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .safety-banner b { color: var(--danger); }
+
+  .panel-actions {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+  .panel-actions button { width: 100%; }
+
+  .save-row { display: flex; gap: 8px; }
+  .save-row select { flex: 1 1 auto; min-width: 0; }
+  .save-row button { width: auto; flex: 0 0 auto; padding-inline: 20px; }
+
+  select {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 9px 10px;
+    cursor: pointer;
+  }
+  select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .panel-note {
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+    margin: 2px 0 0;
+  }
+
+  .privacy {
+    margin-top: 24px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .privacy b { color: var(--ink); }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translate(-50%, 16px);
+    background: var(--ink);
+    color: var(--ground);
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
+
+  @media print {
+    .tools, .panel-actions, .toast, .privacy { display: none !important; }
+    body { background: #fff; }
+    .grid { grid-template-columns: 1fr; }
+    .card, .panel > .card { box-shadow: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">중학교 과학 탐구 · 계획서 점검</p>
+      <h1>이대로 실험해도 될까?</h1>
+      <p>계획서를 쓰는 동안 오른쪽 점검표가 실시간으로 확인합니다. 빠진 곳과 더 생각해 볼 곳을 짚어 주지만, <strong>답을 대신 써 주지는 않습니다.</strong> 인터넷 연결 없이 이 화면 안에서만 동작합니다.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <main>
+      <!-- 1. 주제 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>탐구 주제와 문제 인식</h2>
+          <span class="hint">무엇이 궁금한가요?</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label for="topic">탐구 주제</label>
+            <span class="sub">평소에 관찰하면서 궁금했던 점을 질문 형태로 적어 보세요.</span>
+            <textarea id="topic" rows="3" placeholder="예) 식물에 주는 물의 양이 다르면 자라는 정도도 달라질까?"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 가설 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>가설</h2>
+          <span class="hint">한 문장으로</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label for="hypothesis">가설 설정</label>
+            <span class="sub">“무엇을 <b>바꾸면</b>, 무엇이 <b>어떻게 될 것이다</b>” 형태로 써 보세요.</span>
+            <textarea id="hypothesis" rows="3" placeholder="예) 물의 양을 많이 줄수록 줄기의 길이가 더 길어질 것이다."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 변인 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>변인 통제</h2>
+          <span class="hint">하나만 바꾸고, 나머지는 모두 고정</span>
+        </div>
+        <div class="card-body">
+          <p class="rule">
+            <b>세 변인 모두 재거나 정할 수 있는 값이어야 합니다.</b>
+            “건강 상태”, “잘 자람”처럼 사람마다 다르게 보는 말은 변인이 될 수 없습니다.
+            <span>양 · 온도 · 시간 · 길이 · 무게 · 개수 · 농도 · 각도 · 종류</span>처럼 값을 정하거나 잴 수 있는 말로 적으세요.
+          </p>
+
+          <div class="field is-manipulated">
+            <label for="iv">조작 변인 <span class="tag change">바꾸는 것 · 1개</span></label>
+            <span class="sub">내가 <b>값을 정해서</b> 다르게 만드는 조건입니다. 반드시 하나여야 합니다.</span>
+            <input type="text" id="iv" placeholder="예) 하루에 주는 물의 양 (10 / 30 / 50mL)">
+          </div>
+
+          <div class="field">
+            <label for="dv">종속 변인 <span class="tag result">측정하는 것</span></label>
+            <span class="sub">조작 변인 때문에 달라지는 값. <b>숫자와 단위로 기록</b>할 수 있어야 합니다.</span>
+            <input type="text" id="dv" placeholder="예) 2주 뒤 줄기의 길이(cm)">
+          </div>
+
+          <div class="field is-controlled">
+            <label for="cv">통제 변인 <span class="tag fixed">고정하는 것</span></label>
+            <span class="sub">모든 조건에서 <b>똑같은 값으로 맞춰 둘</b> 것들. 쉼표로 구분해서 적어 주세요.</span>
+            <textarea id="cv" rows="2" placeholder="예) 씨앗의 종류, 화분 크기, 흙의 양, 햇빛 시간, 온도"></textarea>
+            <div class="chips" id="cvChips"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. 설계 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>탐구 설계</h2>
+          <span class="hint">다른 사람이 그대로 따라 할 수 있게</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label for="materials">준비물</label>
+            <span class="sub">개수와 크기까지 함께 적으면 더 좋습니다.</span>
+            <textarea id="materials" rows="2" placeholder="예) 강낭콩 씨앗 12개, 화분 4개, 눈금실린더, 30cm 자, 온도계"></textarea>
+          </div>
+          <div class="field">
+            <label for="procedure">실험 과정</label>
+            <span class="sub">번호를 붙여 순서대로. <b>무엇을 · 얼마나 · 어떤 도구로 · 몇 번</b> 측정하는지 넣어 보세요.</span>
+            <textarea id="procedure" rows="8" placeholder="1. 화분 4개에 같은 흙을 300g씩 담는다.&#10;2. 각 화분에 강낭콩 씨앗을 3개씩 심는다.&#10;3. 화분마다 하루에 주는 물의 양을 10mL, 30mL, 50mL, 70mL로 다르게 한다.&#10;4. 2주 동안 매일 같은 시각에 물을 준다.&#10;5. 3일마다 30cm 자로 줄기의 길이를 재어 기록한다."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 안전 -->
+      <section class="card">
+        <div class="card-head">
+          <h2>안전 계획</h2>
+          <span class="hint">실험 전에 미리 정해 둘 것</span>
+        </div>
+        <div class="card-body">
+          <p class="rule">
+            <b>“조심한다”는 주의 사항이 아닙니다.</b>
+            무엇이 위험한지, 그래서 <b>무엇을 착용하고 어떻게 행동할지</b>를 구체적으로 적어야 합니다.
+            <span>보안경 · 장갑 · 실험복 · 마스크 · 환기 · 손 씻기 · 뒷정리 · 선생님 확인</span>
+          </p>
+          <div class="field">
+            <label>골라서 추가하기</label>
+            <span class="sub">내 실험에 해당하는 것을 눌러 보세요. 다시 누르면 빠집니다.</span>
+            <div class="picks" id="safetyPicks"></div>
+          </div>
+
+          <div class="field">
+            <label for="safety">직접 작성하기</label>
+            <span class="sub">위 목록에 없는 것은 직접 적으세요. <b>내 실험에만 있는 위험</b>이 가장 중요합니다.</span>
+            <textarea id="safety" rows="6" placeholder="예)&#10;· 뜨거운 물을 옮길 때 화상 위험 → 집게를 사용한다.&#10;· 유리 비커가 깨질 수 있음 → 책상 가장자리에 두지 않는다."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <p class="privacy">
+        <b>이름과 학번은 적지 마세요.</b> 이 점검표는 인터넷으로 아무 데도 전송하지 않고, 입력한 내용은 이 브라우저 안에만 임시로 저장됩니다.
+        완성한 계획서는 인쇄하거나 화면을 캡처해서 제출하세요.
+      </p>
+    </main>
+
+    <!-- 점검 결과 -->
+    <aside class="panel">
+      <div class="card">
+        <div class="meter">
+          <div class="meter-top">
+            <h2>점검 결과</h2>
+            <span class="meter-count" id="meterCount">0 / 0</span>
+          </div>
+          <div class="bar" id="bar">
+            <span class="seg-ok" style="width:0%"></span>
+            <span class="seg-ask" style="width:0%"></span>
+            <span class="seg-danger" style="width:0%"></span>
+          </div>
+        </div>
+
+        <div id="safetyBanner"></div>
+        <div id="report"></div>
+
+        <div class="panel-actions">
+          <div class="save-row">
+            <label class="sr-only" for="fmt">저장할 파일 형식</label>
+            <select id="fmt">
+              <option value="html">웹 문서 (.html)</option>
+              <option value="doc">한글·워드에서 열기 (.doc)</option>
+              <option value="txt">텍스트 (.txt)</option>
+            </select>
+            <button class="primary" type="button" id="btnExport">저장</button>
+          </div>
+          <button type="button" id="btnPrint2">인쇄 / PDF로 저장</button>
+          <p class="panel-note">계획서 전문과 점검 결과가 <b>하나의 파일</b>로 저장됩니다. 저장된 파일을 선생님께 제출하세요.</p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var FIELDS = ['topic', 'hypothesis', 'iv', 'dv', 'cv', 'materials', 'procedure', 'safety'];
+  var STORE = 'inquiry-plan-v1';
+
+  var el = {};
+  FIELDS.forEach(function (id) { el[id] = document.getElementById(id); });
+
+  /* ---------- helpers ---------- */
+
+  function val(id) { return (el[id].value || '').trim(); }
+
+  function tokenize(s) {
+    return (s || '').split(/[^0-9A-Za-z가-힣]+/).filter(function (t) { return t.length >= 2; });
+  }
+
+  // Does `haystack` mention any meaningful word from `source`?
+  // Trims one trailing char to tolerate Korean particles (조사).
+  function mentions(haystack, source) {
+    var toks = tokenize(source);
+    if (!toks.length) return false;
+    return toks.some(function (t) {
+      if (haystack.indexOf(t) !== -1) return true;
+      if (t.length >= 3 && haystack.indexOf(t.slice(0, -1)) !== -1) return true;
+      return false;
+    });
+  }
+
+  // 두 변인이 '같은 것'인지 판단합니다.
+  // '운동하는 시간'과 '잠자는 시간'은 단위 낱말 '시간'만 겹칠 뿐 서로 다른 변인입니다.
+  // 그래서 값의 종류를 나타내는 낱말(시간·양·온도…)은 구별에서 빼고,
+  // 수식어와 값의 종류가 '둘 다' 겹칠 때만 같은 변인으로 봅니다.
+
+  function contentTokens(s) {
+    return tokenize(s).filter(function (t) {
+      if (!DIM.test(t)) return true;
+      return t.replace(DIM, '').length >= 2;   // '체지방량'은 남기고 '시간'·'1시간'은 버립니다
+    });
+  }
+
+  function dimsOf(s) {
+    var out = [], m, re = new RegExp(DIM.source, 'g');
+    while ((m = re.exec(s)) !== null) { out.push(m[0]); if (m.index === re.lastIndex) re.lastIndex++; }
+    return out;
+  }
+
+  function stem(t) { return t.length >= 3 ? t.slice(0, 2) : t; }
+
+  // '체지방량(kg)이 줄어든다.' → '체지방량(kg)'
+  // 변인 칸에 서술문을 쓴 학생에게 '어디까지만 남기면 되는지' 보여 주기 위한 것입니다.
+  function trimPredicate(s) {
+    var m = s.match(/^(.+)(?:이|가|은|는|을|를)\s*[가-힣]+[다요][.!]?\s*$/);
+    return m && m[1].trim().length >= 2 ? m[1].trim() : null;
+  }
+
+  function sameVariable(a, b) {
+    var A = contentTokens(a), B = contentTokens(b);
+    var sharedModifier = A.some(function (x) {
+      return B.some(function (y) { return stem(x) === stem(y); });
+    });
+    if (!sharedModifier) return false;          // 운동하는 ≠ 잠자는
+
+    var da = dimsOf(a), db = dimsOf(b);
+    if (!da.length || !db.length) return true;
+    return da.some(function (x) { return db.indexOf(x) !== -1; });  // 물의 '양' ≠ 물의 '온도'
+  }
+
+  function splitList(s) {
+    return (s || '').split(/[,、·\n]+|\s+그리고\s+|\s+및\s+/)
+      .map(function (x) { return x.trim(); })
+      .filter(function (x) { return x.length > 0; });
+  }
+
+  /* ---------- safety rules ---------- */
+
+  var SAFETY = [
+    { label: '화기·가열',
+      terms: ['알코올램프','알콜램프','가스버너','분젠버너','토치','촛불','라이터','성냥','가열','끓','불꽃','연소','태우','인화','점화','화상'],
+      ask: '불이나 열을 다루는 과정이 있습니다. 보안경과 내열장갑이 필요할지, 불을 끄는 순서를 어떻게 정할지 과정에 적어 볼까요?' },
+    { label: '강한 산·염기',
+      terms: ['염산','황산','질산','빙초산','수산화나트륨','수산화칼륨','가성소다','강산','강염기','부식'],
+      ask: '강한 산이나 염기는 피부와 눈에 큰 상처를 낼 수 있습니다. 더 묽은 물질이나 안전한 대체 물질로 같은 것을 확인할 방법은 없을까요?' },
+    { label: '유독 가스',
+      terms: ['락스','표백제','암모니아','염소','세정제','살균제','유독','환기'],
+      ask: '이 물질들은 섞이면 유독한 기체가 생길 수 있습니다. 어떤 물질끼리 절대 섞으면 안 되는지, 환기는 어떻게 할지 확인해 볼까요?' },
+    { label: '초저온·압력',
+      terms: ['드라이아이스','액체질소','고압','밀폐','압력밥솥','폭발'],
+      ask: '아주 차갑거나 압력이 걸리는 물질입니다. 밀폐 용기에 넣으면 어떤 일이 생길지, 맨손으로 만지면 어떻게 될지 생각해 볼까요?' },
+    { label: '전기',
+      terms: ['감전','전기분해','콘센트','220','전원','누전','합선'],
+      ask: '전기를 사용하는 과정이 있습니다. 물과 전기가 가까이 있지는 않은지, 전지 대신 콘센트를 꼭 써야 하는지 확인해 볼까요?' },
+    { label: '날카로움·파손',
+      terms: ['칼로','커터','송곳','유리관','시험관','깨뜨','깨서','자른다','베'],
+      ask: '다칠 수 있는 도구가 있습니다. 누가 어떤 순서로 다룰지, 장갑이 필요할지 과정에 구체적으로 적어 볼까요?' },
+    { label: '미생물 배양',
+      terms: ['세균','대장균','곰팡이','배양','곰팡이균','미생물'],
+      ask: '미생물을 기르는 실험은 다 자란 뒤 처리 방법이 중요합니다. 배양한 것을 어떻게 안전하게 버릴지 계획에 넣어 볼까요?' },
+    { label: '섭취',
+      terms: ['먹어','마셔','섭취','맛보','시식','먹는다','마신다'],
+      ask: '실험실에서는 어떤 것도 먹거나 마시지 않는 것이 원칙입니다. 맛이나 냄새 대신 <b>측정 도구로 잴 수 있는 값</b>으로 바꿀 수 있을까요?' }
+  ];
+
+  /* ---------- analysis ---------- */
+
+  var UNIT = /(mL|ml|ℓ|L\b|g\b|kg|cm|mm|℃|도\b|초|분|시간|일|주|개|회|번|%|°C)/;
+  var TOOL = /(자\b|줄자|저울|전자저울|온도계|비커|스포이트|눈금실린더|메스실린더|초시계|스톱워치|타이머|현미경|리트머스|pH|측정기|계량컵|주사기)/;
+
+  // ── 변인 판정 어휘 ───────────────────────────────────────────
+  // 변인은 재거나 정할 수 있는 값이어야 합니다.
+
+  // DIM = 값의 종류를 가리키는 말. 하나라도 있으면 '값'으로 인정합니다.
+  var DIM = new RegExp([
+    // 기본량 — '량'은 체지방량·강수량·광합성량처럼 '양'의 다른 표기입니다.
+    '양|량','율|률','온도','시간','기간','길이','높이','너비','폭','깊이','둘레','두께','굵기',
+    '무게|질량|중량','부피|용량','넓이|면적','거리|간격','지름|반지름|반경',
+    // 개수·비율
+    '개수|갯수|개체수|마리 수|잎 수','횟수|번수','비율|퍼센트|백분율|확률',
+    '평균','점수','등급|단계|순위',
+    // 운동·물리
+    '속도|속력|가속도','각도|기울기','힘(?!들|겹)','압력','밀도','에너지|열량',
+    '전압|전류|전력|저항','파장|진동수|주파수|진폭','마찰|탄성|장력','회전수',
+    // 화학
+    '농도|산도|알칼리도|pH','용해도|용해량','반응 ?속도','기포','발생량|증발량|흡수량|배출량|소비량|함량|함유량|잔량|총량',
+    // 생물
+    '발아율|생존율|성장률|성장 ?속도','맥박|심장 ?박동|호흡수|체온','키(?![우워])',
+    // 감각의 조작적 정의
+    '밝기|조도|광도','세기|소리 크기|소음|데시벨','습도',
+    // 정할 수 있는 조건(범주형)
+    '종류|재질|재료','모양|형태','색깔|색상|색','위치|장소|방향','시각|계절','주기|빈도'
+  ].join('|'));
+
+  // VAGUE = 사람마다 다르게 보는 말. DIM이 함께 없으면 변인으로 쓸 수 없습니다.
+  var VAGUE = new RegExp([
+    // 가치 판단
+    '좋|나쁘|우수|뛰어|훌륭|최고|최적|만족|품질|완성도',
+    '예쁘|아름|멋있|보기',
+    // 생물의 막연한 상태
+    '건강|튼튼|활발|활력|기운|생생|싱싱|신선|시들|컨디션',
+    '잘 ?자|잘 ?크|잘 ?되|잘 ?자란|성장 ?잘',
+    // 주관적 감각
+    '맛있|맛없|냄새|향기|촉감|부드러|딱딱|미끄러|끈적|진하|연하|짙',
+    // 막연한 정도
+    '적당|적절|알맞|대충|어느 ?정도|약간|조금|많이|충분',
+    // 추상 개념
+    '상태|효과|느낌|기분|환경|분위기|성능|능력|특성|성질',
+    '변화|영향|차이|결과|정도',
+    // 기타
+    '편하|편리|유용|쓸모|안전|재미|인기'
+  ].join('|'));
+
+  // NOTVAR = 변인이 아니라 '문장'을 적은 경우
+  //   · 탐구 주제:  물의 양에 따른 식물의 성장 / 온도와 반응 속도의 관계
+  //   · 서술문:     체지방량(kg)이 줄어든다.  ← 변인이 아니라 가설
+  var NOTVAR = /(에 따른|에 따라|관계|미치는|비교해|알아보|조사해|어떻게 될|얼마나 될|일까|인가|\?|것인가)|[가-힣](다|요)[.!]?\s*$/;
+
+  function analyze() {
+    var d = {};
+    FIELDS.forEach(function (k) { d[k] = val(k); });
+
+    var groups = [];
+
+    // add(상태, 문구, 고쳐야 할 칸) — 세 번째 값이 있으면 그 칸의 글씨가 빨간색이 됩니다.
+    function mk(arr, defField) {
+      return function (state, text, field) {
+        arr.push([state, text, field === undefined ? defField : field]);
+      };
+    }
+
+    /* --- 가설 --- */
+    var h = [], addH = mk(h, 'hypothesis');
+    if (!d.hypothesis) {
+      addH('todo', '가설을 아직 쓰지 않았습니다.');
+    } else {
+      // 조건 — 어떤 어간에도 붙는 '-면 / -수록'까지 폭넓게 인정합니다.
+      //   길면, 넣으면, 많을수록, 높을수록, ~에 따라, ~보다, ~할 때, 만약 ~
+      var hasCond = /[가-힣]면[\s,]|[가-힣]면$|[가-힣]수록|[가-힣] ?때|에 따라|에 따른|보다|만약|라면|경우/.test(d.hypothesis);
+
+      // 결과의 방향 — 늘어나는지 줄어드는지가 드러나는가
+      var hasDir = /(증가|감소|늘어|늘고|줄어|줄고|커지|커진|커질|작아|길어|짧아|빨라|느려|높아|낮아|많아|적어|좋아|나빠|달라|변한|변할|변하|올라|오른|내려|떨어|생기|생긴|자라|자란|진다|더 )/.test(d.hypothesis);
+
+      // 서술형 문장으로 끝나는가 (~다 / ~요)
+      var isStatement = /(다|요)[.!]?\s*$/.test(d.hypothesis);
+
+      if (hasCond && hasDir) {
+        addH('ok', '“조건이 이러하면 결과가 이렇게 된다”는 형태를 갖췄습니다.');
+      } else if (hasCond && isStatement) {
+        addH('ask', '조건은 드러났습니다. 결과가 <b>늘어나는지 줄어드는지</b> 방향까지 적으면 더 좋습니다. 예) …가 감소한다');
+      } else if (!hasCond) {
+        addH('ask', '무엇을 바꿀 때인지가 드러나지 않습니다. “운동 시간이 <b>길면</b>”, “물을 많이 <b>줄수록</b>”처럼 조건을 넣어 볼까요?');
+      } else {
+        addH('ask', '결과가 어떻게 될지 예상이 빠진 것 같습니다. “…이 감소한다”, “…이 길어질 것이다”처럼 마무리해 볼까요?');
+      }
+
+      if (d.iv) {
+        if (mentions(d.hypothesis, d.iv)) addH('ok', '가설에 조작 변인이 들어 있습니다.');
+        else addH('ask', '가설에 조작 변인(' + d.iv + ')이 보이지 않습니다. 무엇을 바꾸는지 가설 문장에도 넣어 볼까요?');
+      }
+      if (d.dv) {
+        if (mentions(d.hypothesis, d.dv)) addH('ok', '가설에 종속 변인이 들어 있습니다.');
+        else addH('ask', '가설에 종속 변인(' + d.dv + ')이 보이지 않습니다. 무엇을 재서 확인할지 가설에도 넣어 볼까요?');
+      }
+      if (/(좋다|나쁘다|더 좋을|예쁘|맛있|재미)/.test(d.hypothesis)) {
+        addH('ask', '“좋다·예쁘다”처럼 사람마다 다르게 느끼는 말이 있습니다. 숫자로 잴 수 있는 표현으로 바꿀 수 있을까요?');
+      }
+    }
+    groups.push({ name: '가설', items: h });
+
+    /* --- 변인 --- */
+    // 변인의 첫째 조건: 재거나 정할 수 있는 '값'일 것.
+    var v = [], addV = mk(v, null);
+
+    // 조작 변인 — 내가 값을 정해서 다르게 만들 수 있는가?
+    if (!d.iv) {
+      addV('todo', '조작 변인을 아직 쓰지 않았습니다.', 'iv');
+    } else {
+      // 값을 여러 개 나열한 것(1시간 / 2시간 / 3시간)은 좋은 작성이므로 길어도 문장으로 보지 않습니다.
+      if (NOTVAR.test(d.iv) || (d.iv.length > 40 && !/\d/.test(d.iv))) {
+        var keepIv = trimPredicate(d.iv);
+        addV('ask', keepIv
+          ? '이 칸에는 <b>바꾸는 값의 이름만</b> 적습니다. “<b>' + keepIv + '</b>”까지만 남기고, 뒤의 서술 부분은 가설 칸으로 옮겨 볼까요?'
+          : '“' + d.iv + '”은 변인 하나가 아니라 <b>문장</b>처럼 보입니다. 이 칸에는 값의 이름만 짧게 적어 주세요. 예) 하루에 주는 물의 양', 'iv');
+      } else if (VAGUE.test(d.iv) && !DIM.test(d.iv)) {
+        addV('ask', '“' + d.iv + '”은 내가 값을 정해 줄 수 있는 조건인가요? 사람마다 다르게 보는 말 대신, <b>양·온도·시간·개수·종류</b>처럼 직접 정할 수 있는 값으로 바꿔 볼까요?', 'iv');
+      } else if (!DIM.test(d.iv) && !UNIT.test(d.iv)) {
+        addV('ask', '조작 변인을 어떤 값으로 다르게 할 계획인가요? “물의 <b>양</b>”, “물의 <b>온도</b>”처럼 무엇을 재는 값인지 붙여 보세요.', 'iv');
+      } else {
+        addV('ok', '내가 값을 정할 수 있는 조건입니다.');
+      }
+
+      if (/[,、]|\s와\s|\s과\s|그리고|및/.test(d.iv))
+        addV('ask', '조작 변인이 둘 이상으로 보입니다. 한 번에 하나만 바꿔야 무엇 때문에 결과가 달라졌는지 알 수 있습니다. 어느 것을 고를까요?', 'iv');
+      else
+        addV('ok', '바꾸는 조건이 하나로 정해졌습니다.');
+
+      // 여러 값으로 나눈 계획은 조작 변인 칸이나 실험 과정 어느 쪽에 적어도 인정합니다.
+      var levelsHere = /[\/,~]\s*\d|\d\s*[\/,~]|단계|가지/.test(d.iv);
+      var levelsInProc = d.procedure && /(다르게|각각|씩|~|\/|단계|조건 [1-9]|[1-9]\s*가지)/.test(d.procedure);
+      if (levelsHere || levelsInProc)
+        addV('ok', '조작 변인을 여러 값으로 나눈 것이 보입니다.');
+      else if (d.procedure)
+        addV('ask', '조작 변인을 <b>몇 가지 값</b>으로 다르게 할 건가요? 예를 들어 10mL / 30mL / 50mL처럼 적어 보세요.', 'iv');
+    }
+
+    // 종속 변인 — 숫자로 재서 기록할 수 있는가?
+    if (!d.dv) {
+      addV('todo', '종속 변인을 아직 쓰지 않았습니다.', 'dv');
+    } else if (NOTVAR.test(d.dv) || (d.dv.length > 40 && !/\d/.test(d.dv))) {
+      var keepDv = trimPredicate(d.dv);
+      addV('ask', keepDv
+        ? '이 칸에는 <b>재는 값의 이름만</b> 적습니다. “<b>' + keepDv + '</b>”까지만 남기고, 뒤의 서술 부분은 가설 칸으로 옮겨 볼까요?'
+        : '“' + d.dv + '”은 변인 하나가 아니라 <b>문장</b>처럼 보입니다. 이 칸에는 재는 값의 이름만 짧게 적어 주세요. 예) 2주 뒤 줄기의 길이(cm)', 'dv');
+    } else if (VAGUE.test(d.dv) && !DIM.test(d.dv)) {
+      addV('ask', '“' + d.dv + '”은 사람마다 다르게 볼 수 있어 숫자로 기록하기 어렵습니다. 대신 <b>무엇을 재면</b> 그것을 알 수 있을까요? (길이·무게·개수·걸린 시간 등)', 'dv');
+    } else if (!DIM.test(d.dv) && !UNIT.test(d.dv)) {
+      addV('ask', '종속 변인을 무엇으로 재서 기록할 계획인가요? 재는 값에는 <b>단위</b>가 붙습니다. cm, g, 초, 개 중 어느 것인가요?', 'dv');
+    } else if (!UNIT.test(d.dv)) {
+      addV('ask', '무엇을 잴지는 정해졌습니다. 단위까지 붙여 볼까요? 예) 줄기의 길이 → 줄기의 길이(cm)', 'dv');
+    } else {
+      addV('ok', '숫자와 단위로 기록할 수 있는 값입니다.');
+    }
+
+    if (d.iv && d.dv && sameVariable(d.dv, d.iv))
+      addV('ask', '조작 변인과 종속 변인이 같은 것을 가리키는 것 같습니다. 바꾸는 것과 재는 것이 서로 다른지 다시 확인해 볼까요?', 'dv');
+
+    if (d.dv && d.procedure && !mentions(d.procedure, d.dv))
+      addV('ask', '실험 과정에 종속 변인을 재는 단계가 보이지 않습니다. 언제, 무엇으로 재는지 과정에 넣어 볼까요?', 'procedure');
+
+    // 통제 변인 — 똑같이 맞춰 둘 수 있는 조건인가?
+    var cvList = splitList(d.cv);
+    if (!cvList.length) {
+      addV('todo', '통제 변인을 아직 쓰지 않았습니다.', 'cv');
+    } else {
+      var vagueCv = cvList.filter(function (c) { return VAGUE.test(c) && !DIM.test(c); });
+      if (vagueCv.length)
+        addV('ask', '“' + vagueCv.join('”, “') + '”은 똑같이 맞춰 두기 어려운 표현입니다. 값을 정해서 모두 같게 할 수 있는 조건으로 바꿔 볼까요?', 'cv');
+      else
+        addV('ok', '모두 같게 맞춰 둘 수 있는 조건들입니다.');
+
+      if (cvList.length < 3)
+        addV('ask', '고정할 조건이 ' + cvList.length + '개입니다. 온도, 시간, 크기, 양, 장소 중에 더 같게 해야 할 것은 없을까요?', 'cv');
+      else
+        addV('ok', '고정할 조건을 ' + cvList.length + '가지 정했습니다.');
+    }
+
+    var dupCv = cvList.filter(function (c) { return d.iv && sameVariable(c, d.iv); });
+    if (dupCv.length)
+      addV('ask', '“' + dupCv.join('”, “') + '”은 조작 변인과 같은 것으로 보입니다. 바꿀 것과 고정할 것 중 어느 쪽인지 정해 볼까요?', 'cv');
+
+    groups.push({ name: '변인 통제', items: v });
+
+    /* --- 설계 --- */
+    var s = [], addS = mk(s, 'procedure');
+    if (!d.materials) addS('todo', '준비물을 아직 쓰지 않았습니다.', 'materials');
+    else if (!/\d/.test(d.materials))
+      addS('ask', '준비물에 개수나 크기가 없습니다. 몇 개, 몇 mL짜리인지 적어 볼까요?', 'materials');
+    else addS('ok', '준비물에 수량이 적혀 있습니다.', null);
+
+    if (!d.procedure) {
+      addS('todo', '실험 과정을 아직 쓰지 않았습니다.');
+    } else {
+      var pLines = d.procedure.split('\n').filter(function (x) { return x.trim(); });
+      var numbered = /^\s*\d+\s*[.)]/m.test(d.procedure);
+      if (numbered || pLines.length >= 3) addS('ok', '과정이 여러 단계로 나뉘어 있습니다.', null);
+      else addS('ask', '과정이 한 덩어리로 되어 있습니다. 1, 2, 3… 순서대로 나눠서 적어 볼까요?');
+
+      if (/\d/.test(d.procedure) && UNIT.test(d.procedure))
+        addS('ok', '과정에 구체적인 수치와 단위가 있습니다.', null);
+      else
+        addS('ask', '과정에 “얼마나”가 빠져 있습니다. 몇 mL, 몇 분, 몇 ℃인지 숫자로 적어 볼까요?');
+
+      if (TOOL.test(d.procedure) || TOOL.test(d.materials))
+        addS('ok', '측정에 쓸 도구가 나와 있습니다.', null);
+      else
+        addS('ask', '무엇으로 잴지가 안 보입니다. 자, 저울, 온도계, 초시계 중 어떤 도구를 쓸 계획인가요?');
+
+      if (/(반복|3회|3번|세 번|5회|여러 번|다시 한 번|평균)/.test(d.procedure))
+        addS('ok', '반복 측정 계획이 있습니다.', null);
+      else
+        addS('ask', '한 번만 재면 우연히 이상한 값이 나올 수 있습니다. 몇 번 반복해서 평균을 낼지 정해 볼까요?');
+
+      // 값이 0인 조건(운동 0시간, 물 0mL)은 그 자체가 대조군입니다.
+      var zeroLevel = /(^|[^\d.])0\s*(시간|분|초|일|주|mL|ml|L|g|kg|cm|mm|개|회|번|%|℃)/;
+      if (/(비교|대조|아무것도|주지 않|않은|기본|평소|그대로)/.test(d.procedure + d.materials)
+          || zeroLevel.test(d.iv + ' ' + d.procedure))
+        addS('ok', '비교할 기준(대조군)이 들어 있습니다.', null);
+      else
+        addS('ask', '비교 대상(대조군)이 있나요? 조건을 바꾸지 않은 경우도 함께 두면 차이를 확인하기 쉽습니다.');
+    }
+    groups.push({ name: '탐구 설계', items: s });
+
+    /* --- 안전 --- */
+    var all = [d.topic, d.hypothesis, d.materials, d.procedure].join(' ');
+    var hits = [];
+    SAFETY.forEach(function (rule) {
+      if (rule.terms.some(function (t) { return all.indexOf(t) !== -1; })) hits.push(rule);
+    });
+
+    // 안전 대비책으로 인정할 표현.
+    // 화학 실험실만이 아니라 운동·관찰·조사형 탐구까지 폭넓게 받아들입니다.
+    var GEAR = new RegExp([
+      // 착용 행위 자체 — '운동복을 착용한다'처럼 무엇을 입는지 밝힌 경우
+      '착용|입는다|입고|끼고|낀다|신고|신는다|쓴다|쓰고',
+      // 보호 장비
+      '보안경|고글|장갑|실험복|가운|마스크|앞치마|헬멧|보호대|안전모|귀마개|무릎|팔꿈치',
+      // 복장
+      '운동복|운동화|편한 ?옷|긴팔|앞치마',
+      // 실험실 행동 요령
+      '환기|창문|후드|집게|받침|손 ?씻|안전한 ?장소|넓은 ?곳|떨어져|거리를',
+      // 운동·신체 활동
+      '준비 ?운동|스트레칭|휴식|무리하지|무리가|수분|물을 마|천천히',
+      // 확인·감독
+      '선생님|교사|지도|확인받|허락|함께'
+    ].join('|'));
+
+    // 뒷정리로 인정할 표현
+    var CLEANUP = /(정리|정돈|청소|치운|치우|폐기|버린|버리|씻|반납|반환|제자리|원래 ?자리|원위치|닦|끈다|끄고|잠근다)/;
+
+    var safe = [], addF = mk(safe, 'safety');
+    if (!d.materials && !d.procedure) {
+      addF('todo', '준비물과 과정을 쓰면 위험 요소를 확인해 드립니다.', null);
+    } else if (!hits.length) {
+      addF('ok', '눈에 띄는 위험 물질이나 화기는 발견되지 않았습니다.', null);
+    } else {
+      // 위험 감지 자체는 과정이 '틀렸다'는 뜻이 아니므로 칸을 빨갛게 만들지 않습니다.
+      hits.forEach(function (rule) {
+        addF('danger', '<strong>' + rule.label + '</strong> — ' + rule.ask, null);
+      });
+    }
+
+    // 주의 사항 칸
+    if (!d.safety) {
+      if (hits.length)
+        addF('danger', '<strong>주의 사항이 비어 있습니다.</strong> 위험 요소가 발견된 계획입니다. 무엇을 착용하고 어떻게 행동할지 <b>반드시</b> 적어 주세요.');
+      else
+        addF('ask', '위험 물질이 없더라도 다칠 수 있는 순간은 있습니다. 주의 사항을 한 가지라도 적어 볼까요?');
+    } else {
+      var sLines = d.safety.split('\n').filter(function (x) { return x.trim().length > 1; });
+      if (GEAR.test(d.safety))
+        addF('ok', '무엇을 착용하고 어떻게 행동할지가 적혀 있습니다.', null);
+      else
+        addF('ask', '위험을 적었다면 <b>대비책</b>도 필요합니다. 무엇을 착용하거나 어떻게 행동할지 한 줄 더 적어 볼까요?');
+
+      if (hits.length && sLines.length < hits.length)
+        addF('ask', '발견된 위험 요소는 ' + hits.length + '가지인데 주의 사항은 ' + sLines.length + '줄입니다. 각 위험마다 대비책을 하나씩 적어 볼까요?');
+
+      // 뒷정리는 다룰 물질·도구가 있을 때만 묻습니다. 운동·조사형 탐구에는 해당하지 않습니다.
+      if (CLEANUP.test(d.safety))
+        addF('ok', '실험 뒷정리 계획이 들어 있습니다.', null);
+      else if (hits.length || /(약품|용액|시약|물질|가루|액체)/.test(d.materials + d.procedure))
+        addF('ask', '실험이 끝난 뒤 남은 물질과 도구는 어떻게 처리할 계획인가요?');
+    }
+
+    groups.push({ name: '현실성과 안전', items: safe });
+
+    return { groups: groups, hits: hits };
+  }
+
+  /* ---------- render ---------- */
+
+  function render() {
+    var result = analyze();
+    var report = document.getElementById('report');
+    var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
+    var needFix = {};   // 고쳐야 할 칸
+    var html = '';
+
+    result.groups.forEach(function (g) {
+      html += '<section class="group"><div class="group-head"><h3>' + g.name + '</h3></div><ul class="items">';
+      g.items.forEach(function (it) {
+        counts[it[0]]++;
+        // 'ask'·'danger'가 붙은 칸은 학생 글씨를 빨간색으로 바꿉니다.
+        if (it[2] && (it[0] === 'ask' || it[0] === 'danger')) needFix[it[2]] = true;
+        html += '<li class="item ' + it[0] + '"><span class="dot"></span><span>' + it[1] + '</span></li>';
+      });
+      html += '</ul></section>';
+    });
+    report.innerHTML = html;
+
+    FIELDS.forEach(function (f) {
+      el[f].classList.toggle('needs-fix', !!needFix[f] && el[f].value.trim() !== '');
+    });
+    syncPicks();
+
+    // safety banner
+    var banner = document.getElementById('safetyBanner');
+    banner.innerHTML = result.hits.length
+      ? '<div class="safety-banner"><b>안전 확인이 필요합니다.</b> 아래 빨간 항목이 있는 계획은 실험을 시작하기 전에 <b>반드시 선생님께 먼저 보여 주세요.</b></div>'
+      : '';
+
+    // meter
+    var total = counts.ok + counts.ask + counts.todo + counts.danger;
+    document.getElementById('meterCount').textContent = counts.ok + ' / ' + total + ' 통과';
+    var bar = document.getElementById('bar').children;
+    bar[0].style.width = total ? (counts.ok / total * 100) + '%' : '0%';
+    bar[1].style.width = total ? (counts.ask / total * 100) + '%' : '0%';
+    bar[2].style.width = total ? (counts.danger / total * 100) + '%' : '0%';
+
+    // controlled-variable chips
+    var chips = splitList(val('cv'));
+    document.getElementById('cvChips').innerHTML = chips.length
+      ? chips.map(function (c) { return '<span class="chip">' + c + ' 고정</span>'; }).join('')
+      : '<span class="chip-empty">고정할 조건을 적으면 여기에 표시됩니다.</span>';
+
+    save();
+  }
+
+  /* ---------- 제출용 파일 만들기 ---------- */
+
+  function esc(s) {
+    return (s || '').replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function stamp() {
+    var n = new Date(), p = function (x) { return ('0' + x).slice(-2); };
+    return {
+      file: n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate()) + '_' + p(n.getHours()) + p(n.getMinutes()),
+      human: n.getFullYear() + '년 ' + (n.getMonth() + 1) + '월 ' + n.getDate() + '일 ' + p(n.getHours()) + ':' + p(n.getMinutes())
+    };
+  }
+
+  var SECTIONS = [
+    ['탐구 주제 / 문제 인식', 'topic'],
+    ['가설', 'hypothesis'],
+    ['조작 변인 (바꾸는 것)', 'iv'],
+    ['종속 변인 (재는 것)', 'dv'],
+    ['통제 변인 (고정하는 것)', 'cv'],
+    ['준비물', 'materials'],
+    ['실험 과정', 'procedure'],
+    ['예상되는 위험과 주의 사항', 'safety']
+  ];
+
+  var MARK = { ok: '통과', ask: '확인', todo: '미작성', danger: '위험' };
+
+  function buildReport() {
+    var r = analyze();
+    var t = stamp();
+    var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
+    r.groups.forEach(function (g) { g.items.forEach(function (i) { counts[i[0]]++; }); });
+    var total = counts.ok + counts.ask + counts.todo + counts.danger;
+
+    var plan = SECTIONS.map(function (s) {
+      var v = val(s[1]);
+      return '<section class="blk"><h3>' + s[0] + '</h3>' +
+        (v ? '<p>' + esc(v).replace(/\n/g, '<br>') + '</p>'
+           : '<p class="none">작성하지 않음</p>') + '</section>';
+    }).join('');
+
+    var review = r.groups.map(function (g) {
+      return '<section class="blk"><h3>' + g.name + '</h3><ul>' +
+        g.items.map(function (i) {
+          return '<li class="' + i[0] + '"><span class="m">' + MARK[i[0]] + '</span>' + i[1] + '</li>';
+        }).join('') + '</ul></section>';
+    }).join('');
+
+    var warn = r.hits.length
+      ? '<div class="warn"><b>안전 확인 필요</b><br>' +
+        r.hits.map(function (x) { return esc(x.label); }).join(' · ') +
+        ' 관련 위험 요소가 감지되었습니다. 실험 전 지도교사 확인이 반드시 필요합니다.</div>'
+      : '';
+
+    return '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">' +
+      '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+      '<title>탐구 계획서 및 점검 결과 ' + t.file + '</title><style>' +
+      'body{font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;line-height:1.65;' +
+      'color:#16191c;max-width:820px;margin:0 auto;padding:36px 24px 64px;background:#fff}' +
+      'h1{font-size:23px;margin:0 0 4px;letter-spacing:-.02em}' +
+      '.meta{color:#6b747c;font-size:13px;margin:0 0 22px;padding-bottom:14px;border-bottom:2px solid #16191c}' +
+      'h2{font-size:15px;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid #d8dde1;letter-spacing:.02em}' +
+      '.blk{margin:0 0 16px;break-inside:avoid}' +
+      '.blk h3{font-size:13px;color:#0d6e77;margin:0 0 4px;font-weight:700}' +
+      '.blk p{margin:0;white-space:pre-wrap;padding:9px 12px;background:#f4f6f7;border-radius:5px;font-size:14.5px}' +
+      '.blk p.none{color:#9aa3aa;background:#fafbfb;font-style:italic}' +
+      '.blk ul{list-style:none;margin:0;padding:0}' +
+      '.blk li{font-size:14px;padding:5px 0 5px 62px;position:relative;border-bottom:1px solid #eef1f3}' +
+      '.blk li:last-child{border-bottom:0}' +
+      '.m{position:absolute;left:0;top:6px;width:50px;text-align:center;font-size:11px;font-weight:700;' +
+      'padding:1px 0;border-radius:3px}' +
+      'li.ok .m{background:#e2f0e9;color:#256b4e}li.ask .m{background:#faf0dd;color:#8f5400}' +
+      'li.todo .m{background:#eef1f3;color:#79838b}li.danger .m{background:#fbe8ea;color:#a22633}' +
+      'li.danger{font-weight:600}' +
+      '.warn{background:#fbe8ea;border-left:4px solid #a22633;padding:12px 15px;border-radius:0 6px 6px 0;' +
+      'font-size:14px;margin:0 0 24px}.warn b{color:#a22633}' +
+      '.sum{display:flex;gap:16px;font-size:13px;color:#55606a;margin:0 0 22px;flex-wrap:wrap}' +
+      '.sum b{color:#16191c}' +
+      'footer{margin-top:36px;padding-top:14px;border-top:1px solid #d8dde1;font-size:12px;color:#8a949d;line-height:1.6}' +
+      '@media print{body{padding:0}}' +
+      '</style></head><body>' +
+      '<h1>과학 탐구 계획서 · 점검 결과</h1>' +
+      '<p class="meta">저장 시각 ' + t.human + '</p>' +
+      warn +
+      '<div class="sum"><span>전체 <b>' + total + '</b>항목</span><span>통과 <b>' + counts.ok + '</b></span>' +
+      '<span>확인 필요 <b>' + counts.ask + '</b></span><span>미작성 <b>' + counts.todo + '</b></span>' +
+      '<span>위험 <b>' + counts.danger + '</b></span></div>' +
+      '<h2>Ⅰ. 계획서 전문</h2>' + plan +
+      '<h2>Ⅱ. 점검 결과</h2>' + review +
+      '<footer>이 점검 결과는 계획서의 <b>형식</b>을 자동으로 확인한 것입니다. ' +
+      '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.<br>' +
+      '작성자 정보는 수집하지 않습니다.</footer></body></html>';
+  }
+
+  function stripTags(s) {
+    return s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  }
+
+  // 텍스트본 — 어떤 편집기에서든 열리고, 게시판에 그대로 붙여넣을 수 있습니다.
+  function buildText() {
+    var r = analyze();
+    var t = stamp();
+    var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
+    r.groups.forEach(function (g) { g.items.forEach(function (i) { counts[i[0]]++; }); });
+    var total = counts.ok + counts.ask + counts.todo + counts.danger;
+    var RULE = '='.repeat(52), THIN = '-'.repeat(52);
+    var out = [];
+
+    out.push('과학 탐구 계획서 · 점검 결과', '저장 시각 ' + t.human, RULE, '');
+
+    if (r.hits.length) {
+      out.push('[ 안전 확인 필요 ]',
+        r.hits.map(function (x) { return x.label; }).join(' · ') + ' 관련 위험 요소가 감지되었습니다.',
+        '실험 전 지도교사 확인이 반드시 필요합니다.', '');
+    }
+
+    out.push('전체 ' + total + '항목  |  통과 ' + counts.ok + '  확인 필요 ' + counts.ask +
+             '  미작성 ' + counts.todo + '  위험 ' + counts.danger, '');
+
+    out.push(RULE, 'Ⅰ. 계획서 전문', RULE, '');
+    SECTIONS.forEach(function (s) {
+      var v = val(s[1]);
+      out.push('■ ' + s[0]);
+      out.push(v ? v.split('\n').map(function (x) { return '   ' + x; }).join('\n') : '   (작성하지 않음)');
+      out.push('');
+    });
+
+    out.push(RULE, 'Ⅱ. 점검 결과', RULE, '');
+    r.groups.forEach(function (g) {
+      out.push('■ ' + g.name, THIN);
+      g.items.forEach(function (i) {
+        out.push('  [' + MARK[i[0]] + '] ' + stripTags(i[1]));
+      });
+      out.push('');
+    });
+
+    out.push(THIN,
+      '이 점검 결과는 계획서의 형식을 자동으로 확인한 것입니다.',
+      '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.',
+      '작성자 정보는 수집하지 않습니다.');
+
+    return out.join('\r\n');
+  }
+
+  var FORMATS = {
+    html: { ext: 'html', mime: 'text/html;charset=utf-8',        build: buildReport },
+    doc:  { ext: 'doc',  mime: 'application/msword;charset=utf-8', build: buildReport },
+    txt:  { ext: 'txt',  mime: 'text/plain;charset=utf-8',       build: buildText }
+  };
+
+  function saveReport(kind) {
+    var f = FORMATS[kind] || FORMATS.html;
+    // 앞의 BOM은 워드·엑셀·메모장이 한글을 깨뜨리지 않고 열게 해 줍니다.
+    var blob = new Blob(['﻿' + f.build()], { type: f.mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = '탐구계획서_점검결과_' + stamp().file + '.' + f.ext;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  /* ---------- storage ---------- */
+
+  function save() {
+    try {
+      var d = {};
+      FIELDS.forEach(function (k) { d[k] = el[k].value; });
+      localStorage.setItem(STORE, JSON.stringify(d));
+    } catch (e) { /* 저장 공간이 막혀 있어도 작성에는 지장이 없습니다 */ }
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return;
+      var d = JSON.parse(raw);
+      FIELDS.forEach(function (k) { if (typeof d[k] === 'string') el[k].value = d[k]; });
+    } catch (e) { /* 저장된 내용을 읽지 못하면 빈 양식으로 시작합니다 */ }
+  }
+
+  /* ---------- 골라서 추가하는 주의 사항 ---------- */
+
+  var SAFETY_PICKS = [
+    ['보호 장비', [
+      '보안경을 착용한다.',
+      '실험용 장갑을 착용한다.',
+      '실험복(앞치마)을 착용한다.',
+      '긴 머리는 묶는다.'
+    ]],
+    ['불 · 물질', [
+      '불을 켠 주변에 종이나 옷을 두지 않는다.',
+      '약품 냄새를 직접 맡지 않는다.',
+      '실험 중에는 아무것도 먹거나 마시지 않는다.',
+      '창문을 열어 환기한다.'
+    ]],
+    ['도구', [
+      '유리 기구는 책상 가장자리에 두지 않는다.',
+      '깨진 유리는 손으로 줍지 않고 선생님께 알린다.'
+    ]],
+    ['몸을 쓰는 실험', [
+      '시작 전에 준비운동을 한다.',
+      '몸에 이상을 느끼면 즉시 멈춘다.',
+      '무리한 동작은 하지 않는다.'
+    ]],
+    ['뒷정리', [
+      '사용한 물질은 선생님께 확인받고 버린다.',
+      '끝나면 도구를 제자리에 두고 손을 씻는다.'
+    ]]
+  ];
+
+  function buildPicks() {
+    var box = document.getElementById('safetyPicks');
+    SAFETY_PICKS.forEach(function (group) {
+      var wrap = document.createElement('div');
+      wrap.className = 'pick-group';
+      var lab = document.createElement('span');
+      lab.className = 'pick-label';
+      lab.textContent = group[0];
+      wrap.appendChild(lab);
+
+      group[1].forEach(function (text) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'pick';
+        b.textContent = text.replace(/\.$/, '');
+        b.setAttribute('data-text', text);
+        b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', function () { togglePick(text); });
+        wrap.appendChild(b);
+      });
+      box.appendChild(wrap);
+    });
+  }
+
+  function safetyLines() {
+    return el.safety.value.split('\n').map(function (s) { return s.trim(); });
+  }
+
+  function togglePick(text) {
+    var lines = el.safety.value.split('\n');
+    var idx = -1;
+    lines.forEach(function (l, i) { if (l.trim() === text && idx === -1) idx = i; });
+
+    if (idx >= 0) lines.splice(idx, 1);
+    else lines.push(text);
+
+    el.safety.value = lines.filter(function (l) { return l.trim() !== ''; }).join('\n');
+    render();
+  }
+
+  function syncPicks() {
+    var lines = safetyLines();
+    var buttons = document.querySelectorAll('#safetyPicks .pick');
+    Array.prototype.forEach.call(buttons, function (b) {
+      var on = lines.indexOf(b.getAttribute('data-text')) !== -1;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  /* ---------- ui wiring ---------- */
+
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast._id);
+    toast._id = setTimeout(function () { t.classList.remove('show'); }, 1900);
+  }
+
+  FIELDS.forEach(function (k) { el[k].addEventListener('input', render); });
+
+  document.getElementById('btnPrint2').addEventListener('click', function () { window.print(); });
+
+  document.getElementById('btnExport').addEventListener('click', function () {
+    var kind = document.getElementById('fmt').value;
+    saveReport(kind);
+    toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
+  });
+
+  buildPicks();
+  load();
+  render();
+})();
+</script>
