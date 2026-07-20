@@ -3,6 +3,7 @@
 const fs = require('fs');
 
 const html = fs.readFileSync(__dirname + '/index.html', 'utf8');
+const CURVE_MARK = 'M600 232Q650 228 700 198';   // 측정값 곡선의 시작 부분
 const m = html.match(/property="og:image" content="data:image\/svg\+xml,([^"]+)"/);
 if (!m) { console.log('og:image를 찾지 못했습니다.'); process.exit(1); }
 
@@ -48,4 +49,55 @@ console.log('용량        :', Math.round(m[1].length / 1024) + 'KB (데이터 U
 fs.writeFileSync(__dirname + '/_og-preview.svg', svg);
 console.log('\n미리보기를 _og-preview.svg로 저장했습니다.');
 
-process.exit(bad || stack.length || dangling.length || !korean.length ? 1 : 0);
+// ── 화면 상단 배너 ────────────────────────────────────────
+// 배너도 데이터 URI라 눈으로 확인할 수 없어 함께 검사합니다.
+console.log('\n[ 화면 상단 배너 ]');
+const banners = html.match(/--banner: url\("data:image\/svg\+xml,([^"]+)"\)/g) || [];
+let bannerFail = 0;
+
+// 각 배너가 어느 테마 블록에 있는지 — 밝은 곳에 어두운 배너가 들어가면 안 됩니다.
+const blocks = [];
+let cur = null;
+html.split('\n').forEach(l => {
+  if (/prefers-color-scheme:\s*dark/.test(l)) cur = 'dark';
+  else if (/^ {2}:root\s*\{/.test(l)) cur = 'light';
+  else if (/:root\[data-theme="dark"\]/.test(l)) cur = 'dark';
+  else if (/:root\[data-theme="light"\]/.test(l)) cur = 'light';
+  if (/--banner:/.test(l)) blocks.push(cur);
+});
+
+if (banners.length !== 4) {
+  console.log(`배너 정의가 ${banners.length}곳입니다. 밝은 테마 2곳 + 어두운 테마 2곳, 모두 4곳이어야 합니다.`);
+  bannerFail++;
+}
+
+banners.forEach((b, i) => {
+  const raw = b.match(/svg\+xml,([^"]+)/)[1];
+  let s;
+  try { s = decodeURIComponent(raw); }
+  catch (e) { console.log(`  ${i + 1}번 : 데이터 URI를 풀지 못했습니다`); bannerFail++; return; }
+
+  const bIds = (s.match(/id='([^']+)'/g) || []).map(x => x.slice(4, -1));
+  const bRefs = (s.match(/url\(#([^)]+)\)/g) || []).map(x => x.slice(5, -1));
+  const cut = bRefs.filter(r => bIds.indexOf(r) === -1);
+  const hasFace = s.indexOf('M21 45.8') !== -1;
+  const opens = (s.match(/<(?!\/)[a-z]/g) || []).length;
+  const closes = (s.match(/<\//g) || []).length + (s.match(/\/>/g) || []).length;
+
+  // 밝은 배너는 진한 분홍(#B32D6B), 어두운 배너는 연한 분홍(#F58BB4) 선을 씁니다.
+  const want = blocks[i];
+  const isDark = s.indexOf("stroke='#F58BB4' stroke-width='.6'") !== -1;
+  const got = isDark ? 'dark' : 'light';
+
+  const problems = [];
+  if (cut.length) problems.push('끊긴 참조 ' + cut.join(','));
+  if (!hasFace) problems.push('캐릭터 없음');
+  if (s.indexOf(CURVE_MARK) === -1) problems.push('측정 곡선 없음');
+  if (opens !== closes) problems.push(`태그 불균형 (연 ${opens} / 닫은 ${closes})`);
+  if (want && got !== want) problems.push(`${want} 블록에 ${got} 배너가 들어감`);
+
+  console.log(`  ${i + 1}번 (${want}) : ` + (problems.length ? problems.join(' · ') : '정상'));
+  if (problems.length) bannerFail++;
+});
+
+process.exit(bad || stack.length || dangling.length || !korean.length || bannerFail ? 1 : 0);
