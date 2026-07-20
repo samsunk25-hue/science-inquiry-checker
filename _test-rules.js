@@ -155,5 +155,35 @@ console.log('\n[ 줄임말 · 채팅 말투 — 잡아야 하는 것 ]');
 ['ㅋㅋㅋ 재밌음', 'ㅇㅇ 맞음', '걍 대충 함', '개꿀임', 'ㄹㅇ 신기함', 'ㅠㅠ 힘들어']
   .forEach(t => line(flagged(t) === 'slang', '줄임말', t, flagged(t) === 'slang' ? '' : '← 놓침'));
 
+// ── 값에 어울리는 서술어 ────────────────────────────────
+eval(grab(/var COLLOCATION = \[[\s\S]*?\n  \}\);/, 'COLLOCATION'));
+eval(grab(/function collocationIssue\([\s\S]*?\n  \}/, 'collocationIssue'));
+
+console.log('\n[ 서술어가 안 맞아 고쳐 줘야 하는 것 ]');
+[
+  ['길이를 크게 한다', '늘린다'],
+  ['온도를 길게 한다', '높인다'],
+  ['물의 양을 높게 한다', '늘린다'],
+  ['속도를 크게 한다', '빠르게'],
+  ['밝기를 높게 한다', '밝게']
+].forEach(([t, want]) => {
+  const c = collocationIssue(t);
+  const ok = c && c.ok.indexOf(want) !== -1;
+  line(ok, '교정', t, ok ? `→ ${c.ok}` : '← 못 잡음');
+});
+
+console.log('\n[ 올바른 문장 — 건드리면 안 되는 것 ]');
+[
+  '길이가 크게 달라진다',      // 크게 = 부사, 정상
+  '온도가 크게 변한다',
+  '길이를 늘린다',
+  '온도를 높인다',
+  '크기를 크게 한다',          // 크기는 크게가 맞음
+  '각도를 크게 한다'           // 각도도 크게가 자연스러움
+].forEach(t => {
+  const c = collocationIssue(t);
+  line(!c, '정상', t, c ? '← 잘못 잡음' : '');
+});
+
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
 process.exit(fail === 0 ? 0 : 1);
