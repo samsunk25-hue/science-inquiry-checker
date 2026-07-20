@@ -803,6 +803,92 @@
   }
   .privacy b { color: var(--ink); }
 
+  /* ---------- 모두 통과했을 때 ---------- */
+
+  .confetti {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 60;
+    display: none;
+  }
+  .confetti.on { display: block; pointer-events: auto; cursor: pointer; }
+
+  .cheer {
+    position: fixed;
+    inset: 0;
+    z-index: 61;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    animation: cheerIn 3.4s ease forwards;
+  }
+  .cheer strong {
+    font-size: clamp(34px, 7vw, 58px);
+    font-weight: 800;
+    letter-spacing: -.04em;
+    color: var(--accent);
+    text-shadow: 0 2px 24px var(--ground), 0 0 40px var(--ground);
+  }
+  .cheer span {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 7px 16px;
+    box-shadow: var(--shadow);
+  }
+  .cheer small {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 4px 12px;
+    box-shadow: var(--shadow);
+  }
+
+  /* 하트를 터뜨리면 나오는 안내 — 형식 점검과 과학적 타당성은 다르다는 것 */
+  .caution {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 62;
+    width: min(430px, calc(100vw - 40px));
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-left: 5px solid var(--accent2);
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 24px 64px -16px rgba(60,20,40,.45);
+    animation: cautionIn .3s ease;
+  }
+  .caution p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); }
+  .caution p + p { margin-top: 8px; }
+  .caution b { color: var(--ink); }
+
+  @keyframes cautionIn {
+    from { opacity: 0; transform: translate(-50%, -46%) scale(.95); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  @keyframes cheerIn {
+    0%   { opacity: 0; transform: scale(.86); }
+    12%  { opacity: 1; transform: scale(1.04); }
+    20%  { transform: scale(1); }
+    78%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
   .toast {
     position: fixed;
     left: 50%;
@@ -1040,6 +1126,19 @@
     </aside>
 
   </div>
+</div>
+
+<canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+<div class="cheer" id="cheer" hidden>
+  <strong>모두 통과!</strong>
+  <span id="cheerSub">형식 점검을 마쳤습니다</span>
+  <small>하트를 눌러 보세요</small>
+</div>
+
+<div class="caution" id="caution" hidden>
+  <p><b>여기까지는 “형식” 점검입니다.</b></p>
+  <p>탐구 계획이 <b>과학적으로 타당한지</b>는 이 점검표가 판단하지 못합니다.
+     실험을 시작하기 전에 선생님과 함께 확인하세요.</p>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1530,6 +1629,13 @@
       jar.setAttribute('class', 'beaker ' + mood);   // 상태가 바뀔 때만 애니메이션이 다시 돕니다
     }
 
+    // 고칠 것을 다 고친 순간 한 번만 축하합니다.
+    // 위험 항목은 '학생이 틀린 것'이 아니라 '선생님 확인이 필요한 것'이므로
+    // 축하를 막지 않되, 문구를 달리해 확인이 남았다는 사실은 분명히 합니다.
+    var done = counts.ok > 0 && !counts.ask && !counts.todo;
+    if (done && !celebrated) { celebrated = true; celebrate(counts.danger > 0); }
+    else if (!done) { celebrated = false; }
+
     // safety banner
     var banner = document.getElementById('safetyBanner');
     banner.innerHTML = result.hits.length
@@ -1839,6 +1945,175 @@
     });
   }
 
+  /* ---------- 모두 통과했을 때 하트가 화면을 채웁니다 ---------- */
+
+  var celebrated = false;
+
+  function heartPath(ctx, s) {
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.32);
+    ctx.bezierCurveTo(0, 0, -s * 0.5, 0, -s * 0.5, s * 0.32);
+    ctx.bezierCurveTo(-s * 0.5, s * 0.62, -s * 0.1, s * 0.82, 0, s);
+    ctx.bezierCurveTo(s * 0.1, s * 0.82, s * 0.5, s * 0.62, s * 0.5, s * 0.32);
+    ctx.bezierCurveTo(s * 0.5, 0, 0, 0, 0, s * 0.32);
+    ctx.closePath();
+  }
+
+  // 점검 안내 — 하트를 터뜨렸을 때, 그리고 저장·제출할 때마다 다시 보여 줍니다.
+  // 형식 점검을 통과한 것이 '과학적으로 맞다'는 뜻으로 굳어지지 않게 하려는 것입니다.
+  var cautionTimer = null;
+
+  function showCaution() {
+    var box = document.getElementById('caution');
+    box.hidden = false;
+    clearTimeout(cautionTimer);
+    cautionTimer = setTimeout(hideCaution, 7000);
+    // 하트를 누른 pointerdown 뒤에 곧바로 click이 이어지므로,
+    // 닫기 감지는 한 박자 늦게 붙여야 뜨자마자 사라지지 않습니다.
+    setTimeout(function () {
+      document.addEventListener('click', hideOnClick, true);
+    }, 80);
+  }
+
+  function hideCaution() {
+    document.getElementById('caution').hidden = true;
+    clearTimeout(cautionTimer);
+    document.removeEventListener('click', hideOnClick, true);
+  }
+
+  function hideOnClick() { hideCaution(); }
+
+  function celebrate(hasRisk) {
+    var cheer = document.getElementById('cheer');
+    document.getElementById('cheerSub').textContent = hasRisk
+      ? '형식 점검 완료 · 안전 항목은 선생님 확인이 필요합니다'
+      : '형식 점검을 마쳤습니다';
+    cheer.hidden = false;
+    setTimeout(function () { cheer.hidden = true; }, 3400);
+
+    // 움직임을 줄이도록 설정한 기기에서는 글자만 보여 주고 안내로 넘어갑니다.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTimeout(showCaution, 1200);
+      return;
+    }
+
+    var cv = document.getElementById('confetti');
+    var ctx = cv.getContext('2d');
+    var w = innerWidth, h = innerHeight;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = w * dpr;
+    cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cv.classList.add('on');
+
+    var css = getComputedStyle(document.documentElement);
+    var palette = [
+      css.getPropertyValue('--accent').trim(),
+      css.getPropertyValue('--accent2').trim(),
+      css.getPropertyValue('--ok').trim()
+    ];
+
+    var hearts = [], bits = [], popped = false;
+    for (var i = 0; i < 90; i++) {
+      hearts.push({
+        x: Math.random() * w,
+        y: h + Math.random() * h * 0.9,
+        s: 14 + Math.random() * 26,
+        vy: 1.4 + Math.random() * 2.6,
+        sway: 0.6 + Math.random() * 1.4,
+        phase: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.05,
+        rot: (Math.random() - 0.5) * 0.6,
+        color: palette[i % palette.length],
+        gone: false
+      });
+    }
+
+    function burst(p) {
+      for (var k = 0; k < 14; k++) {
+        var a = (Math.PI * 2 * k) / 14 + Math.random() * 0.4;
+        bits.push({
+          x: p.x, y: p.y,
+          vx: Math.cos(a) * (1.6 + Math.random() * 2.6),
+          vy: Math.sin(a) * (1.6 + Math.random() * 2.6),
+          r: 1.8 + Math.random() * 2.6,
+          life: 1,
+          color: p.color
+        });
+      }
+    }
+
+    function onTap(e) {
+      var r = cv.getBoundingClientRect();
+      var mx = e.clientX - r.left, my = e.clientY - r.top;
+      var hit = null, best = 1e9;
+
+      hearts.forEach(function (p) {
+        if (p.gone) return;
+        var cx = p.x + Math.sin(p.phase) * p.sway * 9;
+        var d = Math.hypot(mx - cx, my - (p.y + p.s * 0.55));
+        if (d < p.s * 0.95 && d < best) { best = d; hit = p; }
+      });
+
+      if (!hit) return;
+      hit.gone = true;
+      hit.x = hit.x + Math.sin(hit.phase) * hit.sway * 9;
+      hit.y = hit.y + hit.s * 0.55;
+      burst(hit);
+
+      if (!popped) { popped = true; showCaution(); }
+    }
+    cv.addEventListener('pointerdown', onTap);
+
+    var start = performance.now();
+    var DUR = 6000;
+
+    (function frame(now) {
+      var t = now - start;
+      ctx.clearRect(0, 0, w, h);
+      var fade = t > DUR - 900 ? Math.max(0, (DUR - t) / 900) : 1;
+
+      hearts.forEach(function (p) {
+        if (p.gone) return;
+        p.y -= p.vy;
+        p.phase += 0.04;
+        p.rot += p.spin;
+
+        ctx.save();
+        ctx.translate(p.x + Math.sin(p.phase) * p.sway * 9, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = 0.85 * fade;
+        ctx.fillStyle = p.color;
+        heartPath(ctx, p.s);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      bits = bits.filter(function (b) { return b.life > 0; });
+      bits.forEach(function (b) {
+        b.x += b.vx; b.y += b.vy;
+        b.vy += 0.12;
+        b.life -= 0.022;
+        ctx.globalAlpha = Math.max(0, b.life) * fade;
+        ctx.fillStyle = b.color;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      var alive = hearts.some(function (p) { return !p.gone && p.y > -p.s * 2; });
+      if (t < DUR && (alive || bits.length)) requestAnimationFrame(frame);
+      else {
+        ctx.clearRect(0, 0, w, h);
+        cv.classList.remove('on');
+        cv.removeEventListener('pointerdown', onTap);
+        // 한 번도 안 눌렀다면, 안내는 그래도 한 번 보여 줍니다.
+        if (!popped) showCaution();
+      }
+    })(start);
+  }
+
   /* ---------- 예시 보기 ---------- */
   // 잘 쓴 예와 아쉬운 예를 나란히 보여 줍니다. 규칙을 설명하는 것보다
   // 두 문장을 견주어 보는 편이 학생에게 빨리 와닿습니다.
@@ -2039,7 +2314,10 @@
     if (blank) toast('저장했습니다. 아직 쓰지 않은 항목이 ' + blank + '개 있습니다.');
     else if (risky) toast('저장했습니다. 안전 항목 ' + risky + '개는 선생님 확인이 필요합니다.');
     else if (left) toast('저장했습니다. 더 생각해 볼 항목이 ' + left + '개 남아 있습니다.');
-    else toast('저장했습니다. 모든 항목을 통과했습니다.');
+    else toast('저장했습니다. 형식 점검을 모두 통과했습니다.');
+
+    // 다 썼다고 끝난 게 아니라는 점을 저장할 때마다 다시 짚어 줍니다.
+    if (!blank) setTimeout(showCaution, 500);
   }
 
   document.getElementById('btnPrint2').addEventListener('click', function () { window.print(); });
@@ -2048,6 +2326,7 @@
     var kind = document.getElementById('fmt').value;
     saveReport(kind);
     toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
+    setTimeout(showCaution, 500);
   });
 
   buildPicks();
