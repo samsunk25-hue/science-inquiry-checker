@@ -116,6 +116,9 @@
 
   * { box-sizing: border-box; }
 
+  /* display:flex 규칙이 hidden 속성을 덮어쓰지 않도록 합니다. */
+  [hidden] { display: none !important; }
+
   body {
     margin: 0;
     background: var(--ground);
@@ -445,6 +448,88 @@
   }
   .chip-empty { color: var(--ink-faint); font-family: var(--sans); font-size: 12.5px; }
 
+  /* 예시 보기 */
+  .ex-toggle {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink-soft);
+  }
+  .ex-toggle:hover { border-color: var(--accent); color: var(--accent-ink); }
+
+  .ex {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .ex-row {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+  }
+  .ex-tag {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .ex-row.good .ex-tag { background: var(--ok-soft); color: var(--ok); }
+  .ex-row.weak .ex-tag { background: var(--warn-soft); color: var(--warn); }
+  .ex-row.weak { color: var(--ink-faint); text-decoration: line-through 1px; text-decoration-color: var(--line-strong); }
+  .ex-why {
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    padding-top: 7px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* 실험 한눈에 보기 */
+  .summary {
+    padding: 15px 20px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: var(--accent-soft);
+  }
+  .sm-row { display: flex; gap: 9px; align-items: baseline; font-size: 13.5px; line-height: 1.45; }
+  .sm-row b { font-weight: 700; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+  .sm-row i { font-style: normal; color: var(--ink-faint); font-weight: 400; }
+  .sm-row.fixed { margin-top: 5px; font-size: 12px; color: var(--ink-soft); }
+  .sm-tag {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    background: var(--surface);
+    color: var(--accent-ink);
+  }
+  .sm-tag.fix { color: var(--ink-faint); }
+  .sm-arrow {
+    font-size: 12px;
+    color: var(--accent);
+    padding-left: 16px;
+    line-height: 1;
+  }
+
   /* 골라서 추가하는 주의 사항 */
   .picks { display: flex; flex-direction: column; gap: 12px; }
   .pick-group { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -699,6 +784,12 @@
             <span class="sub">평소에 관찰하면서 궁금했던 점을 질문 형태로 적어 보세요.</span>
             <textarea id="topic" rows="3" placeholder="예) 식물에 주는 물의 양이 다르면 자라는 정도도 달라질까?"></textarea>
           </div>
+
+          <div class="field">
+            <label>막혔다면 — 여기서 골라 바꿔 보기</label>
+            <span class="sub">그대로 쓰지 말고, <b>내가 궁금한 것으로 바꿔서</b> 적어 보세요.</span>
+            <div class="picks" id="ideas"></div>
+          </div>
         </div>
       </section>
 
@@ -813,6 +904,7 @@
     <!-- 점검 결과 -->
     <aside class="panel">
       <div class="card">
+        <div class="summary" id="summary" hidden></div>
         <div class="meter">
           <div class="meter-top">
             <h2>점검 결과</h2>
@@ -1326,6 +1418,7 @@
       el[f].classList.toggle('needs-fix', !!needFix[f] && el[f].value.trim() !== '');
     });
     syncPicks();
+    renderSummary();
 
     // safety banner
     var banner = document.getElementById('safetyBanner');
@@ -1636,6 +1729,127 @@
     });
   }
 
+  /* ---------- 예시 보기 ---------- */
+  // 잘 쓴 예와 아쉬운 예를 나란히 보여 줍니다. 규칙을 설명하는 것보다
+  // 두 문장을 견주어 보는 편이 학생에게 빨리 와닿습니다.
+
+  var EXAMPLES = {
+    's-topic': {
+      good: '운동 시간이 길수록 체지방량이 더 많이 줄어들까?',
+      weak: '운동에 대해 알아보기',
+      why: '무엇을 바꿔서 무엇을 알아볼지가 드러나야 합니다.'
+    },
+    's-hypo': {
+      good: '운동 시간이 길면 체지방량이 감소한다.',
+      weak: '운동을 하면 몸이 좋아진다.',
+      why: '“좋아진다”는 잴 수 없습니다. 늘어나는지 줄어드는지가 있어야 합니다.'
+    },
+    's-var': {
+      good: '바꾼다 · 하루 운동 시간(0/1/2/3시간)　잰다 · 체지방량(kg)　고정 · 식사량, 수면 시간, 성별',
+      weak: '바꾼다 · 운동　잰다 · 건강',
+      why: '“건강”은 잴 수 없습니다. 단위를 붙일 수 있는 값이어야 합니다.'
+    },
+    's-design': {
+      good: '3. 체지방을 운동 전후로 3회 측정해 평균을 낸다.',
+      weak: '3. 체지방을 측정한다.',
+      why: '언제 · 몇 번 재는지가 있어야 다른 사람이 따라 할 수 있습니다.'
+    },
+    's-safety': {
+      good: '· 시작 전 준비운동을 한다.　· 몸에 이상을 느끼면 즉시 멈춘다.',
+      weak: '· 조심한다.',
+      why: '무엇을 착용하고 어떻게 행동할지가 구체적이어야 합니다.'
+    }
+  };
+
+  function buildExamples() {
+    Object.keys(EXAMPLES).forEach(function (id) {
+      var card = document.getElementById(id);
+      var head = card.querySelector('.card-head');
+      var ex = EXAMPLES[id];
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ex-toggle';
+      btn.textContent = '예시 보기';
+      btn.setAttribute('aria-expanded', 'false');
+      head.appendChild(btn);
+
+      var box = document.createElement('div');
+      box.className = 'ex';
+      box.hidden = true;
+      box.innerHTML =
+        '<p class="ex-row good"><span class="ex-tag">이렇게</span>' + ex.good + '</p>' +
+        '<p class="ex-row weak"><span class="ex-tag">아쉬워요</span>' + ex.weak + '</p>' +
+        '<p class="ex-why">' + ex.why + '</p>';
+      card.querySelector('.card-body').insertBefore(box, card.querySelector('.card-body').firstChild);
+
+      btn.addEventListener('click', function () {
+        box.hidden = !box.hidden;
+        btn.textContent = box.hidden ? '예시 보기' : '예시 닫기';
+        btn.setAttribute('aria-expanded', box.hidden ? 'false' : 'true');
+      });
+    });
+  }
+
+  /* ---------- 주제 아이디어 ---------- */
+  // 첫 화면에서 아무것도 못 쓰고 멈추는 학생이 가장 많습니다.
+  // 그대로 베끼라는 게 아니라, 바꿔 볼 거리를 주기 위한 것입니다.
+
+  var TOPIC_IDEAS = [
+    ['물리', ['경사가 급할수록 공이 더 멀리 굴러갈까?', '고무줄을 많이 당길수록 더 멀리 날아갈까?']],
+    ['화학', ['물의 온도가 높을수록 소금이 빨리 녹을까?', '식초의 양이 많을수록 달걀 껍데기가 빨리 녹을까?']],
+    ['생물', ['빛의 색깔에 따라 식물이 자라는 정도가 달라질까?', '물을 주는 양에 따라 콩나물의 길이가 달라질까?']],
+    ['지구과학', ['모래가 굵을수록 물이 빨리 빠질까?', '기울기가 클수록 흙이 더 많이 깎일까?']],
+    ['생활', ['운동 시간이 길수록 체지방량이 더 줄어들까?', '수면 시간에 따라 집중력 점수가 달라질까?']]
+  ];
+
+  function buildIdeas() {
+    var box = document.getElementById('ideas');
+    TOPIC_IDEAS.forEach(function (g) {
+      var wrap = document.createElement('div');
+      wrap.className = 'pick-group';
+      var lab = document.createElement('span');
+      lab.className = 'pick-label';
+      lab.textContent = g[0];
+      wrap.appendChild(lab);
+
+      g[1].forEach(function (text) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'pick';
+        b.textContent = text;
+        b.addEventListener('click', function () {
+          el.topic.value = text;
+          render();
+          el.topic.focus();
+        });
+        wrap.appendChild(b);
+      });
+      box.appendChild(wrap);
+    });
+  }
+
+  /* ---------- 실험 한눈에 보기 ---------- */
+  // 변인이 채워지는 대로 실험의 뼈대가 조립되어 보입니다.
+
+  function renderSummary() {
+    var box = document.getElementById('summary');
+    var iv = val('iv'), dv = val('dv'), cv = splitList(val('cv'));
+
+    if (!iv && !dv) { box.hidden = true; return; }
+    box.hidden = false;
+    box.innerHTML =
+      '<div class="sm-row"><span class="sm-tag change">바꾼다</span><b>' +
+        (iv ? esc(iv) : '<i>아직</i>') + '</b></div>' +
+      '<div class="sm-arrow" aria-hidden="true">↓</div>' +
+      '<div class="sm-row"><span class="sm-tag result">잰다</span><b>' +
+        (dv ? esc(dv) : '<i>아직</i>') + '</b></div>' +
+      (cv.length
+        ? '<div class="sm-row fixed"><span class="sm-tag fix">고정</span><span>' +
+          cv.map(esc).join(' · ') + '</span></div>'
+        : '');
+  }
+
   /* ---------- 단계 진행 ---------- */
 
   var STEPS = [
@@ -1727,6 +1941,8 @@
   });
 
   buildPicks();
+  buildIdeas();
+  buildExamples();
   buildRail();
   load();
   goto(0);
