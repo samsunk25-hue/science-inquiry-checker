@@ -1,8 +1,8 @@
-// 비커 친구 SVG 구조 검사 — node _check-svg.js
+﻿// 삼각플라스크 친구 SVG 구조 검사 — node _check-svg.js
 const fs = require('fs');
 const html = fs.readFileSync(__dirname + '/index.html', 'utf8');
 
-const m = html.match(/<svg class="beaker"[\s\S]*?<\/svg>/);
+const m = html.match(/<svg class="flask"[\s\S]*?<\/svg>/);
 if (!m) { console.log('SVG를 찾지 못했습니다.'); process.exit(1); }
 const svg = m[0];
 
@@ -33,7 +33,7 @@ console.log('clipPath 연결 :', clipOk ? '정상' : '끊김');
 
 // CSS에 네 가지 상태가 모두 정의되어 있는지
 ['st-todo', 'st-ask', 'st-bad', 'st-ok'].forEach(function (s) {
-  const n = (html.match(new RegExp('\\.beaker\\.' + s, 'g')) || []).length;
+  const n = (html.match(new RegExp('\\.flask\\.' + s, 'g')) || []).length;
   console.log('상태 ' + s.padEnd(8) + ':', n ? n + '개 규칙' : '정의 없음');
 });
 

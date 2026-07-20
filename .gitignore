@@ -2,6 +2,9 @@
 App_Development_Specification.pdf
 Science_Mentor_App_PRD.md
 
+# 검사 스크립트가 만드는 미리보기
+_og-preview.svg
+
 # 편집기 · OS
 .vscode/
 .idea/
