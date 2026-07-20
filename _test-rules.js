@@ -185,5 +185,42 @@ console.log('\n[ 올바른 문장 — 건드리면 안 되는 것 ]');
   line(!c, '정상', t, c ? '← 잘못 잡음' : '');
 });
 
+// ── 크다·많다 / 작다·적다 구분 ──────────────────────────
+// 콜백 안에서 eval하면 변수가 그 스코프에 갇히므로, 한 문자열로 모아 최상위에서 실행합니다.
+eval(['BIG', 'SMALL', 'MANY', 'FEW']
+  .map(v => grab(new RegExp('var ' + v + ' +=.*?;'), v))
+  .join('\n'));
+eval(grab(/var ADJ_RULES = \[[\s\S]*?\n  \}\);/, 'ADJ_RULES'));
+eval(grab(/function adjectiveIssue\([\s\S]*?\n  \}/, 'adjectiveIssue'));
+
+console.log('\n[ 크다·많다를 바로잡아야 하는 것 ]');
+[
+  ['물의 양이 크다', '많다'],
+  ['씨앗의 개수가 작다', '많다'],
+  ['화분의 크기가 많다', '크다'],
+  ['물의 온도가 크다', '높다'],
+  ['줄기의 길이가 많다', '길다'],
+  ['소금의 양이 클수록', '많다']
+].forEach(([t, want]) => {
+  const a = adjectiveIssue(t);
+  const ok = a && a.ok.indexOf(want) !== -1;
+  line(ok, '교정', t, ok ? `→ ${a.ok}` : '← 못 잡음');
+});
+
+console.log('\n[ 올바른 표현 — 건드리면 안 되는 것 ]');
+[
+  '물의 양이 많다',
+  '화분의 크기가 크다',
+  '물의 온도가 높다',
+  '줄기의 길이가 길다',
+  '모양이 크다',              // '모양'의 양을 잡으면 안 됨
+  '태양이 크다',              // '태양'의 양
+  '물을 적게 준다',           // 부사로 쓰인 적게는 정상
+  '씨앗을 많이 심는다'
+].forEach(t => {
+  const a = adjectiveIssue(t);
+  line(!a, '정상', t, a ? `← ${a.n} 규칙에 잘못 걸림` : '');
+});
+
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
 process.exit(fail === 0 ? 0 : 1);

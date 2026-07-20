@@ -1356,6 +1356,43 @@
     return r;
   });
 
+  // ── 크다·많다 / 작다·적다 구분 ───────────────────────────
+  //   세는 것(양·개수)   → 많다 · 적다
+  //   재는 것(크기·부피) → 크다 · 작다
+  //   높낮이(온도·농도)  → 높다 · 낮다
+  //   길이(길이·거리)    → 길다 · 짧다
+  //
+  // 서술어 자리에 쓰인 경우만 잡습니다. '물을 적게 준다'처럼 부사로
+  // 쓰인 것은 올바른 표현이므로 건드리지 않습니다.
+  var BIG   = '크다|큽니다|클수록|커진|커집|커져';
+  var SMALL = '작다|작습니다|작을수록|작아진|작아집|작아져';
+  var MANY  = '많다|많습니다|많을수록|많아진|많아집|많아져';
+  var FEW   = '적다|적습니다|적을수록|적어진|적어집|적어져';
+
+  var ADJ_RULES = [
+    { n: '양|량|개수|갯수|횟수|번수', wrong: BIG + '|' + SMALL,
+      ok: '많다 · 적다', why: '세는 것' },
+    { n: '크기|부피|면적|넓이|굵기|두께', wrong: MANY + '|' + FEW,
+      ok: '크다 · 작다', why: '재는 것' },
+    { n: '온도|농도|습도|압력|밀도', wrong: BIG + '|' + SMALL + '|' + MANY + '|' + FEW,
+      ok: '높다 · 낮다', why: '높낮이로 나타내는 것' },
+    { n: '길이|거리|폭', wrong: BIG + '|' + SMALL + '|' + MANY + '|' + FEW,
+      ok: '길다 · 짧다', why: '길이로 나타내는 것' }
+  ].map(function (r) {
+    // 앞에 '의'나 공백이 와야 합니다. '모양이 크다'의 '양'을 잡지 않기 위해서입니다.
+    r.re = new RegExp('(?:^|[\\s의(])(' + r.n + ')[이가]\\s*(?:더\\s*)?(' + r.wrong + ')');
+    return r;
+  });
+
+  function adjectiveIssue(text) {
+    if (!text) return null;
+    for (var i = 0; i < ADJ_RULES.length; i++) {
+      var m = text.match(ADJ_RULES[i].re);
+      if (m) return { n: m[1], bad: m[2], ok: ADJ_RULES[i].ok, why: ADJ_RULES[i].why };
+    }
+    return null;
+  }
+
   function collocationIssue(text) {
     if (!text) return null;
     for (var i = 0; i < COLLOCATION.length; i++) {
@@ -1398,6 +1435,11 @@
           add('ask', '“' + c.n + '를 <b>' + c.bad + '</b> 한다”보다 “' + c.n +
                      '를 <b>' + c.ok.split(' · ')[0] + '</b>”가 자연스럽습니다. ' +
                      c.n + '에는 <b>' + c.ok + '</b>를 씁니다.', f);
+
+        var a = adjectiveIssue(v);
+        if (a)
+          add('ask', '“' + a.n + '이(가) <b>' + a.bad + '</b>”는 어색합니다. ' +
+                     a.n + '은 ' + a.why + '이므로 <b>' + a.ok + '</b>를 씁니다.', f);
       });
     }
 
