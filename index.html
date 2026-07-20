@@ -593,10 +593,75 @@
 
   .meter-top {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    align-items: center;
     gap: 10px;
     margin-bottom: 10px;
+  }
+  .meter-top h2 { margin-right: auto; }
+
+  /* ---------- 비커 친구 ----------
+     계획서 상태를 표정으로 알려 줍니다. 색 점만으로는 잘 안 보이는
+     '지금 내 계획이 어떤 상태인가'를 한눈에 전하려는 것입니다. */
+
+  .beaker { width: 40px; height: 48px; flex-shrink: 0; overflow: visible; }
+  .beaker .glass {
+    fill: none;
+    stroke: var(--ink-faint);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .beaker .liquid { fill: var(--line-strong); transition: fill .3s ease, y .5s ease; }
+  .beaker .bub { fill: var(--surface); opacity: 0; }
+  .beaker .face > * { display: none; }
+  .beaker .face circle { fill: var(--ink); }
+  .beaker .face path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.9;
+    stroke-linecap: round;
+  }
+  .beaker .m-oh { fill: var(--ink); stroke: none; }
+
+  /* 아직 안 쓴 상태 — 눈 감고 기다립니다 */
+  .beaker.st-todo .eyes-shut,
+  .beaker.st-todo .m-flat { display: block; }
+
+  /* 확인할 것이 있는 상태 */
+  .beaker.st-ask .eyes-open,
+  .beaker.st-ask .m-wave { display: block; }
+  .beaker.st-ask .liquid { fill: var(--warn); }
+
+  /* 위험 요소가 있는 상태 */
+  .beaker.st-bad .eyes-wide,
+  .beaker.st-bad .m-oh { display: block; }
+  .beaker.st-bad .liquid { fill: var(--danger); }
+  .beaker.st-bad { animation: shake .5s ease; }
+
+  /* 모두 통과 */
+  .beaker.st-ok .eyes-open,
+  .beaker.st-ok .m-smile { display: block; }
+  .beaker.st-ok .liquid { fill: var(--ok); }
+  .beaker.st-ok .bub { animation: rise 2.6s ease-in infinite; }
+  .beaker.st-ok .b2 { animation-delay: .8s; }
+  .beaker.st-ok .b3 { animation-delay: 1.6s; }
+  .beaker.st-ok { animation: hop .45s ease; }
+
+  @keyframes rise {
+    0%   { opacity: 0; transform: translateY(0); }
+    25%  { opacity: .75; }
+    100% { opacity: 0; transform: translateY(-13px); }
+  }
+  @keyframes hop {
+    0%, 100% { transform: translateY(0); }
+    35%      { transform: translateY(-5px); }
+    65%      { transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-2.5px); }
+    50%      { transform: translateX(2.5px); }
+    80%      { transform: translateX(-1.5px); }
   }
   .meter-top h2 { font-size: 15px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
   .meter-count {
@@ -907,6 +972,27 @@
         <div class="summary" id="summary" hidden></div>
         <div class="meter">
           <div class="meter-top">
+            <svg class="beaker" id="beaker" viewBox="0 0 48 58" aria-hidden="true">
+              <path class="glass" d="M16 4h16M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4"/>
+              <clipPath id="jar">
+                <path d="M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4z"/>
+              </clipPath>
+              <g clip-path="url(#jar)">
+                <rect class="liquid" x="6" y="34" width="36" height="24"/>
+                <circle class="bub b1" cx="17" cy="48" r="1.7"/>
+                <circle class="bub b2" cx="24" cy="50" r="1.2"/>
+                <circle class="bub b3" cx="31" cy="47" r="1.5"/>
+              </g>
+              <g class="face">
+                <g class="eyes-open"><circle cx="19.5" cy="41" r="1.7"/><circle cx="28.5" cy="41" r="1.7"/></g>
+                <g class="eyes-shut"><path d="M17.8 41h3.4M26.8 41h3.4"/></g>
+                <g class="eyes-wide"><circle cx="19.5" cy="41" r="2.5"/><circle cx="28.5" cy="41" r="2.5"/></g>
+                <path class="m-smile" d="M21 45.6q3 2.8 6 0"/>
+                <path class="m-flat"  d="M21.4 46.4h5.2"/>
+                <path class="m-wave"  d="M20.8 46.4q1.3-1.4 2.6 0t2.6 0"/>
+                <path class="m-oh"    d="M24 44.8a1.9 2.3 0 1 0 .1 0"/>
+              </g>
+            </svg>
             <h2>점검 결과</h2>
             <span class="meter-count" id="meterCount">0 / 0</span>
           </div>
@@ -1419,6 +1505,16 @@
     });
     syncPicks();
     renderSummary();
+
+    // 비커 친구의 표정 — 지금 계획서 상태를 얼굴로 알려 줍니다.
+    var mood = counts.danger ? 'st-bad'
+             : (counts.ok === 0 && counts.ask === 0) ? 'st-todo'
+             : counts.ask ? 'st-ask' : 'st-ok';
+    var jar = document.getElementById('beaker');
+    if (jar.dataset.mood !== mood) {
+      jar.dataset.mood = mood;
+      jar.setAttribute('class', 'beaker ' + mood);   // 상태가 바뀔 때만 애니메이션이 다시 돕니다
+    }
 
     // safety banner
     var banner = document.getElementById('safetyBanner');
