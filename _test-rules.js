@@ -14,7 +14,7 @@ function grab(re, name) {
 eval(grab(/var DIM = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'DIM'));
 eval(grab(/var VAGUE = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'VAGUE'));
 eval(grab(/var NOTVAR = \/.*?\/;/, 'NOTVAR'));
-eval(grab(/var UNIT = \/.*?\/;/, 'UNIT'));
+eval(grab(/var UNIT = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'UNIT'));
 
 let fail = 0;
 const line = (ok, label, text, note) => {
@@ -229,6 +229,67 @@ console.log('\n[ 올바른 표현 — 건드리면 안 되는 것 ]');
 ].forEach(t => {
   const a = adjectiveIssue(t);
   line(!a, '정상', t, a ? `← ${a.n} 규칙에 잘못 걸림` : '');
+});
+
+// ── 측정 방법 · 단위 인정 범위 ──────────────────────────
+eval(grab(/var SELF_UNIT = \/.*?\/;/, 'SELF_UNIT'));
+eval(grab(/var TOOL = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'TOOL'));
+
+console.log('\n[ 종속 변인 — 단위를 더 요구하면 안 되는 것 ]');
+['시험 점수', '정답 개수', '발아율', '만족도 순위', '정답률']
+  .forEach(t => {
+    const ok = UNIT.test(t) || SELF_UNIT.test(t);
+    line(ok, '인정', t, ok ? '' : '← 단위를 또 요구함');
+  });
+
+console.log('\n[ 측정 방법 — 도구로 인정해야 하는 것 ]');
+[
+  '시험을 쳐서 점수를 확인한다',
+  '설문지로 답을 받는다',
+  '문항 20개로 검사한다',
+  '싹이 난 개수를 센다',
+  '용수철저울로 힘을 잰다',
+  '전류계로 전류를 측정한다',
+  '리트머스 종이로 확인한다',
+  '초시계로 시간을 잰다'
+].forEach(t => line(TOOL.test(t), '도구', t.slice(0, 24), TOOL.test(t) ? '' : '← 못 알아봄'));
+
+console.log('\n[ 중학교 과학 용어 — 변인으로 인정해야 하는 것 ]');
+[
+  '용수철이 늘어난 길이(cm)', '물체의 속력(m/s)', '전구의 밝기', '소리의 세기(dB)',
+  '용액의 끓는점(℃)', '기체의 발생량(mL)', '광합성량', '증산량',
+  '강수량(mm)', '풍속(m/s)', '반응 시간(초)', '집중 시간(분)'
+].forEach(t => line(isValidVar(t), '인정', t, isValidVar(t) ? '' : '← 잘못 지적함'));
+
+// ── 다른 칸에 쓴 내용 안내 ─────────────────────────────
+eval(grab(/var MOVE_RULES = \[[\s\S]*?\n    \];/, 'MOVE_RULES'));
+
+const movedTo = (text, field) => {
+  for (const r of MOVE_RULES)
+    if (r.from.indexOf(field) !== -1 && r.re.test(text)) return r.to;
+  return null;
+};
+
+console.log('\n[ 다른 칸으로 옮기라고 알려야 하는 것 ]');
+[
+  ['주의사항. 운동은 과격하게 하지 않는다.', 'procedure', '안전 계획'],
+  ['1. 물을 붓는다.\n2. 조심한다.', 'procedure', '안전 계획'],
+  ['보안경을 착용하고 실험한다', 'materials', '안전 계획'],
+  ['물을 많이 주면 키가 커질 것이다', 'topic', '가설'],
+  ['준비물: 비커 3개, 물 500mL', 'procedure', '준비물']
+].forEach(([t, f, want]) => {
+  const got = movedTo(t, f);
+  line(got === want, '이동', t.split('\n')[0].slice(0, 24), got ? `→ ${got} 칸` : '← 못 잡음');
+});
+
+console.log('\n[ 제자리에 쓴 내용 — 건드리면 안 되는 것 ]');
+[
+  ['1. 물을 100mL 붓는다.\n2. 3분간 젓는다.', 'procedure'],
+  ['물의 양에 따라 콩나물 길이가 달라질까?', 'topic'],
+  ['비커 3개, 물 500mL, 소금 20g', 'materials']
+].forEach(([t, f]) => {
+  const got = movedTo(t, f);
+  line(!got, '정상', t.split('\n')[0].slice(0, 24), got ? `← ${got} 칸으로 잘못 안내` : '');
 });
 
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
