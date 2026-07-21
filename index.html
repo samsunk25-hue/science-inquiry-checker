@@ -1016,10 +1016,10 @@
     <main>
       <div class="intake">
         <label for="upload" class="intake-btn">계획서 파일 불러오기</label>
-        <input type="file" id="upload" accept=".txt,.md,.html,.htm" hidden>
+        <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
         <span class="intake-note">
           이미 써 둔 계획서가 있다면 불러와서 각 칸에 나눠 넣습니다.
-          <b>txt · md · html</b> 파일을 읽습니다.
+          <b>docx · txt · md · html</b> 파일을 읽습니다. 파일은 이 기기 안에서만 열립니다.
         </span>
       </div>
 
@@ -2477,7 +2477,8 @@
     lines.forEach(function (raw) {
       // 앞머리 장식(#, ■, ·, -, 1., [ )을 걷어 내고 소제목인지 봅니다.
       var line = raw.replace(/^[\s#■◆●○·•\-*>|]+/, '').replace(/^\[|\]$/g, '');
-      var head = line.match(/^([^:：]{1,20})\s*[:：]\s*(.*)$/);
+      // 콜론 형식(가설: ...)과 표 형식(가설〈탭〉...)을 모두 받습니다.
+      var head = line.match(/^([^:：\t]{1,20})\s*[:：\t]+\s*(.*)$/);
       var label = head ? head[1] : line.trim();
       var rest = head ? head[2] : '';
 
@@ -2507,39 +2508,135 @@
     return result;
   }
 
+  // ── 워드 파일(.docx) 풀기 ────────────────────────────────
+  // docx는 ZIP으로 묶인 XML 꾸러미입니다. 그 안의 word/document.xml만
+  // 꺼내 읽으면 됩니다. 브라우저에 들어 있는 DecompressionStream을 써서
+  // 외부 라이브러리 없이 처리합니다.
+
+  function zipFind(buf, want) {
+    var dv = new DataView(buf), u8 = new Uint8Array(buf);
+
+    // 끝에서부터 중앙 디렉터리 끝 표지(PK\x05\x06)를 찾습니다.
+    var eocd = -1, min = Math.max(0, u8.length - 65558);
+    for (var i = u8.length - 22; i >= min; i--) {
+      if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    }
+    if (eocd < 0) return null;
+
+    var count = dv.getUint16(eocd + 10, true);
+    var p = dv.getUint32(eocd + 16, true);
+    var dec = new TextDecoder('utf-8');
+
+    for (var n = 0; n < count; n++) {
+      if (dv.getUint32(p, true) !== 0x02014b50) return null;
+      var method = dv.getUint16(p + 10, true);
+      var compSize = dv.getUint32(p + 20, true);
+      var nameLen = dv.getUint16(p + 28, true);
+      var extraLen = dv.getUint16(p + 30, true);
+      var cmtLen = dv.getUint16(p + 32, true);
+      var localAt = dv.getUint32(p + 42, true);
+      var name = dec.decode(u8.subarray(p + 46, p + 46 + nameLen));
+
+      if (name === want) {
+        // 지역 헤더의 이름·여분 길이는 중앙 디렉터리와 다를 수 있어 다시 읽습니다.
+        var nl = dv.getUint16(localAt + 26, true);
+        var xl = dv.getUint16(localAt + 28, true);
+        var from = localAt + 30 + nl + xl;
+        return { method: method, data: u8.slice(from, from + compSize) };
+      }
+      p += 46 + nameLen + extraLen + cmtLen;
+    }
+    return null;
+  }
+
+  function inflateRaw(u8) {
+    if (typeof DecompressionStream === 'undefined') return Promise.reject(new Error('nostream'));
+    var s = new Blob([u8]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return new Response(s).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+  }
+
+  function docxToText(xml) {
+    return xml
+      .replace(/<w:tab[^>]*\/?>/g, '\t')
+      .replace(/<w:br[^>]*\/?>/g, '\n')
+      .replace(/<\/w:p>/g, '\n')
+      .replace(/<\/w:tc>/g, '\t')      // 표의 칸 구분
+      .replace(/<\/w:tr>/g, '\n')      // 표의 줄 구분
+      .replace(/<[^>]+>/g, '')
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+      .replace(/&amp;/g, '&')
+      .replace(/\t+\n/g, '\n');
+  }
+
+  function htmlToText(t) {
+    return t
+      .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
+      .replace(/<\/(p|div|h[1-6]|li|tr|section)>/gi, '\n')
+      .replace(/<\/t[dh]>/gi, '\t')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ');
+  }
+
+  function applyPlan(text) {
+    var got = parsePlan(text);
+    var keys = Object.keys(got);
+
+    if (!keys.length) {
+      toast('내용을 찾지 못했습니다. 소제목(가설, 준비물 등)이 있는 파일인지 확인해 주세요.');
+      return;
+    }
+
+    var clash = FIELDS.filter(function (f) {
+      return el[f].value.trim() && keys.indexOf(f) !== -1;
+    });
+    if (clash.length &&
+        !confirm('이미 쓴 내용 ' + clash.length + '곳이 불러온 내용으로 바뀝니다. 계속할까요?')) return;
+
+    keys.forEach(function (k) { el[k].value = got[k]; });
+    render();
+    goto(0);
+    toast(keys.length + '개 항목을 채웠습니다. 각 칸이 맞게 들어갔는지 확인하세요.');
+  }
+
   function readPlanFile(file) {
+    var name = file.name.toLowerCase();
+
+    if (/\.docx$/.test(name)) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        var entry;
+        try { entry = zipFind(fr.result, 'word/document.xml'); }
+        catch (e) { entry = null; }
+
+        if (!entry) {
+          toast('워드 파일을 열지 못했습니다. .doc(옛 형식)이라면 워드에서 .docx로 저장한 뒤 다시 시도하세요.');
+          return;
+        }
+
+        var done = function (bytes) {
+          applyPlan(docxToText(new TextDecoder('utf-8').decode(bytes)));
+        };
+
+        if (entry.method === 0) { done(entry.data); return; }   // 압축하지 않은 경우
+        inflateRaw(entry.data).then(done, function (err) {
+          toast(err && err.message === 'nostream'
+            ? '이 브라우저는 워드 파일을 열 수 없습니다. 크롬이나 엣지에서 열거나, 텍스트로 저장해 주세요.'
+            : '워드 파일의 압축을 푸는 데 실패했습니다.');
+        });
+      };
+      fr.onerror = function () { toast('파일을 읽지 못했습니다.'); };
+      fr.readAsArrayBuffer(file);
+      return;
+    }
+
     var reader = new FileReader();
     reader.onload = function () {
       var text = String(reader.result);
-
-      // html이면 태그를 걷어 내고 줄바꿈을 살립니다.
-      if (/\.html?$/i.test(file.name) || /^\s*<!DOCTYPE|<html/i.test(text)) {
-        text = text
-          .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
-          .replace(/<\/(p|div|h[1-6]|li|tr|section)>/gi, '\n')
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(/<[^>]+>/g, '')
-          .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-          .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ');
-      }
-
-      var got = parsePlan(text);
-      var keys = Object.keys(got);
-
-      if (!keys.length) {
-        toast('내용을 찾지 못했습니다. 소제목(가설, 준비물 등)이 있는 파일인지 확인해 주세요.');
-        return;
-      }
-
-      var filled = FIELDS.filter(function (f) { return el[f].value.trim(); });
-      var clash = filled.filter(function (f) { return keys.indexOf(f) !== -1; });
-      if (clash.length &&
-          !confirm('이미 쓴 내용 ' + clash.length + '곳이 불러온 내용으로 바뀝니다. 계속할까요?')) return;
-
-      keys.forEach(function (k) { el[k].value = got[k]; });
-      render();
-      goto(0);
-      toast(keys.length + '개 항목을 채웠습니다. 각 칸이 맞게 들어갔는지 확인하세요.');
+      if (/\.html?$/.test(name) || /^\s*<!DOCTYPE|<html/i.test(text)) text = htmlToText(text);
+      applyPlan(text);
     };
     reader.onerror = function () { toast('파일을 읽지 못했습니다.'); };
     reader.readAsText(file, 'utf-8');
