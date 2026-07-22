@@ -2634,10 +2634,14 @@
     hideCaution();
   });
 
+  // 동작 줄이기 설정을 존중하되, 축하는 보여 줍니다(개수·속도를 낮춘 부드러운 모드).
+  function gentleMotion() {
+    return matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   // 단계를 마칠 때마다 짧게 뿌리는 색종이 꽃가루. (전체 완성 하트와는 별개)
   function stepConfetti() {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+    var gentle = gentleMotion();
     var cv = document.getElementById('confetti');
     var ctx = cv.getContext('2d');
     var w = innerWidth, h = innerHeight;
@@ -2656,21 +2660,22 @@
 
     // 화면 위쪽에서 색종이가 쏟아져 내려옵니다.
     var bits = [];
-    for (var i = 0; i < 70; i++) {
+    var n = gentle ? 34 : 70;
+    for (var i = 0; i < n; i++) {
       bits.push({
         x: Math.random() * w,
         y: -20 - Math.random() * h * 0.3,
         w: 6 + Math.random() * 6,
         h: 8 + Math.random() * 8,
-        vy: 2.5 + Math.random() * 3,
-        vx: (Math.random() - 0.5) * 1.6,
+        vy: (gentle ? 1.4 : 2.5) + Math.random() * (gentle ? 1.4 : 3),
+        vx: (Math.random() - 0.5) * (gentle ? 0.8 : 1.6),
         rot: Math.random() * Math.PI,
-        vr: (Math.random() - 0.5) * 0.3,
+        vr: (Math.random() - 0.5) * (gentle ? 0.15 : 0.3),
         color: palette[i % palette.length]
       });
     }
 
-    var start = performance.now(), DUR = 1800;
+    var start = performance.now(), DUR = gentle ? 1400 : 1800;
     (function frame(now) {
       var t = now - start;
       ctx.clearRect(0, 0, w, h);
@@ -2700,11 +2705,7 @@
     cheer.hidden = false;
     setTimeout(function () { cheer.hidden = true; }, 3400);
 
-    // 움직임을 줄이도록 설정한 기기에서는 글자만 보여 주고 안내로 넘어갑니다.
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTimeout(showCaution, 1200);
-      return;
-    }
+    var gentle = gentleMotion();
 
     var cv = document.getElementById('confetti');
     var ctx = cv.getContext('2d');
@@ -2723,7 +2724,8 @@
     ];
 
     var hearts = [], bits = [], confs = [], popped = false;
-    for (var i = 0; i < 90; i++) {
+    var heartN = gentle ? 40 : 90;
+    for (var i = 0; i < heartN; i++) {
       hearts.push({
         x: Math.random() * w,
         y: h + Math.random() * h * 0.9,
@@ -2738,16 +2740,17 @@
       });
     }
     // 하트와 함께 위에서 쏟아지는 색종이 꽃가루.
-    for (var c = 0; c < 80; c++) {
+    var confN = gentle ? 34 : 80;
+    for (var c = 0; c < confN; c++) {
       confs.push({
         x: Math.random() * w,
         y: -20 - Math.random() * h * 0.5,
         w: 6 + Math.random() * 6,
         hgt: 8 + Math.random() * 8,
-        vy: 2.4 + Math.random() * 3.2,
-        vx: (Math.random() - 0.5) * 1.6,
+        vy: (gentle ? 1.4 : 2.4) + Math.random() * (gentle ? 1.6 : 3.2),
+        vx: (Math.random() - 0.5) * (gentle ? 0.8 : 1.6),
         rot: Math.random() * Math.PI,
-        vr: (Math.random() - 0.5) * 0.3,
+        vr: (Math.random() - 0.5) * (gentle ? 0.15 : 0.3),
         color: palette[c % palette.length]
       });
     }
