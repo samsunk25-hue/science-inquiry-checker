@@ -39,8 +39,10 @@
     --ok-soft:     #E2F2E9;
     --shadow:      0 1px 2px rgba(60,20,40,.06), 0 8px 24px -12px rgba(60,20,40,.2);
 
-    --sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
-            system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    /* 저작권 걱정이 없는 시스템 폰트만 씁니다. 둥근 느낌의 고딕을 앞에 둡니다. */
+    --sans: 'Apple SD Gothic Neo', 'Pretendard Variable', Pretendard,
+            -apple-system, BlinkMacSystemFont, system-ui,
+            'Malgun Gothic', '맑은 고딕', 'Noto Sans KR', sans-serif;
     --mono: ui-monospace, SFMono-Regular, 'Cascadia Mono', Consolas,
             'D2Coding', 'Malgun Gothic', monospace;
 
@@ -274,6 +276,82 @@
     overflow: hidden;
   }
 
+  /* ---------- 완성도 · 레벨 ---------- */
+  .level {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(120deg, var(--accent-soft), var(--accent2-soft));
+    box-shadow: var(--shadow);
+  }
+  .level-badge {
+    position: relative;
+    flex-shrink: 0;
+    width: 54px;
+    text-align: center;
+    color: var(--accent);
+  }
+  .mini-flask { width: 40px; height: 48px; display: block; margin: 0 auto; }
+  .mini-flask .mf-liquid { fill: var(--accent); transition: y .5s ease, height .5s ease; }
+  .level-num {
+    display: block;
+    margin-top: 1px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-ink);
+    letter-spacing: .02em;
+  }
+  .level-body { flex: 1 1 auto; min-width: 0; }
+  .level-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .level-name { font-size: 14.5px; font-weight: 800; color: var(--ink); letter-spacing: -.01em; }
+  .level-pct {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .level-bar {
+    height: 9px;
+    border-radius: 999px;
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .level-bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width .5s cubic-bezier(.22,1,.36,1);
+  }
+  .level-msg { margin: 6px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+
+  /* 레벨이 오른 순간 잠깐 통통 튑니다. */
+  @keyframes levelPop {
+    0%, 100% { transform: scale(1); }
+    30% { transform: scale(1.22) rotate(-6deg); }
+    60% { transform: scale(1.05); }
+  }
+  .level.levelup .level-badge { animation: levelPop .6s ease; }
+  .level.levelup { animation: levelGlow 1s ease; }
+  @keyframes levelGlow {
+    0%, 100% { box-shadow: var(--shadow); }
+    40% { box-shadow: 0 0 0 3px var(--accent2), var(--shadow); }
+  }
+
   /* ---------- 파일 불러오기 ---------- */
 
   .intake {
@@ -303,28 +381,28 @@
     flex-shrink: 0;
     margin-left: auto;         /* 오른쪽 끝으로 */
     font-size: 12.5px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    background: var(--surface);
-    border: 1px solid var(--line-strong);
+    font-weight: 700;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
     border-radius: 6px;
     padding: 7px 12px;
     cursor: pointer;
   }
-  .intake-clear:hover { border-color: var(--danger); color: var(--danger); }
+  .intake-clear:hover { filter: brightness(.97); }
 
   .clear-one {
     flex-shrink: 0;
     font-size: 11.5px;
-    font-weight: 600;
-    color: var(--ink-faint);
-    background: none;
-    border: 1px solid var(--line);
+    font-weight: 700;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
     border-radius: 5px;
-    padding: 3px 9px;
+    padding: 3px 10px;
     cursor: pointer;
   }
-  .clear-one:hover { border-color: var(--danger); color: var(--danger); background: var(--surface); }
+  .clear-one:hover { filter: brightness(.97); }
   .intake-note b { color: var(--ink-soft); font-family: var(--mono); font-size: 11.5px; }
 
   /* ---------- 단계 진행 ---------- */
@@ -594,14 +672,14 @@
   .ex-toggle {
     flex-shrink: 0;
     font-size: 12px;
-    font-weight: 600;
-    padding: 4px 10px;
+    font-weight: 700;
+    padding: 4px 11px;
     border-radius: 999px;
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink-soft);
+    border: 1px solid var(--accent2);
+    background: var(--accent2-soft);
+    color: var(--warn);
   }
-  .ex-toggle:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .ex-toggle:hover { filter: brightness(.97); }
 
   .ex {
     background: var(--surface-2);
@@ -1137,6 +1215,29 @@
         <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
 
+      <!-- 완성도 · 레벨 -->
+      <div class="level" id="level" aria-live="polite">
+        <div class="level-badge" id="levelBadge">
+          <svg class="mini-flask" viewBox="0 0 48 58" aria-hidden="true">
+            <clipPath id="jar2"><path d="M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4z"/></clipPath>
+            <g clip-path="url(#jar2)"><rect class="mf-liquid" x="6" y="30" width="36" height="28"/></g>
+            <path d="M16 4h16M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4"
+                  fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="41" r="1.7" fill="#241920"/><circle cx="28" cy="41" r="1.7" fill="#241920"/>
+            <path d="M21 45.4q3 2.6 6 0" fill="none" stroke="#241920" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="level-num" id="levelNum">Lv.1</span>
+        </div>
+        <div class="level-body">
+          <div class="level-top">
+            <span class="level-name" id="levelName">새싹 연구원</span>
+            <span class="level-pct" id="levelPct">0%</span>
+          </div>
+          <div class="level-bar"><span id="levelFill"></span></div>
+          <p class="level-msg" id="levelMsg">계획서를 채워 나가면 연구원 등급이 올라갑니다.</p>
+        </div>
+      </div>
+
       <ol class="rail" id="rail"></ol>
 
       <!-- 1. 주제 -->
@@ -1313,19 +1414,18 @@
         <div id="report"></div>
 
         <div class="panel-actions">
-          <div class="save-row">
-            <label class="sr-only" for="fmt">저장할 파일 형식</label>
-            <select id="fmt">
-              <option value="html">웹 문서 (.html)</option>
-              <option value="doc">한글·워드에서 열기 (.doc)</option>
-              <option value="txt">텍스트 (.txt)</option>
-            </select>
-            <button class="primary" type="button" id="btnExport">저장</button>
-          </div>
+          <label class="sr-only" for="fmt">저장할 파일 형식</label>
+          <select id="fmt">
+            <option value="html">웹 문서 (.html)</option>
+            <option value="doc">한글·워드에서 열기 (.doc)</option>
+            <option value="txt">텍스트 (.txt)</option>
+          </select>
+          <button class="primary" type="button" id="btnExportFull">계획서 + 점검 결과 저장</button>
+          <button type="button" id="btnExportPlan">계획서만 저장</button>
           <button type="button" id="btnPrint2">인쇄 / PDF로 저장</button>
           <p class="panel-note">
-            작성 내용은 <b>이 기기에 자동 저장</b>됩니다. 선생님께 제출할 때만
-            계획서 전문과 점검 결과를 <b>하나의 파일</b>로 내려받으세요.
+            작성 내용은 <b>이 기기에 자동 저장</b>됩니다. 제출할 때 파일로 내려받으세요.
+            <b>계획서만</b>은 학생이 쓴 내용만, <b>+ 점검 결과</b>는 점검표까지 함께 담습니다.
           </p>
         </div>
       </div>
@@ -2076,6 +2176,7 @@
       el[f].classList.toggle('needs-fix', !!needFix[f] && el[f].value.trim() !== '');
     });
     renderProcOverlay();
+    renderLevel(counts);
     syncPicks();
     filterPicks();
     renderSummary();
@@ -2149,7 +2250,7 @@
 
   var MARK = { ok: '통과', ask: '확인', todo: '미작성', danger: '위험' };
 
-  function buildReport() {
+  function buildReport(withReview) {
     var r = analyze();
     var t = stamp();
     var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
@@ -2176,9 +2277,23 @@
         ' 관련 위험 요소가 감지되었습니다. 실험 전 지도교사 확인이 반드시 필요합니다.</div>'
       : '';
 
+    var reviewBlock = withReview
+      ? '<h2 class="newpage">Ⅱ. 점검 결과</h2>' +
+        '<p class="pagehead">과학 탐구 계획서 · 점검 결과 (' + t.human + ')</p>' +
+        '<div class="sum"><span>전체 <b>' + total + '</b>항목</span><span>통과 <b>' + counts.ok + '</b></span>' +
+        '<span>확인 필요 <b>' + counts.ask + '</b></span><span>미작성 <b>' + counts.todo + '</b></span>' +
+        '<span>위험 <b>' + counts.danger + '</b></span></div>' +
+        review
+      : '';
+    var title = withReview ? '탐구 계획서 및 점검 결과' : '탐구 계획서';
+    var footer = withReview
+      ? '이 점검 결과는 계획서의 <b>형식</b>을 자동으로 확인한 것입니다. ' +
+        '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.<br>작성자 정보는 수집하지 않습니다.'
+      : '작성자 정보는 수집하지 않습니다.';
+
     return '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width,initial-scale=1">' +
-      '<title>탐구 계획서 및 점검 결과 ' + t.file + '</title><style>' +
+      '<title>' + title + ' ' + t.file + '</title><style>' +
       'body{font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;line-height:1.65;' +
       'color:#16191c;max-width:820px;margin:0 auto;padding:36px 24px 64px;background:#fff}' +
       'h1{font-size:23px;margin:0 0 4px;letter-spacing:-.02em}' +
@@ -2208,19 +2323,12 @@
       'footer{margin-top:36px;padding-top:14px;border-top:1px solid #d8dde1;font-size:12px;color:#8a949d;line-height:1.6}' +
       '@media print{body{padding:0}}' +
       '</style></head><body>' +
-      '<h1>과학 탐구 계획서 · 점검 결과</h1>' +
+      '<h1>과학 탐구 계획서' + (withReview ? ' · 점검 결과' : '') + '</h1>' +
       '<p class="meta">저장 시각 ' + t.human + '</p>' +
-      warn +
-      '<div class="sum"><span>전체 <b>' + total + '</b>항목</span><span>통과 <b>' + counts.ok + '</b></span>' +
-      '<span>확인 필요 <b>' + counts.ask + '</b></span><span>미작성 <b>' + counts.todo + '</b></span>' +
-      '<span>위험 <b>' + counts.danger + '</b></span></div>' +
-      '<h2>Ⅰ. 계획서 전문</h2>' + plan +
-      '<h2 class="newpage">Ⅱ. 점검 결과</h2>' +
-      '<p class="pagehead">과학 탐구 계획서 · 점검 결과 (' + t.human + ')</p>' +
-      review +
-      '<footer>이 점검 결과는 계획서의 <b>형식</b>을 자동으로 확인한 것입니다. ' +
-      '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.<br>' +
-      '작성자 정보는 수집하지 않습니다.</footer></body></html>';
+      (withReview ? warn : '') +
+      (withReview ? '<h2>Ⅰ. 계획서 전문</h2>' : '') + plan +
+      reviewBlock +
+      '<footer>' + footer + '</footer></body></html>';
   }
 
   function stripTags(s) {
@@ -2228,7 +2336,7 @@
   }
 
   // 텍스트본 — 어떤 편집기에서든 열리고, 게시판에 그대로 붙여넣을 수 있습니다.
-  function buildText() {
+  function buildText(withReview) {
     var r = analyze();
     var t = stamp();
     var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
@@ -2237,18 +2345,19 @@
     var RULE = '='.repeat(52), THIN = '-'.repeat(52);
     var out = [];
 
-    out.push('과학 탐구 계획서 · 점검 결과', '저장 시각 ' + t.human, RULE, '');
+    out.push('과학 탐구 계획서' + (withReview ? ' · 점검 결과' : ''), '저장 시각 ' + t.human, RULE, '');
 
-    if (r.hits.length) {
+    if (withReview && r.hits.length) {
       out.push('[ 안전 확인 필요 ]',
         r.hits.map(function (x) { return x.label; }).join(' · ') + ' 관련 위험 요소가 감지되었습니다.',
         '실험 전 지도교사 확인이 반드시 필요합니다.', '');
     }
 
-    out.push('전체 ' + total + '항목  |  통과 ' + counts.ok + '  확인 필요 ' + counts.ask +
-             '  미작성 ' + counts.todo + '  위험 ' + counts.danger, '');
+    if (withReview)
+      out.push('전체 ' + total + '항목  |  통과 ' + counts.ok + '  확인 필요 ' + counts.ask +
+               '  미작성 ' + counts.todo + '  위험 ' + counts.danger, '');
 
-    out.push(RULE, 'Ⅰ. 계획서 전문', RULE, '');
+    out.push(RULE, withReview ? 'Ⅰ. 계획서 전문' : '계획서', RULE, '');
     SECTIONS.forEach(function (s) {
       var v = val(s[1]);
       out.push('■ ' + s[0]);
@@ -2256,19 +2365,20 @@
       out.push('');
     });
 
-    out.push(RULE, 'Ⅱ. 점검 결과', RULE, '');
-    r.groups.forEach(function (g) {
-      out.push('■ ' + g.name, THIN);
-      g.items.forEach(function (i) {
-        out.push('  [' + MARK[i[0]] + '] ' + stripTags(i[1]));
+    if (withReview) {
+      out.push(RULE, 'Ⅱ. 점검 결과', RULE, '');
+      r.groups.forEach(function (g) {
+        out.push('■ ' + g.name, THIN);
+        g.items.forEach(function (i) {
+          out.push('  [' + MARK[i[0]] + '] ' + stripTags(i[1]));
+        });
+        out.push('');
       });
-      out.push('');
-    });
-
-    out.push(THIN,
-      '이 점검 결과는 계획서의 형식을 자동으로 확인한 것입니다.',
-      '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.',
-      '작성자 정보는 수집하지 않습니다.');
+      out.push(THIN,
+        '이 점검 결과는 계획서의 형식을 자동으로 확인한 것입니다.',
+        '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.');
+    }
+    out.push('작성자 정보는 수집하지 않습니다.');
 
     return out.join('\r\n');
   }
@@ -2279,14 +2389,15 @@
     txt:  { ext: 'txt',  mime: 'text/plain;charset=utf-8',       build: buildText }
   };
 
-  function saveReport(kind) {
+  // withReview: true면 점검 결과까지, false면 작성 내용만 저장합니다.
+  function saveReport(kind, withReview) {
     var f = FORMATS[kind] || FORMATS.html;
     // 앞의 BOM은 워드·엑셀·메모장이 한글을 깨뜨리지 않고 열게 해 줍니다.
-    var blob = new Blob(['﻿' + f.build()], { type: f.mime });
+    var blob = new Blob(['﻿' + f.build(withReview)], { type: f.mime });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = '탐구계획서_점검결과_' + stamp().file + '.' + f.ext;
+    a.download = (withReview ? '탐구계획서_점검결과_' : '탐구계획서_') + stamp().file + '.' + f.ext;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -2523,6 +2634,64 @@
     hideCaution();
   });
 
+  // 단계를 마칠 때마다 짧게 뿌리는 색종이 꽃가루. (전체 완성 하트와는 별개)
+  function stepConfetti() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var cv = document.getElementById('confetti');
+    var ctx = cv.getContext('2d');
+    var w = innerWidth, h = innerHeight;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cv.classList.add('on');
+
+    var css = getComputedStyle(document.documentElement);
+    var palette = [
+      css.getPropertyValue('--accent').trim(),
+      css.getPropertyValue('--accent2').trim(),
+      css.getPropertyValue('--ok').trim(),
+      css.getPropertyValue('--accent-ink').trim()
+    ];
+
+    // 화면 위쪽에서 색종이가 쏟아져 내려옵니다.
+    var bits = [];
+    for (var i = 0; i < 70; i++) {
+      bits.push({
+        x: Math.random() * w,
+        y: -20 - Math.random() * h * 0.3,
+        w: 6 + Math.random() * 6,
+        h: 8 + Math.random() * 8,
+        vy: 2.5 + Math.random() * 3,
+        vx: (Math.random() - 0.5) * 1.6,
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.3,
+        color: palette[i % palette.length]
+      });
+    }
+
+    var start = performance.now(), DUR = 1800;
+    (function frame(now) {
+      var t = now - start;
+      ctx.clearRect(0, 0, w, h);
+      var fade = t > DUR - 500 ? Math.max(0, (DUR - t) / 500) : 1;
+
+      bits.forEach(function (p) {
+        p.y += p.vy; p.x += p.vx; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = 0.9 * fade;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+
+      if (t < DUR) requestAnimationFrame(frame);
+      else { ctx.clearRect(0, 0, w, h); cv.classList.remove('on'); }
+    })(start);
+  }
+
   function celebrate(hasRisk) {
     var cheer = document.getElementById('cheer');
     document.getElementById('cheerSub').textContent = hasRisk
@@ -2553,7 +2722,7 @@
       css.getPropertyValue('--ok').trim()
     ];
 
-    var hearts = [], bits = [], popped = false;
+    var hearts = [], bits = [], confs = [], popped = false;
     for (var i = 0; i < 90; i++) {
       hearts.push({
         x: Math.random() * w,
@@ -2566,6 +2735,20 @@
         rot: (Math.random() - 0.5) * 0.6,
         color: palette[i % palette.length],
         gone: false
+      });
+    }
+    // 하트와 함께 위에서 쏟아지는 색종이 꽃가루.
+    for (var c = 0; c < 80; c++) {
+      confs.push({
+        x: Math.random() * w,
+        y: -20 - Math.random() * h * 0.5,
+        w: 6 + Math.random() * 6,
+        hgt: 8 + Math.random() * 8,
+        vy: 2.4 + Math.random() * 3.2,
+        vx: (Math.random() - 0.5) * 1.6,
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.3,
+        color: palette[c % palette.length]
       });
     }
 
@@ -2629,6 +2812,18 @@
         ctx.restore();
       });
 
+      // 쏟아지는 색종이
+      confs.forEach(function (p) {
+        p.y += p.vy; p.x += p.vx; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = 0.9 * fade;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.hgt / 2, p.w, p.hgt);
+        ctx.restore();
+      });
+
       bits = bits.filter(function (b) { return b.life > 0; });
       bits.forEach(function (b) {
         b.x += b.vx; b.y += b.vy;
@@ -2652,6 +2847,63 @@
         if (!popped) showCaution();
       }
     })(start);
+  }
+
+  /* ---------- 완성도와 레벨 ---------- */
+  // 완성도 = 통과한 항목 / 전체 항목. 미작성·확인 필요·위험은 아직 안 된 것으로 봅니다.
+
+  var LEVELS = [
+    { min: 0,   num: 1, name: '새싹 연구원',   msg: '계획서를 채워 나가면 등급이 올라갑니다.' },
+    { min: 25,  num: 2, name: '관찰 연구원',   msg: '좋아요. 변인을 잴 수 있는 값으로 다듬어 볼까요?' },
+    { min: 50,  num: 3, name: '실험 연구원',   msg: '절반을 넘었어요. 실험 과정을 더 구체적으로!' },
+    { min: 75,  num: 4, name: '탐구 연구원',   msg: '거의 다 왔어요. 안전 계획까지 챙겨 볼까요?' },
+    { min: 100, num: 5, name: '수석 연구원',   msg: '모든 점검을 통과했어요. 훌륭한 계획서예요!' }
+  ];
+
+  function levelOf(pct) {
+    var lv = LEVELS[0];
+    for (var i = 0; i < LEVELS.length; i++) if (pct >= LEVELS[i].min) lv = LEVELS[i];
+    return lv;
+  }
+
+  var lastLevelNum = 1, levelInited = false;
+
+  function renderLevel(counts) {
+    var total = counts.ok + counts.ask + counts.todo + counts.danger;
+    var pct = total ? Math.round(counts.ok / total * 100) : 0;
+    var lv = levelOf(pct);
+
+    document.getElementById('levelFill').style.width = pct + '%';
+    document.getElementById('levelPct').textContent = pct + '%';
+    document.getElementById('levelNum').textContent = 'Lv.' + lv.num;
+    document.getElementById('levelName').textContent = lv.name + (lv.num === 5 ? ' 🏆' : '');
+    document.getElementById('levelMsg').textContent = lv.msg;
+
+    // 미니 플라스크 액체가 완성도만큼 차오릅니다.
+    var liq = document.querySelector('.mf-liquid');
+    if (liq) {
+      var top = 52 - (52 - 24) * (pct / 100);   // 24(가득) ~ 52(빔)
+      liq.setAttribute('y', top.toFixed(1));
+      liq.setAttribute('height', (58 - top).toFixed(1));
+    }
+
+    // 등급이 올랐으면 잠깐 축하 애니메이션 + 알림.
+    if (levelInited && lv.num > lastLevelNum) {
+      var box = document.getElementById('level');
+      box.classList.remove('levelup');
+      void box.offsetWidth;         // 애니메이션 재시작
+      box.classList.add('levelup');
+
+      if (pct >= 100) {
+        // 완성도 100% — 화면 가득 하트와 꽃가루가 함께 날립니다.
+        celebrate(counts.danger > 0);
+      } else {
+        toast('레벨 업! ' + lv.name + '이 되었어요 🎉');
+        stepConfetti();
+      }
+    }
+    lastLevelNum = lv.num;
+    levelInited = true;   // 첫 렌더(저장된 계획서 불러오기)에서는 축하하지 않습니다
   }
 
   /* ---------- 실험 과정: 문제 있는 줄 표시 ---------- */
@@ -3133,8 +3385,27 @@
   });
 
   document.getElementById('prev').addEventListener('click', function () { goto(step - 1); });
+  // 지금 단계가 오류 없이 완성됐는지 — 그 단계 항목에 확인·미작성·위험이 없어야 합니다.
+  function stepComplete(idx) {
+    var group = STEPS[idx].group;
+    var g = analyze().groups.filter(function (x) { return x.name === group; })[0];
+    if (!g || !g.items.length) return false;
+    var ok = 0, bad = 0;
+    g.items.forEach(function (i) {
+      if (i[0] === 'ok') ok++;
+      else bad++;
+    });
+    return ok > 0 && bad === 0;
+  }
+
   document.getElementById('next').addEventListener('click', function () {
-    if (step < STEPS.length - 1) { goto(step + 1); return; }
+    if (step < STEPS.length - 1) {
+      var done = stepComplete(step);
+      goto(step + 1);
+      // 방금 떠난 단계를 오류 없이 마쳤으면 색종이로 축하합니다.
+      if (done) stepConfetti();
+      return;
+    }
     finish();
   });
 
@@ -3166,13 +3437,16 @@
   });
 
   // 내려받기 전에 안내를 먼저 보여 주고, '확인'을 눌러야 저장합니다.
-  document.getElementById('btnExport').addEventListener('click', function () {
+  function doExport(withReview) {
     var kind = document.getElementById('fmt').value;
     showCaution(function () {
-      saveReport(kind);
-      toast('.' + FORMATS[kind].ext + ' 파일로 저장했습니다. 다운로드 폴더를 확인하세요.');
+      saveReport(kind, withReview);
+      toast((withReview ? '계획서와 점검 결과를 ' : '계획서를 ') +
+        '.' + FORMATS[kind].ext + ' 파일로 저장했습니다.');
     }, '확인하고 저장');
-  });
+  }
+  document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
+  document.getElementById('btnExportPlan').addEventListener('click', function () { doExport(false); });
 
   buildPicks();
   buildIdeas();
