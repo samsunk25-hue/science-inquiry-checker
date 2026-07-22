@@ -1180,15 +1180,29 @@
   }
   .confetti.on { display: block; pointer-events: auto; cursor: pointer; }
 
+  /* 응원 메시지 뒤를 흐리게 덮어, 글씨가 배경과 섞이지 않게 합니다. */
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 59;
+    background: rgba(60, 20, 40, .28);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .scrim.show { opacity: 1; }
+
   /* 꽃가루와 함께 뜨는 응원 메시지 */
   .praise {
     position: fixed;
     left: 50%;
-    top: 32%;
+    top: 34%;
     z-index: 63;
     pointer-events: none;
     text-align: center;
-    width: min(440px, calc(100vw - 40px));
+    width: min(460px, calc(100vw - 32px));
     opacity: 0;
     transform: translate(-50%, -50%) scale(.85);
     transition: opacity .28s ease, transform .28s cubic-bezier(.34,1.56,.64,1);
@@ -1197,25 +1211,28 @@
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
+  /* 불투명한 카드 위에 글씨를 얹어 어떤 배경에서도 또렷하게 보이게 합니다. */
+  .praise-card {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: 18px;
+    padding: 20px 26px 22px;
+    box-shadow: 0 20px 50px -12px rgba(60,20,40,.5);
+  }
   .praise strong {
     display: block;
     font-size: clamp(26px, 5.5vw, 40px);
     font-weight: 800;
     letter-spacing: -.03em;
     color: var(--accent);
-    text-shadow: 0 2px 18px var(--ground), 0 0 30px var(--ground), 0 0 30px var(--ground);
   }
   .praise span {
     display: inline-block;
-    margin-top: 8px;
-    font-size: 14px;
+    margin-top: 10px;
+    font-size: 14.5px;
     font-weight: 600;
+    line-height: 1.5;
     color: var(--ink);
-    background: var(--surface);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    padding: 6px 15px;
-    box-shadow: var(--shadow);
   }
   @media (prefers-reduced-motion: reduce) {
     .praise { transition: opacity .28s ease; transform: translate(-50%, -50%); }
@@ -1606,10 +1623,13 @@
   </div>
 </div>
 
+<div class="scrim" id="scrim" hidden></div>
 <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
 <div class="praise" id="praise" hidden aria-live="polite">
-  <strong id="praiseTitle"></strong>
-  <span id="praiseMsg"></span>
+  <div class="praise-card">
+    <strong id="praiseTitle"></strong>
+    <span id="praiseMsg"></span>
+  </div>
 </div>
 <div class="cheer" id="cheer" hidden>
   <strong>모두 통과!</strong>
@@ -3527,17 +3547,29 @@
   // 꽃가루와 함께 '왜 축하하는지'를 알려 주는 응원 메시지.
   function showPraise(title, msg) {
     var box = document.getElementById('praise');
+    var scrim = document.getElementById('scrim');
     document.getElementById('praiseTitle').textContent = title;
     document.getElementById('praiseMsg').textContent = msg;
     box.hidden = false;
+    scrim.hidden = false;
     box.classList.remove('show');
+    scrim.classList.remove('show');
     clearTimeout(showPraise._s);
     // 잠깐 뒤에 show를 붙여 transition이 일어나게 합니다.
-    showPraise._s = setTimeout(function () { box.classList.add('show'); }, 20);
+    showPraise._s = setTimeout(function () {
+      box.classList.add('show');
+      scrim.classList.add('show');
+    }, 20);
     clearTimeout(showPraise._t);
     clearTimeout(showPraise._h);
-    showPraise._t = setTimeout(function () { box.classList.remove('show'); }, 1900);
-    showPraise._h = setTimeout(function () { box.hidden = true; }, 2250);
+    showPraise._t = setTimeout(function () {
+      box.classList.remove('show');
+      scrim.classList.remove('show');
+    }, 1900);
+    showPraise._h = setTimeout(function () {
+      box.hidden = true;
+      scrim.hidden = true;
+    }, 2250);
   }
 
   // 각 단계 카드 맨 위에, 비어 있을 때 뜨는 마스코트 말풍선을 답니다.
