@@ -292,5 +292,86 @@ console.log('\n[ 제자리에 쓴 내용 — 건드리면 안 되는 것 ]');
   line(!got, '정상', t.split('\n')[0].slice(0, 24), got ? `← ${got} 칸으로 잘못 안내` : '');
 });
 
+// ── 대조군 판정 ─────────────────────────────────────────
+function controlVerdict(proc, iv) {
+  const zeroLevel = /(^|[^\d.])0\s*(시간|분|초|일|주|mL|ml|L|g|kg|cm|mm|개|회|번|%|℃)/;
+  const realControl = zeroLevel.test((iv || '') + ' ' + proc) ||
+    /(아무것도|아무 ?처리|주지 ?않|하지 ?않은|넣지 ?않|그냥 ?둔|그대로 ?둔|평소대로|처리하지 ?않|물만 ?준|비교(군|용))/.test(proc);
+  const wordOnly = /(대조군|대조 ?실험|비교)/.test(proc);
+  return realControl ? 'ok' : wordOnly ? 'word' : 'none';
+}
+
+console.log('\n[ 실제 대조군 — 통과해야 하는 것 ]');
+[
+  ['물을 0mL, 10mL, 20mL 준다', ''],
+  ['한 화분에는 물을 주지 않는다', ''],
+  ['비료를 넣지 않은 화분과 비교한다', ''],
+  ['운동을 0시간 한 사람도 측정한다', '운동 시간'],
+  ['아무 처리도 하지 않은 대조군을 둔다', '']
+].forEach(([p, iv]) => {
+  const v = controlVerdict(p, iv);
+  line(v === 'ok', '통과', p.slice(0, 24), v === 'ok' ? '' : `← ${v}`);
+});
+
+console.log('\n[ 말로만 대조군 — 지적해야 하는 것 ]');
+[
+  '대조군을 만든다',
+  '대조군과 실험군을 비교한다',
+  '비교 실험을 한다'
+].forEach(p => {
+  const v = controlVerdict(p, '');
+  line(v === 'word', '말뿐', p, v === 'word' ? '' : (v === 'ok' ? '← 그냥 통과시킴(버그)' : `← ${v}`));
+});
+
+// ── 변인 통제가 어려운 주제 ──────────────────────────────
+eval(grab(/var HARD_TOPICS = \[[\s\S]*?\n  \];/, 'HARD_TOPICS'));
+const hardHit = t => HARD_TOPICS.some(r => r.re.test(t));
+
+console.log('\n[ 통제 어려운 주제 — 안내해야 하는 것 ]');
+[
+  '혈액형에 따라 성격이 다를까?',
+  '별자리 운세는 잘 맞을까?',
+  '어떤 음악을 들으면 더 행복해질까?',
+  '누가 더 예쁜 그림을 그릴까?',
+  '어느 팀이 이길까?',
+  '지구 온난화는 왜 일어날까?'
+].forEach(t => line(hardHit(t), '안내', t, hardHit(t) ? '' : '← 못 잡음'));
+
+console.log('\n[ 정상 주제 — 건드리면 안 되는 것 ]');
+[
+  '물의 온도에 따라 소금이 녹는 시간이 달라질까?',
+  '운동 시간이 길면 체지방량이 줄어들까?',       // 운동은 정상
+  '빛의 색깔에 따라 식물의 키가 달라질까?',
+  '경사가 급할수록 공이 멀리 갈까?',
+  '스트레스 호르몬 농도를 무엇이 바꿀까?'          // 스트레스 호르몬은 잴 수 있음
+].forEach(t => line(!hardHit(t), '정상', t, hardHit(t) ? '← 잘못 안내' : ''));
+
+// ── 실험 과정 줄 단위 문제 판정 ─────────────────────────
+eval(grab(/function badProcedureLines\([\s\S]*?\n  \}/, 'badProcedureLines'));
+
+console.log('\n[ 여러 줄 중 문제 줄만 골라내기 ]');
+const proc = [
+  '1. 화분 4개에 흙을 300g씩 담는다.',       // 0 정상
+  '2. 물을 10, 30, 50, 70mL로 다르게 준다.', // 1 정상
+  '주의사항: 물을 흘리지 않게 조심한다.',      // 2 안전 오배치
+  '3. 3일마다 자로 길이를 잰다.',            // 3 정상
+  'ㅋㅋ 대충 잰다',                        // 4 채팅
+  '5. 물의 양을 크게 한다.'                 // 5 서술어 오류
+].join('\n');
+const bad = badProcedureLines(proc);
+const badSet = Object.keys(bad).map(Number).sort((a, b) => a - b);
+const want = [2, 4, 5];
+line(JSON.stringify(badSet) === JSON.stringify(want), '문제줄',
+  `[${badSet.join(',')}]`, JSON.stringify(badSet) === JSON.stringify(want) ? '' : `← 기대 [${want.join(',')}]`);
+
+console.log('\n[ 정상 과정 — 빨간 줄이 없어야 하는 것 ]');
+const good = [
+  '1. 비커에 물을 200mL 담는다.',
+  '2. 소금 10g을 넣고 젓는다.',
+  '3. 녹는 시간을 초시계로 3회 잰다.'
+].join('\n');
+const gb = Object.keys(badProcedureLines(good)).length;
+line(gb === 0, '정상', `문제 줄 ${gb}개`, gb === 0 ? '' : '← 정상 줄을 잘못 잡음');
+
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
 process.exit(fail === 0 ? 0 : 1);

@@ -299,7 +299,32 @@
     cursor: pointer;
   }
   .intake-btn:hover { filter: brightness(.97); }
-  .intake-note { font-size: 12.5px; color: var(--ink-faint); line-height: 1.5; }
+  .intake-clear {
+    flex-shrink: 0;
+    margin-left: auto;         /* 오른쪽 끝으로 */
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+  .intake-clear:hover { border-color: var(--danger); color: var(--danger); }
+
+  .clear-one {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-faint);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 3px 9px;
+    cursor: pointer;
+  }
+  .clear-one:hover { border-color: var(--danger); color: var(--danger); background: var(--surface); }
   .intake-note b { color: var(--ink-soft); font-family: var(--mono); font-size: 11.5px; }
 
   /* ---------- 단계 진행 ---------- */
@@ -457,6 +482,70 @@
     box-shadow: 0 0 0 3px var(--danger-soft);
   }
 
+  .redword { color: var(--danger); font-weight: 700; }
+
+  /* ---------- 실험 과정: 문제 있는 줄만 빨갛게 ----------
+     textarea 글자는 투명하게 두고, 뒤에 겹친 backdrop이 글자를 그립니다.
+     정확히 겹치려면 두 요소의 글자 배치 속성이 완전히 같아야 합니다. */
+  .hl-wrap { position: relative; }
+
+  .hl-backdrop,
+  .hl-wrap textarea {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: normal;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    margin: 0;
+  }
+
+  .hl-backdrop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    color: var(--ink);
+    background: var(--ground);
+    border-color: transparent;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hl-backdrop mark {
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-weight: 700;
+    border-radius: 3px;
+    text-decoration: underline wavy var(--danger);
+    text-underline-offset: 2px;
+    box-shadow: 0 0 0 1px var(--danger-soft);
+  }
+
+  .hl-wrap textarea {
+    position: relative;
+    z-index: 1;
+    color: transparent;
+    background: transparent;
+    caret-color: var(--ink);
+    resize: vertical;
+  }
+  .hl-wrap textarea::placeholder { color: var(--ink-faint); }
+  .hl-wrap textarea:focus { outline: none; }
+  /* 초점을 받으면 backdrop 테두리를 강조합니다. */
+  .hl-wrap:focus-within .hl-backdrop {
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .hl-wrap:focus-within.has-bad .hl-backdrop {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px var(--danger-soft);
+  }
+
   /* the one variable that changes gets the accent rail */
   .field.is-manipulated {
     border-left: 3px solid var(--accent);
@@ -578,9 +667,29 @@
     gap: 3px;
     background: var(--accent-soft);
   }
-  .sm-row { display: flex; gap: 9px; align-items: baseline; font-size: 13.5px; line-height: 1.45; }
+  .sm-title {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--accent-ink);
+  }
+  .sm-sentence {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .sm-sentence b { color: var(--accent-ink); }
+  .sm-row { display: flex; gap: 8px; align-items: baseline; font-size: 13.5px; line-height: 1.45; }
   .sm-row b { font-weight: 700; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
   .sm-row i { font-style: normal; color: var(--ink-faint); font-weight: 400; }
+  .sm-what {
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--ink-faint);
+    min-width: 3.6em;
+  }
   .sm-row.fixed { margin-top: 5px; font-size: 12px; color: var(--ink-soft); }
   .sm-tag {
     flex-shrink: 0;
@@ -602,6 +711,14 @@
   }
 
   /* 골라서 추가하는 주의 사항 */
+  .picks-note {
+    margin: 0 0 4px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    padding: 7px 10px;
+    background: var(--surface-2);
+    border-radius: 6px;
+  }
   .picks { display: flex; flex-direction: column; gap: 12px; }
   .pick-group { display: flex; flex-wrap: wrap; gap: 6px; }
   .pick-label {
@@ -1015,12 +1132,9 @@
 
     <main>
       <div class="intake">
-        <label for="upload" class="intake-btn">계획서 파일 불러오기</label>
+        <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
-        <span class="intake-note">
-          이미 써 둔 계획서가 있다면 불러와서 각 칸에 나눠 넣습니다.
-          <b>docx · txt · md · html</b> 파일을 읽습니다. 파일은 이 기기 안에서만 열립니다.
-        </span>
+        <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
 
       <ol class="rail" id="rail"></ol>
@@ -1109,8 +1223,11 @@
           </div>
           <div class="field">
             <label for="procedure">실험 과정</label>
-            <span class="sub">번호를 붙여 순서대로. <b>무엇을 · 얼마나 · 어떤 도구로 · 몇 번</b> 측정하는지 넣어 보세요.</span>
-            <textarea id="procedure" rows="8" placeholder="1. 화분 4개에 같은 흙을 300g씩 담는다.&#10;2. 각 화분에 강낭콩 씨앗을 3개씩 심는다.&#10;3. 화분마다 하루에 주는 물의 양을 10mL, 30mL, 50mL, 70mL로 다르게 한다.&#10;4. 2주 동안 매일 같은 시각에 물을 준다.&#10;5. 3일마다 30cm 자로 줄기의 길이를 재어 기록한다."></textarea>
+            <span class="sub">번호를 붙여 순서대로. <b>무엇을 · 얼마나 · 어떤 도구로 · 몇 번</b> 측정하는지 넣어 보세요. 고쳐야 할 줄은 <span class="redword">빨간 글씨</span>로 표시됩니다.</span>
+            <div class="hl-wrap">
+              <div class="hl-backdrop" id="procBackdrop" aria-hidden="true"></div>
+              <textarea id="procedure" rows="8" spellcheck="false" placeholder="1. 화분 4개에 같은 흙을 300g씩 담는다.&#10;2. 각 화분에 강낭콩 씨앗을 3개씩 심는다.&#10;3. 화분마다 하루에 주는 물의 양을 10mL, 30mL, 50mL, 70mL로 다르게 한다.&#10;4. 2주 동안 매일 같은 시각에 물을 준다.&#10;5. 3일마다 30cm 자로 줄기의 길이를 재어 기록한다."></textarea>
+            </div>
           </div>
         </div>
       </section>
@@ -1129,7 +1246,8 @@
           </p>
           <div class="field">
             <label>골라서 추가하기</label>
-            <span class="sub">내 실험에 해당하는 것을 눌러 보세요. 다시 누르면 빠집니다.</span>
+            <span class="sub">내 <b>실험 방법</b>에 맞는 항목만 골라 보여 줍니다. 눌러서 추가하고, 다시 누르면 빠집니다.</span>
+            <p class="picks-note" id="picksNote">실험 과정을 자세히 적을수록 그에 맞는 안전 항목이 더 나타납니다.</p>
             <div class="picks" id="safetyPicks"></div>
           </div>
 
@@ -1534,6 +1652,27 @@
     return null;
   }
 
+  // ── 변인 통제가 어려운 주제 ──────────────────────────────
+  // 사람의 마음·감정·복합적 사회 현상은 조건을 똑같이 맞출 수 없어
+  // 중학교 탐구로는 결과를 신뢰하기 어렵습니다. 다른 주제로 이끌어 줍니다.
+  var HARD_TOPICS = [
+    { label: '운세·별자리·혈액형과 성격',
+      re: /운세|별자리|타로|혈액형.*(성격|성향)|성격.*혈액형|점(을|괘)|사주/,
+      tip: '조작 변인을 정할 수 없고 과학적 근거도 없습니다. 대신 “무엇을 바꾸면 무엇이 달라지는지”를 잴 수 있는 주제를 골라 볼까요?' },
+    { label: '행복·기분·사랑 같은 마음',
+      re: /행복|기분|사랑|우울|스트레스(?! ?호르몬)|자신감|성격이 ?좋|착한/,
+      tip: '마음은 사람마다 다르게 느껴 숫자로 재기 어렵습니다. “집중 시간”, “심장 박동 수”처럼 잴 수 있는 값으로 바꿀 수 있을까요?' },
+    { label: '맛·멋·아름다움 같은 취향',
+      re: /맛있|맛이 ?좋|예쁜|예쁘|멋있|멋진|더 ?좋은 ?디자인|어떤 ?색이 ?예|아름다|귀여운|잘 ?그린/,
+      tip: '취향은 사람마다 달라 통제가 어렵습니다. “당도(%)”, “무게”처럼 도구로 잴 수 있는 값으로 바꿔 볼까요?' },
+    { label: '어느 팀·누가 이길까 같은 예측',
+      re: /어느 ?팀이 ?이|누가 ?이길|승부|우승할|경기 ?결과/,
+      tip: '경기 결과는 통제할 수 없는 조건이 너무 많습니다. 스스로 조건을 바꿔 볼 수 있는 주제가 실험에 알맞습니다.' },
+    { label: '세계·역사·우주 규모의 문제',
+      re: /지구 ?온난화|기후 ?변화|공룡.*멸종|블랙홀|우주의 ?크기|역사(를|의)|전쟁의 ?원인/,
+      tip: '직접 조건을 바꿔 실험하기 어려운 큰 주제입니다. 교실이나 집에서 직접 해 볼 수 있는 작은 주제로 좁혀 볼까요?' }
+  ];
+
   // NOTVAR = 변인이 아니라 '문장'을 적은 경우
   //   · 탐구 주제:  물의 양에 따른 식물의 성장 / 온도와 반응 속도의 관계
   //   · 서술문:     체지방량(kg)이 줄어든다.  ← 변인이 아니라 가설
@@ -1611,6 +1750,13 @@
     var tp = [], addT = mk(tp, 'topic');
     checkWriting(addT, ['topic']);
     checkMisplaced(addT, ['topic']);
+
+    // 변인 통제가 사실상 불가능한 주제는 다른 주제로 이끌어 줍니다.
+    if (d.topic) {
+      var hard = HARD_TOPICS.find(function (r) { return r.re.test(d.topic); });
+      if (hard)
+        addT('ask', '<b>' + hard.label + '</b>은(는) 조건을 똑같이 맞추기가 매우 어려워 중학교 실험으로는 결과를 믿기 어렵습니다. ' + hard.tip, 'topic');
+    }
     if (!d.topic) {
       addT('todo', '탐구 주제를 아직 쓰지 않았습니다.');
     } else {
@@ -1790,13 +1936,22 @@
       else
         addS('ask', '한 번만 재면 우연히 이상한 값이 나올 수 있습니다. 몇 번 반복해서 평균을 낼지 정해 볼까요?');
 
+      // 대조군은 '단어'가 아니라 '실제로 조건을 바꾸지 않은 경우'가 있어야 합니다.
+      var proc = d.procedure + ' ' + d.materials;
       // 값이 0인 조건(운동 0시간, 물 0mL)은 그 자체가 대조군입니다.
       var zeroLevel = /(^|[^\d.])0\s*(시간|분|초|일|주|mL|ml|L|g|kg|cm|mm|개|회|번|%|℃)/;
-      if (/(비교|대조|아무것도|주지 않|않은|기본|평소|그대로)/.test(d.procedure + d.materials)
-          || zeroLevel.test(d.iv + ' ' + d.procedure))
-        addS('ok', '비교할 기준(대조군)이 들어 있습니다.', null);
+      // 실제 대조군을 가리키는 표현
+      var realControl = zeroLevel.test(d.iv + ' ' + proc) ||
+        /(아무것도|아무 ?처리|주지 ?않|하지 ?않은|넣지 ?않|그냥 ?둔|그대로 ?둔|평소대로|처리하지 ?않|물만 ?준|비교(군|용))/.test(proc);
+      // 말로만 '대조군/비교'라고 적은 경우
+      var wordOnly = /(대조군|대조 ?실험|비교)/.test(proc);
+
+      if (realControl)
+        addS('ok', '조건을 바꾸지 않은 비교 대상(대조군)이 있습니다.', null);
+      else if (wordOnly)
+        addS('ask', '“대조군”이라고 적었지만, <b>실제로 어떤 조건을 그대로 둘지</b>가 안 보입니다. 예를 들어 “물을 주지 않는 화분”처럼 구체적으로 정해 볼까요?', 'procedure');
       else
-        addS('ask', '비교 대상(대조군)이 있나요? 조건을 바꾸지 않은 경우도 함께 두면 차이를 확인하기 쉽습니다.');
+        addS('ask', '비교 대상(대조군)이 있나요? 조건을 바꾸지 않은 경우도 함께 두면 차이를 확인하기 쉽습니다.', 'procedure');
     }
     groups.push({ name: '탐구 설계', items: s });
 
@@ -1916,9 +2071,13 @@
     });
 
     FIELDS.forEach(function (f) {
+      // 실험 과정은 줄 단위 하이라이트로 따로 표시하므로 칸 전체를 빨갛게 하지 않습니다.
+      if (f === 'procedure') return;
       el[f].classList.toggle('needs-fix', !!needFix[f] && el[f].value.trim() !== '');
     });
+    renderProcOverlay();
     syncPicks();
+    filterPicks();
     renderSummary();
 
     // 삼각플라스크 친구의 표정 — 지금 계획서 상태를 얼굴로 알려 줍니다.
@@ -2176,45 +2335,67 @@
 
   /* ---------- 골라서 추가하는 주의 사항 ---------- */
 
+  // trigger가 null이면 어떤 실험에서든 보여 줍니다(기본 안전 수칙).
+  // 그 외에는 실험 방법·준비물에 관련 낱말이 있을 때만 나타납니다.
   var SAFETY_PICKS = [
-    ['보호 장비', [
+    { name: '보호 장비', trigger: null, items: [
       '보안경을 착용한다.',
       '실험용 장갑을 착용한다.',
       '실험복(앞치마)을 착용한다.',
       '긴 머리는 묶는다.'
-    ]],
-    ['불 · 물질', [
+    ]},
+    { name: '불 · 가열', trigger: /불|가열|끓|데운|데우|촛불|버너|램프|토치|뜨거|열을|끓인|가스/, items: [
       '불을 켠 주변에 종이나 옷을 두지 않는다.',
+      '뜨거운 물체는 집게로 옮긴다.',
+      '가열한 물질이 식은 뒤에 만진다.',
+      '창문을 열어 환기한다.'
+    ]},
+    { name: '약품 · 화학', trigger: /약품|시약|용액|산\b|염기|염산|황산|수산화|표백|락스|암모니아|세제|가루|화학|지시약|아세톤|알코올/, items: [
       '약품 냄새를 직접 맡지 않는다.',
+      '피부에 묻으면 바로 물로 씻는다.',
+      '서로 다른 약품을 함부로 섞지 않는다.',
       '실험 중에는 아무것도 먹거나 마시지 않는다.',
       '창문을 열어 환기한다.'
-    ]],
-    ['도구', [
+    ]},
+    { name: '유리 · 날카로운 도구', trigger: /유리|비커|시험관|플라스크|칼\b|커터|가위|송곳|바늘|핀\b|깨/, items: [
       '유리 기구는 책상 가장자리에 두지 않는다.',
-      '깨진 유리는 손으로 줍지 않고 선생님께 알린다.'
-    ]],
-    ['몸을 쓰는 실험', [
+      '깨진 유리는 손으로 줍지 않고 선생님께 알린다.',
+      '칼이나 가위는 날을 몸 반대쪽으로 향하게 한다.'
+    ]},
+    { name: '전기', trigger: /전기|전지|건전지|전류|전압|회로|콘센트|플러그|감전|모터|전구/, items: [
+      '젖은 손으로 전기 장치를 만지지 않는다.',
+      '전선이 벗겨진 곳이 없는지 확인한다.',
+      '실험이 끝나면 전원을 끈다.'
+    ]},
+    { name: '몸을 쓰는 실험', trigger: /운동|달리|뛰|줄넘기|맥박|심박|심장|근육|체력|스트레칭|걷|계단|자전거|체지방|턱걸이|팔굽/, items: [
       '시작 전에 준비운동을 한다.',
       '몸에 이상을 느끼면 즉시 멈춘다.',
-      '무리한 동작은 하지 않는다.'
-    ]],
-    ['뒷정리', [
+      '무리한 동작은 하지 않는다.',
+      '중간중간 물을 마신다.'
+    ]},
+    { name: '생물 · 미생물', trigger: /곰팡이|세균|대장균|미생물|배양|효모|이스트|식물|씨앗|콩나물|동물|곤충|물고기|달팽이/, items: [
+      '기른 미생물은 뚜껑을 함부로 열지 않는다.',
+      '생물을 만진 뒤에는 손을 씻는다.',
+      '실험이 끝난 생물은 선생님 안내에 따라 처리한다.'
+    ]},
+    { name: '뒷정리', trigger: null, items: [
       '사용한 물질은 선생님께 확인받고 버린다.',
       '끝나면 도구를 제자리에 두고 손을 씻는다.'
-    ]]
+    ]}
   ];
 
   function buildPicks() {
     var box = document.getElementById('safetyPicks');
-    SAFETY_PICKS.forEach(function (group) {
+    SAFETY_PICKS.forEach(function (group, gi) {
       var wrap = document.createElement('div');
       wrap.className = 'pick-group';
+      wrap.setAttribute('data-group', gi);
       var lab = document.createElement('span');
       lab.className = 'pick-label';
-      lab.textContent = group[0];
+      lab.textContent = group.name;
       wrap.appendChild(lab);
 
-      group[1].forEach(function (text) {
+      group.items.forEach(function (text) {
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'pick';
@@ -2226,6 +2407,24 @@
       });
       box.appendChild(wrap);
     });
+  }
+
+  // 실험 방법·준비물을 보고, 관련된 안전 항목 묶음만 보여 줍니다.
+  function filterPicks() {
+    var hay = (val('procedure') + ' ' + val('materials') + ' ' + val('topic') + ' ' + val('iv'));
+    var shown = 0;
+    var groups = document.querySelectorAll('#safetyPicks .pick-group');
+    Array.prototype.forEach.call(groups, function (wrap, gi) {
+      var g = SAFETY_PICKS[gi];
+      // 이미 고른 항목이 그 묶음에 있으면, 트리거와 무관하게 계속 보여 줍니다.
+      var chosen = g.items.some(function (t) { return el.safety.value.indexOf(t) !== -1; });
+      var on = g.trigger === null || g.trigger.test(hay) || chosen;
+      wrap.hidden = !on;
+      if (on) shown++;
+    });
+
+    var note = document.getElementById('picksNote');
+    if (note) note.hidden = shown > 2;   // 기본(보호장비·뒷정리) 말고 더 떴을 때만 안내를 감춥니다
   }
 
   function safetyLines() {
@@ -2453,6 +2652,54 @@
         if (!popped) showCaution();
       }
     })(start);
+  }
+
+  /* ---------- 실험 과정: 문제 있는 줄 표시 ---------- */
+  // 그 줄 하나만 봐도 명백히 잘못된 것만 빨갛게 합니다.
+  // (수치·도구·반복·대조군처럼 '과정 전체'를 보는 조언은 여기서 제외)
+
+  function badProcedureLines(text) {
+    var bad = {};
+    text.split('\n').forEach(function (line, i) {
+      var t = line.trim();
+      if (!t) return;
+      if (PROFANITY.test(t)) { bad[i] = 1; return; }
+      if (JAMO.test(t) || SLANG.test(t)) { bad[i] = 1; return; }
+      // 안전 사항을 실험 과정에 적은 줄
+      if (/주의\s*사항|조심(한다|해야|하여|하고)|보안경|실험복|장갑을 ?(끼|착용)|다치지 ?않/.test(t)) { bad[i] = 1; return; }
+      // 준비물을 실험 과정에 적은 줄
+      if (/^\s*준비물\s*[:：]/.test(line)) { bad[i] = 1; return; }
+      // 값에 안 맞는 서술어
+      if (collocationIssue(t) || adjectiveIssue(t)) { bad[i] = 1; return; }
+    });
+    return bad;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+    });
+  }
+
+  function renderProcOverlay() {
+    var ta = el.procedure;
+    var back = document.getElementById('procBackdrop');
+    if (!back) return;
+
+    var text = ta.value;
+    var bad = badProcedureLines(text);
+    var lines = text.split('\n');
+
+    var html = lines.map(function (line, i) {
+      var safe = escapeHtml(line) || '​';       // 빈 줄도 높이를 차지하도록
+      return bad[i] ? '<mark>' + safe + '</mark>' : safe;
+    }).join('\n');
+    // 마지막 줄바꿈 뒤 커서 높이를 맞춥니다.
+    back.innerHTML = html + '​';
+
+    var anyBad = Object.keys(bad).length > 0;
+    ta.parentNode.classList.toggle('has-bad', anyBad);
+    back.scrollTop = ta.scrollTop;
   }
 
   /* ---------- 계획서 파일 불러오기 ---------- */
@@ -2758,15 +3005,25 @@
 
     if (!iv && !dv) { box.hidden = true; return; }
     box.hidden = false;
+
+    // 태그의 뜻이 바로 통하도록, 위에 한 문장으로 풀어 줍니다.
+    var sentence = '';
+    if (iv && dv) {
+      sentence = '<p class="sm-sentence"><b>' + esc(iv) + '</b>을(를) 바꿔 가며 <b>' +
+        esc(dv) + '</b>이(가) 어떻게 달라지는지 알아보는 실험입니다.</p>';
+    }
+
     box.innerHTML =
-      '<div class="sm-row"><span class="sm-tag change">바꾼다</span><b>' +
-        (iv ? esc(iv) : '<i>아직</i>') + '</b></div>' +
-      '<div class="sm-arrow" aria-hidden="true">↓</div>' +
-      '<div class="sm-row"><span class="sm-tag result">잰다</span><b>' +
-        (dv ? esc(dv) : '<i>아직</i>') + '</b></div>' +
+      '<p class="sm-title">이 실험을 한눈에</p>' +
+      sentence +
+      '<div class="sm-row"><span class="sm-tag change">바꾼다</span>' +
+        '<span class="sm-what">조작 변인</span><b>' + (iv ? esc(iv) : '<i>아직</i>') + '</b></div>' +
+      '<div class="sm-arrow" aria-hidden="true">↓ 그래서</div>' +
+      '<div class="sm-row"><span class="sm-tag result">잰다</span>' +
+        '<span class="sm-what">종속 변인</span><b>' + (dv ? esc(dv) : '<i>아직</i>') + '</b></div>' +
       (cv.length
-        ? '<div class="sm-row fixed"><span class="sm-tag fix">고정</span><span>' +
-          cv.map(esc).join(' · ') + '</span></div>'
+        ? '<div class="sm-row fixed"><span class="sm-tag fix">고정</span>' +
+          '<span class="sm-what">통제 변인</span><span>' + cv.map(esc).join(' · ') + '</span></div>'
         : '');
   }
 
@@ -2778,12 +3035,43 @@
   window.addEventListener('afterprint',  function () { printMode = false; render(); });
 
   var STEPS = [
-    { id: 's-topic',  label: '주제', group: '탐구 주제' },
-    { id: 's-hypo',   label: '가설', group: '가설' },
-    { id: 's-var',    label: '변인', group: '변인 통제' },
-    { id: 's-design', label: '설계', group: '탐구 설계' },
-    { id: 's-safety', label: '안전', group: '현실성과 안전' }
+    { id: 's-topic',  label: '주제', group: '탐구 주제',   fields: ['topic'] },
+    { id: 's-hypo',   label: '가설', group: '가설',        fields: ['hypothesis'] },
+    { id: 's-var',    label: '변인', group: '변인 통제',    fields: ['iv', 'dv', 'cv'] },
+    { id: 's-design', label: '설계', group: '탐구 설계',    fields: ['materials', 'procedure'] },
+    { id: 's-safety', label: '안전', group: '현실성과 안전', fields: ['safety'] }
   ];
+
+  // 각 단계 카드에 '이 단계 지우기' 버튼을 답니다.
+  function buildClearButtons() {
+    STEPS.forEach(function (s) {
+      var head = document.getElementById(s.id).querySelector('.card-head');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'clear-one';
+      b.textContent = '지우기';
+      b.title = '이 단계에 쓴 내용을 지웁니다';
+      b.addEventListener('click', function () {
+        var has = s.fields.some(function (f) { return el[f].value.trim(); });
+        if (!has) { toast('지울 내용이 없습니다.'); return; }
+        if (!confirm('“' + s.label + '” 단계에 쓴 내용을 지울까요?')) return;
+        s.fields.forEach(function (f) { el[f].value = ''; });
+        render();
+        toast(s.label + ' 단계를 지웠습니다.');
+      });
+      head.appendChild(b);
+    });
+  }
+
+  function clearAll() {
+    var has = FIELDS.some(function (f) { return el[f].value.trim(); });
+    if (!has) { toast('지울 내용이 없습니다.'); return; }
+    if (!confirm('작성한 내용을 모두 지울까요? 되돌릴 수 없습니다.')) return;
+    FIELDS.forEach(function (f) { el[f].value = ''; });
+    render();
+    goto(0);
+    toast('전체 내용을 지웠습니다.');
+  }
   var step = 0;
 
   function buildRail() {
@@ -2830,6 +3118,13 @@
   }
 
   FIELDS.forEach(function (k) { el[k].addEventListener('input', render); });
+
+  // 실험 과정 칸을 스크롤하면 뒤의 하이라이트도 같이 움직여야 합니다.
+  el.procedure.addEventListener('scroll', function () {
+    document.getElementById('procBackdrop').scrollTop = el.procedure.scrollTop;
+  });
+
+  document.getElementById('clearAll').addEventListener('click', clearAll);
 
   document.getElementById('upload').addEventListener('change', function (e) {
     var file = e.target.files && e.target.files[0];
@@ -2882,6 +3177,7 @@
   buildPicks();
   buildIdeas();
   buildExamples();
+  buildClearButtons();
   buildRail();
   load();
   goto(0);
