@@ -4,8 +4,9 @@ Science_Mentor_App_PRD.md
 
 # 검사 스크립트가 만드는 미리보기 · 임시 파일
 _og-preview.svg
-_shot*.png
+_*.png
 _probe.html
+_ct.html
 
 # 편집기 · OS
 .vscode/
