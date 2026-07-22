@@ -81,7 +81,7 @@ banners.forEach((b, i) => {
   const bIds = (s.match(/id='([^']+)'/g) || []).map(x => x.slice(4, -1));
   const bRefs = (s.match(/url\(#([^)]+)\)/g) || []).map(x => x.slice(5, -1));
   const cut = bRefs.filter(r => bIds.indexOf(r) === -1);
-  const hasFace = s.indexOf('M21 45.8') !== -1;
+  // 플라스크 캐릭터는 이제 HTML에 인라인으로 얹으므로 배너 배경에는 없는 게 정상입니다.
   const opens = (s.match(/<(?!\/)[a-z]/g) || []).length;
   const closes = (s.match(/<\//g) || []).length + (s.match(/\/>/g) || []).length;
 
@@ -92,7 +92,6 @@ banners.forEach((b, i) => {
 
   const problems = [];
   if (cut.length) problems.push('끊긴 참조 ' + cut.join(','));
-  if (!hasFace) problems.push('캐릭터 없음');
   if (s.indexOf(CURVE_MARK) === -1) problems.push('측정 곡선 없음');
   if (opens !== closes) problems.push(`태그 불균형 (연 ${opens} / 닫은 ${closes})`);
   if (want && got !== want) problems.push(`${want} 블록에 ${got} 배너가 들어감`);

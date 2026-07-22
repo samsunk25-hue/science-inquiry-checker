@@ -39,18 +39,7 @@ function banner(c) {
     `<g fill='${c.heart2}' fill-opacity='${c.heart2Op}'>`,
     `<g transform='translate(890,34) rotate(22) scale(.32)'><path d='${HEART}'/></g>`,
     `</g>`,
-    // 왼쪽 — 삼각플라스크
-    `<g transform='translate(760,60) scale(2.35)'>`,
-    `<path d='M14.3 36H33.7L37.5 45.5A4.5 4.5 0 0 1 33.4 52H14.6A4.5 4.5 0 0 1 10.5 45.5Z' fill='${c.liquid}'/>`,
-    `<circle cx='17' cy='48' r='1.3' fill='#FFFFFF' fill-opacity='${c.bubble}'/>`,
-    `<circle cx='24' cy='50' r='1' fill='#FFFFFF' fill-opacity='${c.bubble}'/>`,
-    `<circle cx='31' cy='47' r='1.2' fill='#FFFFFF' fill-opacity='${c.bubble}'/>`,
-    `<circle cx='15.8' cy='45.6' r='1.8' fill='#E8447F' fill-opacity='${c.cheek}'/>`,
-    `<circle cx='32.2' cy='45.6' r='1.8' fill='#E8447F' fill-opacity='${c.cheek}'/>`,
-    `<circle cx='19.5' cy='42' r='1.75' fill='#241920'/><circle cx='28.5' cy='42' r='1.75' fill='#241920'/>`,
-    `<path d='M21 45.8q3 2.8 6 0' fill='none' stroke='#241920' stroke-width='1.9' stroke-linecap='round'/>`,
-    `<path d='M16 4h16M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4' fill='none' stroke='${c.edge}' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/>`,
-    `</g>`,
+    // 플라스크 캐릭터는 화면에서 완성도에 반응하도록 HTML에 인라인으로 따로 얹습니다.
     `</svg>`
   ].join('');
 }
