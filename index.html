@@ -2398,6 +2398,7 @@
 
     // 단계 표시줄 — 각 단계의 상태를 색으로 알려 줍니다.
     var railItems = document.querySelectorAll('#rail li');
+    var justDone = [];
     STEPS.forEach(function (s, i) {
       var li = railItems[i];
       if (!li) return;
@@ -2411,10 +2412,19 @@
       if (railDone[s.group]) {
         li.classList.add('stamped');
         // 방금 도장이 찍힌 순간에만 톡 찍히는 효과를 줍니다.
-        if (!wasStamped) li.classList.add('stamp-now');
+        if (!wasStamped) { li.classList.add('stamp-now'); justDone.push(i); }
         else li.classList.remove('stamp-now');
       }
     });
+
+    // 단계가 방금 완성되어 도장이 찍히면, 바로 꽃가루와 응원 메시지를 띄웁니다.
+    // (첫 렌더에서 이미 완성돼 있던 단계는 축하하지 않습니다.)
+    if (railInited && justDone.length) {
+      var ci = justDone.indexOf(step) !== -1 ? step : justDone[0];
+      stepConfetti();
+      showPraise(STEPS[ci].praise, STEPS[ci].cheer);
+    }
+    railInited = true;
 
     FIELDS.forEach(function (f) {
       // 실험 과정은 줄 단위 하이라이트로 따로 표시하므로 칸 전체를 빨갛게 하지 않습니다.
@@ -3127,6 +3137,7 @@
 
   var lastLevelNum = 1, levelInited = false;
   var prevItemState = {};   // 항목별 직전 상태 — 방금 통과한 항목을 톡 튀게 하는 데 씁니다.
+  var railInited = false;   // 첫 렌더(저장된 계획서 불러오기)에서는 축하하지 않습니다.
 
   function renderLevel(counts) {
     var total = counts.ok + counts.ask + counts.todo + counts.danger;
@@ -3743,18 +3754,10 @@
     return ok > 0 && blocking === 0;
   }
 
+  // 축하(꽃가루·응원)는 단계가 완성되는 순간 render에서 이미 띄우므로,
+  // 다음 버튼은 화면 이동만 합니다.
   document.getElementById('next').addEventListener('click', function () {
-    if (step < STEPS.length - 1) {
-      var from = STEPS[step];
-      var done = stepComplete(step);
-      goto(step + 1);
-      // 방금 떠난 단계를 오류 없이 마쳤으면 색종이와 응원 메시지로 축하합니다.
-      if (done) {
-        stepConfetti();
-        showPraise(from.praise, from.cheer);
-      }
-      return;
-    }
+    if (step < STEPS.length - 1) { goto(step + 1); return; }
     finish();
   });
 
