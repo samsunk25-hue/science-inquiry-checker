@@ -3817,11 +3817,15 @@
   var standalone = matchMedia('(display-mode: standalone)').matches ||
     matchMedia('(display-mode: minimal-ui)').matches || navigator.standalone;
 
-  // 크롬·엣지: 바로가기를 만들 수 있게 되면 이벤트가 오고, 버튼을 보여 줍니다.
+  // 홈 화면 앱으로 이미 열린 게 아니면 버튼을 늘 보여 줍니다.
+  // (설치 이벤트는 브라우저마다 안 올 때가 있어, 그것만 기다리지 않습니다.)
+  if (!standalone) installBtn.hidden = false;
+
+  // 크롬·엣지에서 원클릭이 가능해지면 그 기회를 잡아 둡니다.
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    if (!standalone) installBtn.hidden = false;
+    installBtn.hidden = false;
   });
 
   installBtn.addEventListener('click', function () {
@@ -3844,7 +3848,5 @@
     installBtn.hidden = true;
   });
 
-  // 아이폰·아이패드는 설치 이벤트가 없으므로, 브라우저로 연 경우 버튼을 안내용으로 띄웁니다.
-  if (isIOS && !standalone) installBtn.hidden = false;
 })();
 </script>
