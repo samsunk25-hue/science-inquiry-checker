@@ -2,11 +2,9 @@
 
 <meta name="description" content="중학교 과학 탐구 계획서를 실험 전에 스스로 점검합니다. 변인이 잴 수 있는 값인지, 과정이 구체적인지, 위험한 것은 없는지 짚어 주지만 답을 대신 써 주지는 않습니다.">
 
-<!-- 홈 화면에 추가(PWA) -->
+<!-- 홈 화면 바로가기 -->
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#B32D6B">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="탐구 점검">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -187,22 +185,11 @@
     transform: translateY(-50%);
     width: 96px;
     height: 116px;
+    overflow: visible;         /* 원이 플라스크보다 커서 넘쳐도 보이도록 */
     z-index: 0;
   }
-  /* 플라스크를 감싸는 노란 원 (항상 플라스크 중심에 붙어 다닙니다) */
-  .hero-flask::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    width: 168px;
-    height: 168px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: var(--accent2);
-    opacity: .15;
-    z-index: -1;
-  }
+  /* 플라스크를 감싸는 노란 원 (SVG 안에 있어 항상 플라스크와 함께 다닙니다) */
+  .hero-halo { fill: var(--accent2); opacity: .16; }
   .hero-glass {
     fill: none;
     stroke: var(--accent);
@@ -1416,6 +1403,7 @@
     </div>
     <!-- 완성도에 따라 액체가 차오르고 표정이 바뀌는 플라스크 친구 -->
     <svg class="hero-flask" id="heroFlask" viewBox="0 0 48 58" aria-hidden="true">
+      <circle class="hero-halo" cx="24" cy="30" r="33"/>
       <clipPath id="herojar"><path d="M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4z"/></clipPath>
       <g clip-path="url(#herojar)">
         <rect class="hero-liquid" x="6" y="50" width="36" height="8"/>
@@ -3820,39 +3808,22 @@
     });
   }
 
+  // 홈 화면에 바로가기를 만듭니다. 앱 전체화면이 아니라, 눌러서 이 화면을
+  // 브라우저로 여는 바로가기입니다. 만드는 방법은 브라우저마다 조금 다릅니다.
   var installBtn = document.getElementById('installBtn');
-  var deferredPrompt = null;
+  var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 
-  // 안드로이드·크롬: 설치 가능해지면 이벤트가 오고, 그때 버튼을 보여 줍니다.
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.hidden = false;
-  });
+  // 이미 홈 화면 바로가기로 연 경우엔 버튼이 필요 없습니다.
+  if (!standalone) installBtn.hidden = false;
 
   installBtn.addEventListener('click', function () {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function () {
-        deferredPrompt = null;
-        installBtn.hidden = true;
-      });
+    if (isIOS) {
+      alert('홈 화면에 바로가기를 만들려면\n\n① 화면 아래 공유 버튼을 누르고\n② “홈 화면에 추가”를 선택하세요.');
     } else {
-      // iPhone·iPad 사파리는 설치 이벤트가 없어 방법을 직접 안내합니다.
-      alert('홈 화면에 추가하려면\n\n① 아래 공유 버튼(￼)을 누르고\n② “홈 화면에 추가”를 선택하세요.');
+      alert('홈 화면에 바로가기를 만들려면\n\n① 브라우저 메뉴(⋮)를 열고\n② “홈 화면에 추가” 또는 “바로가기 만들기”를 선택하세요.');
     }
   });
-
-  // 설치가 끝나면 버튼을 감춥니다.
-  window.addEventListener('appinstalled', function () {
-    deferredPrompt = null;
-    installBtn.hidden = true;
-  });
-
-  // 이미 홈 화면 앱으로 열린 경우엔 버튼이 필요 없습니다.
-  var standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-  // iOS 사파리에서는 beforeinstallprompt가 없으므로, 브라우저로 연 경우에만 버튼을 띄웁니다.
-  var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
-  if (isIOS && !standalone) installBtn.hidden = false;
 })();
 </script>

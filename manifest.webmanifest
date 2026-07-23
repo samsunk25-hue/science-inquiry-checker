@@ -4,7 +4,7 @@
   "description": "중학교 과학 탐구 계획서를 실험 전에 스스로 점검하는 도구",
   "start_url": "./index.html",
   "scope": "./",
-  "display": "standalone",
+  "display": "browser",
   "orientation": "portrait",
   "lang": "ko",
   "background_color": "#FDF6F9",
