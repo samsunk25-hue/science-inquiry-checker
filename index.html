@@ -1501,11 +1501,16 @@
           <span class="hint">하나만 바꾸고, 나머지는 모두 고정</span>
         </div>
         <div class="card-body">
-          <p class="rule">
-            <b>세 변인 모두 재거나 정할 수 있는 값이어야 합니다.</b>
-            “건강 상태”, “잘 자람”처럼 사람마다 다르게 보는 말은 변인이 될 수 없습니다.
-            <span>양 · 온도 · 시간 · 길이 · 무게 · 개수 · 농도 · 각도 · 종류</span>처럼 값을 정하거나 잴 수 있는 말로 적으세요.
-          </p>
+          <div class="mascot-hint always">
+            <svg class="bh-flask" viewBox="0 0 48 58" aria-hidden="true">
+              <clipPath id="bhjar2"><path d="M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4z"/></clipPath>
+              <g clip-path="url(#bhjar2)"><rect x="6" y="40" width="36" height="18"/></g>
+              <circle cx="19.5" cy="41.5" r="1.6"/><circle cx="28.5" cy="41.5" r="1.6"/>
+              <path d="M20.8 45.2q3.2 2.8 6.4 0" fill="none" stroke="#241920" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M16 4h16M19 4v20L10.5 45.5A4.5 4.5 0 0 0 14.6 52h18.8a4.5 4.5 0 0 0 4.1-6.5L29 24V4" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>세 변인 모두 <b>재거나 정할 수 있는 값</b>이어야 해요. “건강 상태”, “잘 자람”처럼 사람마다 다르게 보는 말은 변인이 될 수 없어요. <b>양·온도·시간·길이·무게·개수·농도·각도·종류</b>처럼 적어 보세요.</span>
+          </div>
 
           <div class="field is-manipulated">
             <label for="iv">조작 변인 <span class="tag change">바꾸는 것 · 1개</span></label>
@@ -3563,8 +3568,8 @@
       praise: '가설 완성!',  cheer: '예상을 분명하게 세웠어요. 다음은 변인이에요.',
       tip: '“무엇을 바꾸면, 무엇이 어떻게 될 것이다” 형태로 예상을 적어요.' },
     { id: 's-var',    label: '변인', group: '변인 통제',    fields: ['iv', 'dv', 'cv'],
-      praise: '변인 완성!',  cheer: '바꿀 것과 잴 것을 잘 나눴어요. 설계로 가 볼까요?',
-      tip: '바꿀 것 하나, 잴 것 하나를 먼저 정해 보세요.' },
+      praise: '변인 완성!',  cheer: '바꿀 것과 잴 것을 잘 나눴어요. 설계로 가 볼까요?' },
+      /* 변인 탭은 항상 보이는 규칙 말풍선이 따로 있어 tip을 두지 않습니다. */
     { id: 's-design', label: '설계', group: '탐구 설계',    fields: ['materials', 'procedure'],
       praise: '설계 완성!',  cheer: '따라 할 수 있게 잘 적었어요. 안전만 챙기면 끝!',
       tip: '실험 순서를 1, 2, 3… 번호를 붙여 적어 보세요.' },
@@ -3637,8 +3642,8 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'clear-one';
-      b.textContent = '지우기';
-      b.title = '이 단계에 쓴 내용을 지웁니다';
+      b.textContent = '이 단계만';
+      b.title = '이 단계에 쓴 내용만 지웁니다 (다른 단계는 그대로)';
       b.addEventListener('click', function () {
         var has = s.fields.some(function (f) { return el[f].value.trim(); });
         if (!has) { toast('지울 내용이 없습니다.'); return; }
@@ -3656,6 +3661,7 @@
     if (!has) { toast('지울 내용이 없습니다.'); return; }
     if (!confirm('작성한 내용을 모두 지울까요? 되돌릴 수 없습니다.')) return;
     FIELDS.forEach(function (f) { el[f].value = ''; });
+    try { localStorage.removeItem(STORE); } catch (e) { /* 저장이 막혀 있어도 화면은 지워집니다 */ }
     render();
     goto(0);
     toast('전체 내용을 지웠습니다.');
