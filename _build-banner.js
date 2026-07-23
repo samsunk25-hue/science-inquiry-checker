@@ -23,7 +23,7 @@ function banner(c) {
     `</linearGradient>`,
     `</defs>`,
     `<rect width='1200' height='260' fill='url(#bg)'/>`,
-    `<circle cx='822' cy='118' r='84' fill='${c.circle}' fill-opacity='${c.circleOp}'/>`,
+    // 노란 원은 플라스크 뒤에 CSS로 붙여 항상 플라스크를 감싸도록 했습니다.
     // 오른쪽 — 측정값 곡선
     `<path d='${CURVE}V260H905Z' fill='url(#fg)'/>`,
     `<path d='${CURVE}' fill='none' stroke='${c.line}' stroke-width='2.4' stroke-opacity='${c.lineOp}' stroke-linecap='round'/>`,

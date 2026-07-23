@@ -1,6 +1,15 @@
 ﻿<title>이대로 실험해도 될까? · 탐구 계획서 점검표</title>
 
 <meta name="description" content="중학교 과학 탐구 계획서를 실험 전에 스스로 점검합니다. 변인이 잴 수 있는 값인지, 과정이 구체적인지, 위험한 것은 없는지 짚어 주지만 답을 대신 써 주지는 않습니다.">
+
+<!-- 홈 화면에 추가(PWA) -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#B32D6B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="탐구 점검">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="중학교 과학 탐구">
@@ -48,7 +57,7 @@
 
     /* 제목 배경 — 실험 노트의 모눈 위에 측정값이 흐르는 곡선.
        공유 미리보기(og:image)와 같은 그림입니다. */
-    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.12%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%27.22%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Ccircle cx%3D%27822%27 cy%3D%27118%27 r%3D%2784%27 fill%3D%27%23E8A600%27 fill-opacity%3D%27.15%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.45%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23B32D6B%27 fill-opacity%3D%27.5%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23E8A600%27 fill-opacity%3D%27.6%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.12%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%27.22%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.45%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23B32D6B%27 fill-opacity%3D%27.5%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23E8A600%27 fill-opacity%3D%27.6%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   }
 
   @media (prefers-color-scheme: dark) {
@@ -74,7 +83,7 @@
       --ok:          #74C295;
       --ok-soft:     #17291F;
       --shadow:      0 1px 2px rgba(0,0,0,.45), 0 8px 24px -12px rgba(0,0,0,.65);
-      --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.15%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%27.16%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Ccircle cx%3D%27822%27 cy%3D%27118%27 r%3D%2784%27 fill%3D%27%23FFD34E%27 fill-opacity%3D%27.11%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.5%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.55%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.45%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23FFD34E%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+      --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.15%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%27.16%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.5%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.55%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.45%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23FFD34E%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
     }
   }
 
@@ -100,7 +109,7 @@
     --ok:          #74C295;
     --ok-soft:     #17291F;
     --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
-    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.15%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%27.16%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Ccircle cx%3D%27822%27 cy%3D%27118%27 r%3D%2784%27 fill%3D%27%23FFD34E%27 fill-opacity%3D%27.11%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.5%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.55%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.45%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23FFD34E%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.15%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23FFD34E%27 stop-opacity%3D%27.16%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23F58BB4%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.5%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.55%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.45%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23FFD34E%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   }
 
   :root[data-theme="light"] {
@@ -125,7 +134,7 @@
     --ok:          #2F7A52;
     --ok-soft:     #E2F2E9;
     --shadow:      0 1px 2px rgba(20,24,27,.06), 0 8px 24px -12px rgba(20,24,27,.18);
-    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.12%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%27.22%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Ccircle cx%3D%27822%27 cy%3D%27118%27 r%3D%2784%27 fill%3D%27%23E8A600%27 fill-opacity%3D%27.15%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.45%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23B32D6B%27 fill-opacity%3D%27.5%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23E8A600%27 fill-opacity%3D%27.6%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    --banner: url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 width%3D%271200%27 height%3D%27260%27 preserveAspectRatio%3D%27xMaxYMid slice%27%3E%3Cdefs%3E%3Cpattern id%3D%27bg%27 width%3D%2724%27 height%3D%2724%27 patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath d%3D%27M24 0H0v24%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%27.6%27 stroke-opacity%3D%27.12%27%2F%3E%3C%2Fpattern%3E%3ClinearGradient id%3D%27fg%27 x1%3D%270%27 y1%3D%271%27 x2%3D%270%27 y2%3D%270%27%3E%3Cstop offset%3D%270%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%270%27%2F%3E%3Cstop offset%3D%271%27 stop-color%3D%27%23E8A600%27 stop-opacity%3D%27.22%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect width%3D%271200%27 height%3D%27260%27 fill%3D%27url(%23bg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70V260H905Z%27 fill%3D%27url(%23fg)%27%2F%3E%3Cpath d%3D%27M905 216Q940 211 975 186Q1010 161 1036 130Q1066 96 1100 86Q1125 80 1146 70%27 fill%3D%27none%27 stroke%3D%27%23B32D6B%27 stroke-width%3D%272.4%27 stroke-opacity%3D%27.45%27 stroke-linecap%3D%27round%27%2F%3E%3Cg fill%3D%27%23B32D6B%27 fill-opacity%3D%27.5%27%3E%3Ccircle cx%3D%27905%27 cy%3D%27216%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%27975%27 cy%3D%27186%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271036%27 cy%3D%27130%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271100%27 cy%3D%2786%27 r%3D%274%27%2F%3E%3Ccircle cx%3D%271146%27 cy%3D%2770%27 r%3D%274%27%2F%3E%3C%2Fg%3E%3Cg fill%3D%27%23F58BB4%27 fill-opacity%3D%27.5%27%3E%3Cg transform%3D%27translate(738%2C30) rotate(-16) scale(.4)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3Cg transform%3D%27translate(886%2C198) rotate(14) scale(.36)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg fill%3D%27%23E8A600%27 fill-opacity%3D%27.6%27%3E%3Cg transform%3D%27translate(890%2C34) rotate(22) scale(.32)%27%3E%3Cpath d%3D%27M20 12.8C20 0 0 0 0 12.8 0 24.8 16 32.8 20 40 24 32.8 40 24.8 40 12.8 40 0 20 0 20 12.8Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   }
 
   * { box-sizing: border-box; }
@@ -170,7 +179,7 @@
     background-color: var(--surface);
   }
 
-  /* 완성도에 반응하는 플라스크 친구 (배너 오른쪽) */
+  /* 완성도에 반응하는 플라스크 친구 (배너 오른쪽) — 노란 원 안에 자리합니다. */
   .hero-flask {
     position: absolute;
     right: 150px;
@@ -179,6 +188,20 @@
     width: 96px;
     height: 116px;
     z-index: 0;
+  }
+  /* 플라스크를 감싸는 노란 원 (항상 플라스크 중심에 붙어 다닙니다) */
+  .hero-flask::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 168px;
+    height: 168px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--accent2);
+    opacity: .15;
+    z-index: -1;
   }
   .hero-glass {
     fill: none;
@@ -430,6 +453,23 @@
     cursor: pointer;
   }
   .intake-clear:hover { filter: brightness(.97); }
+
+  .intake-install {
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 7px 13px;
+    cursor: pointer;
+  }
+  .intake-install::before { content: "＋ "; font-weight: 800; }
+  .intake-install:hover { filter: brightness(1.06); }
+  /* 설치 버튼이 보이면 전체 지우기는 auto 밀림을 양보합니다. */
+  .intake-install + .intake-clear { margin-left: 0; }
 
   .clear-one {
     flex-shrink: 0;
@@ -1401,6 +1441,7 @@
       <div class="intake">
         <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
+        <button type="button" class="intake-install" id="installBtn" hidden>홈 화면에 추가</button>
         <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
 
@@ -3770,5 +3811,48 @@
   buildRail();
   load();
   goto(0);
+
+  /* ---------- 홈 화면에 추가(PWA) ---------- */
+  // 서비스워커를 등록해 두면, 한 번 연 뒤에는 인터넷 없이도 열립니다.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    });
+  }
+
+  var installBtn = document.getElementById('installBtn');
+  var deferredPrompt = null;
+
+  // 안드로이드·크롬: 설치 가능해지면 이벤트가 오고, 그때 버튼을 보여 줍니다.
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function () {
+        deferredPrompt = null;
+        installBtn.hidden = true;
+      });
+    } else {
+      // iPhone·iPad 사파리는 설치 이벤트가 없어 방법을 직접 안내합니다.
+      alert('홈 화면에 추가하려면\n\n① 아래 공유 버튼(￼)을 누르고\n② “홈 화면에 추가”를 선택하세요.');
+    }
+  });
+
+  // 설치가 끝나면 버튼을 감춥니다.
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+
+  // 이미 홈 화면 앱으로 열린 경우엔 버튼이 필요 없습니다.
+  var standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  // iOS 사파리에서는 beforeinstallprompt가 없으므로, 브라우저로 연 경우에만 버튼을 띄웁니다.
+  var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+  if (isIOS && !standalone) installBtn.hidden = false;
 })();
 </script>
