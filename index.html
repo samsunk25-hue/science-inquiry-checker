@@ -495,6 +495,70 @@
   .device-btn:hover { filter: brightness(.97); }
   .device-btn.danger { color: var(--accent-ink); border-color: var(--accent); background: var(--accent-soft); }
 
+  /* 첫 화면 학번 입력 게이트 */
+  .idgate {
+    position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center;
+    background: rgba(20, 12, 18, .55); backdrop-filter: blur(4px); padding: 20px;
+  }
+  .idgate[hidden] { display: none; }
+  .idgate-card {
+    width: 100%; max-width: 380px; background: var(--card, #fff); color: var(--ink, #16191c);
+    border-radius: 16px; padding: 26px 24px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    text-align: center;
+  }
+  .idgate-title { font-size: 19px; font-weight: 800; margin: 0 0 8px; }
+  .idgate-sub { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 16px; }
+  .idgate-card input {
+    width: 100%; font-size: 17px; font-family: var(--mono); text-align: center;
+    padding: 11px 12px; border: 1.5px solid var(--line); border-radius: 9px; background: #fff;
+    box-sizing: border-box;
+  }
+  .idgate-card input:focus { outline: none; border-color: var(--accent); }
+  .idgate-act { display: flex; gap: 8px; margin: 14px 0 12px; }
+  .idgate-act button {
+    flex: 1; font-size: 14px; font-weight: 700; padding: 11px; border-radius: 9px; cursor: pointer;
+    border: 1.5px solid var(--line); background: #fff; color: var(--ink-soft);
+  }
+  .idgate-act button.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .idgate-act button:hover { filter: brightness(.98); }
+  .idgate-note { font-size: 11px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+
+  /* 학번 입력 바 (공용 기기에서 학생 구분·초기화) */
+  .idbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+  .idbar label { font-size: 13px; font-weight: 800; color: var(--ink-soft); }
+  .idbar input {
+    width: 120px; font-size: 14px; font-family: var(--mono);
+    padding: 6px 10px; border: 1.5px solid var(--line); border-radius: 7px; background: #fff;
+  }
+  .idbar input:focus { outline: none; border-color: var(--accent); }
+  .idbar-note { flex: 1 1 220px; font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); }
+
+  /* 탐구 슬롯 탭 (탐구 1·2·3 + 자유탐구) */
+  .slotbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; align-items: center; }
+  .slot-tab {
+    font-size: 13px; font-weight: 700; color: var(--ink-soft);
+    background: var(--card, #fff); border: 1.5px solid var(--line);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer; white-space: nowrap;
+  }
+  .slot-tab:hover { filter: brightness(.98); }
+  .slot-tab.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .slot-tab.assess { border-style: dashed; }
+  .slot-tab.assess.on { background: var(--accent-ink, #8A1F52); border-color: var(--accent-ink, #8A1F52); }
+  .slot-tab.locked { opacity: .45; cursor: not-allowed; }
+  .slot-tab .lock { font-size: 11px; }
+  .slot-timer {
+    margin-left: auto; font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: var(--accent-ink); background: var(--accent-soft);
+    border: 1px solid var(--accent); border-radius: 999px; padding: 5px 12px;
+  }
+  .slot-timer.hidden { display: none; }
+  .assess-note {
+    font-size: 12.5px; line-height: 1.55; color: var(--accent-ink);
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 9px 13px; margin: 0 0 10px;
+  }
+  .assess-note b { font-weight: 800; }
+
   /* ---------- 단계 진행 ---------- */
 
   .step { display: none; }
@@ -1449,6 +1513,15 @@
   <div class="grid">
 
     <main>
+      <div class="idbar">
+        <label for="studentId">학번</label>
+        <input type="text" id="studentId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="예) 10315">
+        <span class="idbar-note">공용 기기에서 <b>다른 학번</b>을 넣으면 이전 내용은 지워지고 새로 시작합니다. 학번은 이 기기에만 저장되고 전송·제출되지 않습니다.</span>
+      </div>
+
+      <div class="slotbar" id="slotbar" role="tablist" aria-label="탐구 고르기"></div>
+      <div class="assess-note" id="assessNote" hidden></div>
+
       <div class="intake">
         <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
@@ -1640,7 +1713,7 @@
 
       <p class="privacy">
         <span class="saved" id="savedNote">작성한 내용은 이 기기에 자동 저장됩니다.</span>
-        <b>이름과 학번은 적지 마세요.</b> 이 점검표는 인터넷으로 아무 데도 전송하지 않습니다.
+        <b>계획서 칸에는 이름 등 개인정보를 적지 마세요.</b> 학번은 이 기기에서 학생을 구분하는 데만 쓰이며, 이 점검표는 인터넷으로 아무 데도 전송하지 않습니다.
         입력한 내용은 이 브라우저에만 저장되므로, 다른 기기에서는 이어서 쓸 수 없습니다.
       </p>
     </main>
@@ -1731,6 +1804,20 @@
   </div>
 </div>
 
+<div class="idgate" id="idgate" hidden role="dialog" aria-labelledby="gateTitle" aria-modal="true">
+  <div class="idgate-card">
+    <p class="idgate-title" id="gateTitle">학번을 입력하세요</p>
+    <p class="idgate-sub">학번을 넣으면 그 학번으로 저장해 둔 <b>탐구 1·2·3</b>을 다시 불러옵니다.
+       <b>자유탐구(수행평가)</b>는 늘 새로 시작합니다.</p>
+    <input type="text" id="gateId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="예) 10315">
+    <div class="idgate-act">
+      <button type="button" id="gateSkip">학번 없이 시작</button>
+      <button type="button" class="primary" id="gateStart">시작하기</button>
+    </div>
+    <p class="idgate-note">학번은 이 기기에만 저장되고, 인터넷으로 전송하거나 제출 파일에 넣지 않습니다.</p>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1738,9 +1825,40 @@
   'use strict';
 
   var FIELDS = ['topic', 'hypothesis', 'iv', 'dv', 'cv', 'materials', 'procedure', 'predict', 'safety'];
-  var STORE = 'inquiry-plan-v1';
-  var STORE_IMG = 'inquiry-plan-v1-img';   // 실험 장치 그림은 용량이 커서 따로 저장합니다.
-  var deviceImg = '';                       // 실험 장치 그림·사진 (데이터 URI, 선택)
+  // 수행평가를 위해 여러 탐구를 따로 저장합니다.
+  //   · 탐구 1·2·3 — 연습(일반 모드)
+  //   · 자유탐구   — 수행평가(과정 기록·타이머·잠금이 켜지는 모드)
+  var SLOTS = [
+    { k: 't1',   label: '탐구 1' },
+    { k: 't2',   label: '탐구 2' },
+    { k: 't3',   label: '탐구 3' },
+    { k: 'free', label: '자유탐구', assess: true }
+  ];
+  var STORE_V = 'inquiry-plan-v2';
+  var STORE_CUR = STORE_V + '::cur';
+  var STORE_ID  = STORE_V + '::id';     // 마지막으로 쓴 학번(다음에 시작 화면에 미리 채웁니다)
+  // 저장은 '학번'별로 나눕니다. 탐구 1·2·3은 학번마다 따로 남아 다시 불러오고,
+  // 자유탐구(수행평가)는 학번을 넣을 때마다 새로 시작합니다.
+  var studentId = '';
+  function scopeId() { return studentId || '_'; }   // 학번이 없으면 '_'(공용)
+  function dataKey(k) { return STORE_V + '::u:' + scopeId() + '::' + k; }
+  function imgKey(k)  { return dataKey(k) + '::img'; }
+  var OLD_STORE = 'inquiry-plan-v1', OLD_IMG = 'inquiry-plan-v1-img';
+
+  var curSlot = 't1';
+  var deviceImg = '';    // 현재 슬롯의 실험 장치 그림·사진 (데이터 URI, 선택)
+  var freeMeta = null;   // 자유탐구 과정 기록 — 아래 blankMeta() 참고
+  var lastRec = {};      // 필드별 마지막으로 기록한 값 (같은 값 중복 기록 방지)
+  var recTimers = {};    // 필드별 수정 이력 기록 디바운스 타이머
+  var timerTick = 0;     // 자유탐구 경과 시간 표시용 setInterval 핸들
+
+  function isAssess(k) { return k === 'free'; }
+  function slotOf(k) { for (var i = 0; i < SLOTS.length; i++) if (SLOTS[i].k === k) return SLOTS[i]; return SLOTS[0]; }
+
+  // 자유탐구 과정 기록: 시작·제출 시각, 총 시간, 단계별 완성 시각, 스스로 고친 횟수, 수정 이력.
+  function blankMeta() {
+    return { startedAt: 0, submitted: false, submittedAt: 0, stepDoneAt: {}, fixCount: 0, revisions: [] };
+  }
 
   var el = {};
   FIELDS.forEach(function (id) { el[id] = document.getElementById(id); });
@@ -2473,6 +2591,9 @@
         var key = g.name + '#' + idx;
         var was = prevItemState[key];
         var justOk = it[0] === 'ok' && was !== undefined && was !== 'ok';
+        // 자유탐구에서는 '확인 필요·위험'을 스스로 고쳐 통과시킨 횟수를 셉니다.
+        if (justOk && (was === 'ask' || was === 'danger') && isAssess(curSlot) && freeMeta)
+          freeMeta.fixCount++;
         prevItemState[key] = it[0];
         html += '<li class="item ' + it[0] + (justOk ? ' just-ok' : '') +
           '"><span class="dot"></span><span>' + it[1] + '</span></li>';
@@ -2499,6 +2620,9 @@
         // 방금 도장이 찍힌 순간에만 톡 찍히는 효과를 줍니다.
         if (!wasStamped) { li.classList.add('stamp-now'); justDone.push(i); }
         else li.classList.remove('stamp-now');
+        // 자유탐구에서는 각 단계를 처음 완성한 시각을 기록합니다.
+        if (isAssess(curSlot) && freeMeta && freeMeta.startedAt && !freeMeta.stepDoneAt[s.id])
+          freeMeta.stepDoneAt[s.id] = Math.round(elapsedMs() / 1000);
       }
     });
 
@@ -2601,6 +2725,41 @@
 
   var MARK = { ok: '통과', ask: '확인', todo: '미작성', danger: '위험' };
 
+  function clockOf(ms) {
+    var n = new Date(ms), p = function (x) { return ('0' + x).slice(-2); };
+    return p(n.getHours()) + ':' + p(n.getMinutes());
+  }
+  function mmss(sec) {
+    var m = Math.floor(sec / 60), s = sec % 60, p = function (x) { return ('0' + x).slice(-2); };
+    return p(m) + ':' + p(s);
+  }
+
+  // 자유탐구(수행평가) 과정 기록 — 걸린 시간·단계별 완성·스스로 고친 횟수·수정 이력.
+  function buildAssessHtml() {
+    if (!(isAssess(curSlot) && freeMeta && freeMeta.startedAt)) return '';
+    var m = freeMeta;
+    var steps = STEPS.filter(function (s) { return m.stepDoneAt[s.id] != null; })
+      .map(function (s) { return esc(s.label) + ' ' + mmss(m.stepDoneAt[s.id]); }).join(' · ') || '아직 완성한 단계가 없습니다';
+    var revs = m.revisions.length
+      ? '<ol style="list-style:none;margin:0;padding:0">' + m.revisions.map(function (rv) {
+          return '<li style="border-bottom:1px solid #eef1f3;padding:8px 0">' +
+            '<span style="font-family:monospace;color:#8a949d;font-size:12px">' + mmss(rv.t) + '</span> ' +
+            '<b style="color:#0d6e77">' + esc(rv.f) + '</b>' +
+            '<div style="white-space:pre-wrap;background:#f4f6f7;border-radius:5px;padding:6px 9px;margin-top:4px;font-size:13.5px">' +
+            esc(rv.v).replace(/\n/g, '<br>') + '</div></li>';
+        }).join('') + '</ol>'
+      : '<p class="none">수정한 기록이 없습니다.</p>';
+    return '<h2 class="newpage">Ⅲ. 수행평가 과정 기록</h2>' +
+      '<p class="pagehead">자유탐구 · 작성 과정 기록</p>' +
+      '<div class="sum"><span>시작 <b>' + clockOf(m.startedAt) + '</b></span>' +
+      (m.submitted ? '<span>제출 <b>' + clockOf(m.submittedAt) + '</b></span>' : '') +
+      '<span>걸린 시간 <b>' + fmtElapsed(elapsedMs()) + '</b></span>' +
+      '<span>스스로 고친 횟수 <b>' + m.fixCount + '회</b></span></div>' +
+      '<p style="font-size:13.5px;color:#55606a;margin:0 0 16px">단계별 완성 시각(시작 후): ' + steps + '</p>' +
+      '<h3 style="font-size:14px;margin:20px 0 8px;color:#16191c">고쳐 온 과정 · 수정 이력 (' + m.revisions.length + '번)</h3>' +
+      revs;
+  }
+
   function buildReport(withReview) {
     var r = analyze();
     var t = stamp();
@@ -2684,6 +2843,7 @@
       (withReview ? warn : '') +
       (withReview ? '<h2>Ⅰ. 계획서 전문</h2>' : '') + plan +
       reviewBlock +
+      (withReview ? buildAssessHtml() : '') +
       '<footer>' + footer + '</footer></body></html>';
   }
 
@@ -2735,6 +2895,27 @@
       out.push(THIN,
         '이 점검 결과는 계획서의 형식을 자동으로 확인한 것입니다.',
         '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.');
+    }
+
+    // 자유탐구(수행평가)라면 작성 과정 기록을 함께 담습니다.
+    if (withReview && isAssess(curSlot) && freeMeta && freeMeta.startedAt) {
+      var m = freeMeta;
+      out.push('', RULE, 'Ⅲ. 수행평가 과정 기록', RULE, '');
+      out.push('시작 ' + clockOf(m.startedAt) +
+        (m.submitted ? '   제출 ' + clockOf(m.submittedAt) : '') +
+        '   걸린 시간 ' + fmtElapsed(elapsedMs()) +
+        '   스스로 고친 횟수 ' + m.fixCount + '회');
+      var steps = STEPS.filter(function (s) { return m.stepDoneAt[s.id] != null; })
+        .map(function (s) { return s.label + ' ' + mmss(m.stepDoneAt[s.id]); }).join(' · ') || '(없음)';
+      out.push('단계별 완성 시각(시작 후): ' + steps, '');
+      out.push(THIN, '고쳐 온 과정 · 수정 이력 (' + m.revisions.length + '번)', THIN);
+      if (m.revisions.length)
+        m.revisions.forEach(function (rv) {
+          out.push('[' + mmss(rv.t) + '] ' + rv.f);
+          out.push(rv.v.split('\n').map(function (x) { return '    ' + x; }).join('\n'));
+        });
+      else out.push('  (수정한 기록이 없습니다.)');
+      out.push('');
     }
     out.push('작성자 정보는 수집하지 않습니다.');
 
@@ -2792,7 +2973,8 @@
     try {
       var d = { at: new Date().toISOString() };
       FIELDS.forEach(function (k) { d[k] = el[k].value; });
-      localStorage.setItem(STORE, JSON.stringify(d));
+      if (isAssess(curSlot) && freeMeta) d.meta = freeMeta;
+      localStorage.setItem(dataKey(curSlot), JSON.stringify(d));
 
       var any = FIELDS.some(function (k) { return el[k].value.trim() !== ''; });
       note.textContent = any ? '이 기기에 자동 저장됨 · ' + clock() : '작성한 내용은 이 기기에 자동 저장됩니다.';
@@ -2809,23 +2991,218 @@
     return p(n.getHours()) + ':' + p(n.getMinutes());
   }
 
-  function load() {
+  // 예전(단일 계획서) 저장분을 처음 한 번 탐구 1로 옮겨 옵니다.
+  function migrateOld() {
     try {
-      var raw = localStorage.getItem(STORE);
-      if (!raw) return;
-      var d = JSON.parse(raw);
-      FIELDS.forEach(function (k) { if (typeof d[k] === 'string') el[k].value = d[k]; });
-      if (d.at) {
-        var t = new Date(d.at), p = function (x) { return ('0' + x).slice(-2); };
-        document.getElementById('savedNote').textContent =
-          '이 기기에 저장해 둔 내용을 불러왔습니다 · ' +
-          (t.getMonth() + 1) + '월 ' + t.getDate() + '일 ' + p(t.getHours()) + ':' + p(t.getMinutes());
+      if (localStorage.getItem(dataKey('t1'))) return;       // 이미 새 방식으로 저장됨
+      var old = localStorage.getItem(OLD_STORE);
+      if (old) {
+        localStorage.setItem(dataKey('t1'), old);
+        localStorage.removeItem(OLD_STORE);
       }
-    } catch (e) { /* 저장된 내용을 읽지 못하면 빈 양식으로 시작합니다 */ }
+      var oldImg = localStorage.getItem(OLD_IMG);
+      if (oldImg) {
+        localStorage.setItem(imgKey('t1'), oldImg);
+        localStorage.removeItem(OLD_IMG);
+      }
+    } catch (e) { /* 옮기지 못해도 새로 시작하면 됩니다 */ }
+  }
+
+  // 현재 슬롯의 저장분을 화면에 펼칩니다. 저장된 내용이 없으면 빈 양식이 됩니다.
+  function loadSlot() {
+    FIELDS.forEach(function (k) { el[k].value = ''; });
+    deviceImg = '';
+    freeMeta = isAssess(curSlot) ? blankMeta() : null;
+    var note = document.getElementById('savedNote');
     try {
-      var img = localStorage.getItem(STORE_IMG);
+      var raw = localStorage.getItem(dataKey(curSlot));
+      var any = false;
+      if (raw) {
+        var d = JSON.parse(raw);
+        FIELDS.forEach(function (k) { if (typeof d[k] === 'string') el[k].value = d[k]; });
+        if (isAssess(curSlot) && d.meta) freeMeta = d.meta;
+        any = FIELDS.some(function (k) { return el[k].value.trim(); });
+        if (d.at && any) {
+          var t = new Date(d.at), p = function (x) { return ('0' + x).slice(-2); };
+          note.textContent = '이 기기에 저장해 둔 내용을 불러왔습니다 · ' +
+            (t.getMonth() + 1) + '월 ' + t.getDate() + '일 ' + p(t.getHours()) + ':' + p(t.getMinutes());
+        } else {
+          note.textContent = '작성한 내용은 이 기기에 자동 저장됩니다.';
+        }
+      } else {
+        note.textContent = '작성한 내용은 이 기기에 자동 저장됩니다.';
+      }
+    } catch (e) { /* 읽지 못하면 빈 양식으로 시작합니다 */ }
+    try {
+      var img = localStorage.getItem(imgKey(curSlot));
       if (img) deviceImg = img;
     } catch (e) { /* 그림을 못 읽어도 나머지는 그대로 씁니다 */ }
+    // 마지막 수정 이력의 값을 기준값으로 삼아, 불러온 직후 같은 값이 다시 기록되지 않게 합니다.
+    lastRec = {};
+    FIELDS.forEach(function (k) { lastRec[k] = el[k].value; });
+  }
+
+  // 탐구 슬롯을 바꿉니다. 자유탐구를 제출하기 전에는 다른 탐구로 넘어갈 수 없습니다.
+  function switchSlot(k) {
+    if (k === curSlot) return;
+    if (isLocked(k)) {
+      toast('자유탐구를 제출하기 전에는 다른 탐구를 볼 수 없어요.');
+      return;
+    }
+    save();
+    curSlot = k;
+    try { localStorage.setItem(STORE_CUR, k); } catch (e) {}
+    loadSlot();
+    renderDeviceImg();
+    renderSlotBar();
+    if (isAssess(curSlot) && freeMeta && freeMeta.startedAt && !freeMeta.submitted) startTimer();
+    else stopTimer();
+    render();
+    goto(0);
+  }
+
+  // 자유탐구를 작성하기 시작하면(제출 전) 다른 탐구는 잠깁니다.
+  function isLocked(k) {
+    return isAssess(curSlot) && !isAssess(k) && freeMeta && freeMeta.startedAt && !freeMeta.submitted;
+  }
+
+  function fieldLabel(f) {
+    for (var i = 0; i < SECTIONS.length; i++) if (SECTIONS[i][1] === f) return SECTIONS[i][0];
+    return f;
+  }
+
+  /* ---------- 자유탐구 타이머 ---------- */
+  function elapsedMs() {
+    if (!freeMeta || !freeMeta.startedAt) return 0;
+    var end = (freeMeta.submitted && freeMeta.submittedAt) ? freeMeta.submittedAt : Date.now();
+    return Math.max(0, end - freeMeta.startedAt);
+  }
+  function fmtElapsed(ms) {
+    var s = Math.floor(ms / 1000), m = Math.floor(s / 60), h = Math.floor(m / 60);
+    var p = function (x) { return ('0' + x).slice(-2); };
+    return (h ? h + ':' : '') + p(m % 60) + ':' + p(s % 60);
+  }
+  function startTimer() {
+    stopTimer();
+    timerTick = setInterval(function () {
+      var t = document.getElementById('slotTimer');
+      if (t && isAssess(curSlot) && freeMeta && freeMeta.startedAt && !freeMeta.submitted)
+        t.textContent = '⏱ ' + fmtElapsed(elapsedMs());
+      else stopTimer();
+    }, 1000);
+  }
+  function stopTimer() { if (timerTick) { clearInterval(timerTick); timerTick = 0; } }
+
+  /* ---------- 슬롯 탭 바 그리기 ---------- */
+  function renderSlotBar() {
+    var bar = document.getElementById('slotbar');
+    if (!bar) return;
+    bar.innerHTML = '';
+    SLOTS.forEach(function (s) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      var locked = isLocked(s.k);
+      b.className = 'slot-tab' + (s.assess ? ' assess' : '') +
+        (s.k === curSlot ? ' on' : '') + (locked ? ' locked' : '');
+      b.innerHTML = (s.assess ? '⭐ ' : '') + s.label + (locked ? ' <span class="lock">🔒</span>' : '');
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', s.k === curSlot ? 'true' : 'false');
+      b.addEventListener('click', function () { switchSlot(s.k); });
+      bar.appendChild(b);
+    });
+    var tm = document.createElement('span');
+    tm.id = 'slotTimer';
+    var showTimer = isAssess(curSlot) && freeMeta && freeMeta.startedAt && !freeMeta.submitted;
+    tm.className = 'slot-timer' + (showTimer ? '' : ' hidden');
+    tm.textContent = '⏱ ' + fmtElapsed(elapsedMs());
+    bar.appendChild(tm);
+
+    var note = document.getElementById('assessNote');
+    if (isAssess(curSlot)) {
+      note.hidden = false;
+      note.innerHTML = (freeMeta && freeMeta.submitted)
+        ? '✅ <b>제출을 마쳤습니다.</b> 이제 다른 탐구도 볼 수 있어요. 걸린 시간과 고쳐 온 과정은 제출 파일에 담겼습니다.'
+        : '📝 <b>자유탐구(수행평가)</b> 모드예요. 작성을 시작하면 제출 전까지 탐구 1·2·3을 볼 수 없고, 걸린 시간과 <b>고쳐 온 과정이 모두 기록</b>됩니다. 다 되면 <b>“계획서 + 점검 결과 저장”</b>으로 제출하세요.';
+    } else {
+      note.hidden = true;
+    }
+  }
+
+  /* ---------- 학번 (학번별 탐구 저장 · 자유탐구는 매번 새로) ---------- */
+  // 학번을 넣으면: 그 학번으로 저장해 둔 탐구 1·2·3을 불러오고,
+  //               자유탐구(수행평가)는 지워 새로 시작합니다.
+  function applyId(id) {
+    id = (id || '').trim();
+    // 연습(탐구 1·2·3)만 이전 학번 범위에 저장해 둡니다. 자유탐구는 남기지 않습니다.
+    if (!isAssess(curSlot)) save();
+    try { localStorage.removeItem(dataKey('free')); localStorage.removeItem(imgKey('free')); } catch (e) {}
+    studentId = id;
+    try { localStorage.setItem(STORE_ID, id); } catch (e) {}
+    // 새 학번의 자유탐구도 깨끗이 비워 늘 새로 시작하게 합니다.
+    try { localStorage.removeItem(dataKey('free')); localStorage.removeItem(imgKey('free')); } catch (e) {}
+    freeMeta = null; stopTimer();
+    curSlot = 't1';
+    try { localStorage.setItem(STORE_CUR, 't1'); } catch (e) {}
+    loadSlot(); renderDeviceImg(); renderSlotBar(); render(); goto(0);
+  }
+
+  // 위쪽 학번 칸을 직접 바꿨을 때 — 자유탐구 내용이 있으면 한 번 확인합니다.
+  function onIdChange() {
+    var input = document.getElementById('studentId');
+    var v = input.value.trim();
+    if (v === studentId) return;
+    var freeHas = false;
+    try {
+      var fr = localStorage.getItem(dataKey('free'));
+      freeHas = (isAssess(curSlot) && FIELDS.some(function (f) { return el[f].value.trim(); })) ||
+        (fr && FIELDS.some(function (f) { var d = JSON.parse(fr); return d[f] && String(d[f]).trim(); }));
+    } catch (e) {}
+    if (freeHas && !confirm('학번을 바꾸면 자유탐구(수행평가)에 쓴 내용은 지워지고,\n“' + (v || '공용') + '” 학번으로 저장해 둔 탐구 1·2·3을 불러옵니다. 계속할까요?')) {
+      input.value = studentId;
+      return;
+    }
+    applyId(v);
+    toast(v ? ('“' + v + '” 학번으로 시작합니다.') : '학번 없이 시작합니다.');
+  }
+
+  /* ---------- 첫 화면 학번 입력 ---------- */
+  function showIdGate() {
+    var gate = document.getElementById('idgate');
+    var input = document.getElementById('gateId');
+    if (!gate) return;
+    input.value = studentId;
+    gate.hidden = false;
+    setTimeout(function () { input.focus(); }, 60);
+  }
+  function submitIdGate() {
+    var v = document.getElementById('gateId').value.trim();
+    applyId(v);
+    document.getElementById('idgate').hidden = true;
+    var top = document.getElementById('studentId');
+    if (top) top.value = v;
+    toast(v ? ('“' + v + '” 학번으로 시작합니다. 자유탐구는 새로 시작해요.')
+            : '학번 없이 시작합니다.');
+  }
+
+  /* ---------- 자유탐구 과정 기록 ---------- */
+  // 작성 중 값이 바뀔 때마다(잠깐 멈추면) 그 버전을 이력으로 남깁니다.
+  function recordEdit(field) {
+    if (!isAssess(curSlot)) return;
+    if (!freeMeta) freeMeta = blankMeta();
+    if (!freeMeta.startedAt) {
+      freeMeta.startedAt = Date.now();
+      startTimer();
+      renderSlotBar();   // 시작하는 순간 타이머가 뜨고 다른 탐구가 잠깁니다.
+    }
+    clearTimeout(recTimers[field]);
+    recTimers[field] = setTimeout(function () {
+      if (!isAssess(curSlot) || !freeMeta) return;
+      var v = el[field].value;
+      if (v === lastRec[field]) return;
+      lastRec[field] = v;
+      freeMeta.revisions.push({ t: Math.round(elapsedMs() / 1000), f: fieldLabel(field), v: v });
+      save();
+    }, 1200);
   }
 
   /* ---------- 실험 장치 그림·사진 (선택) ---------- */
@@ -2861,8 +3238,8 @@
 
   function saveDeviceImg() {
     try {
-      if (deviceImg) localStorage.setItem(STORE_IMG, deviceImg);
-      else localStorage.removeItem(STORE_IMG);
+      if (deviceImg) localStorage.setItem(imgKey(curSlot), deviceImg);
+      else localStorage.removeItem(imgKey(curSlot));
     } catch (e) {
       // 저장 공간을 넘겼다면, 그림은 이번에 낼 파일에는 담기지만 다음에 열 때는 사라질 수 있습니다.
       toast('그림이 커서 자동 저장은 못 했어요. 이번 제출 파일에는 담깁니다.');
@@ -3872,10 +4249,13 @@
     if (!confirm('작성한 내용을 모두 지울까요? 되돌릴 수 없습니다.')) return;
     FIELDS.forEach(function (f) { el[f].value = ''; });
     deviceImg = ''; saveDeviceImg(); renderDeviceImg();
-    try { localStorage.removeItem(STORE); } catch (e) { /* 저장이 막혀 있어도 화면은 지워집니다 */ }
+    if (isAssess(curSlot)) { freeMeta = blankMeta(); stopTimer(); }
+    try { localStorage.removeItem(dataKey(curSlot)); } catch (e) { /* 저장이 막혀 있어도 화면은 지워집니다 */ }
+    lastRec = {};
     render();
+    renderSlotBar();
     goto(0);
-    toast('전체 내용을 지웠습니다.');
+    toast((isAssess(curSlot) ? '자유탐구 내용을' : slotOf(curSlot).label + ' 내용을') + ' 지웠습니다.');
   }
   var step = 0;
 
@@ -3923,7 +4303,9 @@
     toast._id = setTimeout(function () { t.classList.remove('show'); }, 1900);
   }
 
-  FIELDS.forEach(function (k) { el[k].addEventListener('input', render); });
+  FIELDS.forEach(function (k) {
+    el[k].addEventListener('input', function () { recordEdit(k); render(); });
+  });
 
   // 실험 과정 칸을 스크롤하면 뒤의 하이라이트도 같이 움직여야 합니다.
   el.procedure.addEventListener('scroll', function () {
@@ -3988,13 +4370,26 @@
   function doExport(withReview) {
     var kind = document.getElementById('fmt').value;
     showCaution(function () {
+      // 자유탐구에서 '계획서 + 점검 결과'를 저장하는 것이 곧 '제출'입니다.
+      // 제출하면 걸린 시간이 확정되고, 잠겨 있던 탐구 1·2·3이 다시 열립니다.
+      var justSubmitted = false;
+      if (isAssess(curSlot) && withReview && freeMeta && freeMeta.startedAt && !freeMeta.submitted) {
+        freeMeta.submitted = true;
+        freeMeta.submittedAt = Date.now();
+        stopTimer();
+        save();
+        renderSlotBar();
+        justSubmitted = true;
+      }
       saveReport(kind, withReview);
       if (kind === 'pdf')
         toast('저장 창이 열리면 “PDF로 저장”을 선택하세요.');
+      else if (justSubmitted)
+        toast('자유탐구를 제출했습니다. 이제 다른 탐구도 볼 수 있어요.');
       else
         toast((withReview ? '계획서와 점검 결과를 ' : '계획서를 ') +
           '.' + FORMATS[kind].ext + ' 파일로 저장했습니다.');
-    }, '확인하고 저장');
+    }, isAssess(curSlot) && withReview ? '제출하기' : '확인하고 저장');
   }
   document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
   document.getElementById('btnExportPlan').addEventListener('click', function () { doExport(false); });
@@ -4005,15 +4400,34 @@
     e.target.value = '';
   });
 
+  // 학번 — 위쪽 칸에서 바꾸면 그 학번의 탐구를 불러오고 자유탐구는 새로 시작합니다.
+  document.getElementById('studentId').addEventListener('change', onIdChange);
+  // 첫 화면 학번 게이트
+  document.getElementById('gateStart').addEventListener('click', submitIdGate);
+  document.getElementById('gateId').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') submitIdGate();
+  });
+  document.getElementById('gateSkip').addEventListener('click', function () {
+    document.getElementById('gateId').value = '';
+    submitIdGate();
+  });
+
   buildPicks();
   buildIdeas();
   buildExamples();
   buildBubbles();
   buildClearButtons();
   buildRail();
-  load();
+  migrateOld();
+  try { studentId = localStorage.getItem(STORE_ID) || ''; } catch (e) {}
+  try { var savedCur = localStorage.getItem(STORE_CUR); if (savedCur && slotOf(savedCur).k === savedCur) curSlot = savedCur; } catch (e) {}
+  document.getElementById('studentId').value = studentId;
+  loadSlot();
+  renderSlotBar();
   renderDeviceImg();
   goto(0);
+  // 첫 화면에서 학번을 물어봅니다. 시작하면 그 학번의 탐구를 불러오고 자유탐구는 새로 시작합니다.
+  showIdGate();
 
   /* ---------- 홈 화면에 추가(PWA) ---------- */
   // 서비스워커를 등록해 두면, 한 번 연 뒤에는 인터넷 없이도 열립니다.
