@@ -2929,9 +2929,19 @@
     txt:  { ext: 'txt',  mime: 'text/plain;charset=utf-8',       build: buildText }
   };
 
+  // 기본 파일 이름 — 사용자가 저장할 때 원하는 이름으로 바꿀 수 있습니다.
+  function defaultName(withReview) {
+    return (withReview ? '탐구계획서_점검결과_' : '탐구계획서_') + stamp().file;
+  }
+  // 파일 이름에 쓸 수 없는 문자를 정리합니다.
+  function cleanName(name, withReview) {
+    name = (name || '').trim().replace(/[\\/:*?"<>|]/g, '_').replace(/\.+$/, '');
+    return name || defaultName(withReview);
+  }
+
   // PDF는 파일로 바로 만들 수 없어, 계획서를 숨은 창에 담아 브라우저의
   // '인쇄 → PDF로 저장' 기능으로 넘깁니다. 이 앱 밖으로는 아무것도 보내지 않습니다.
-  function printReport(withReview) {
+  function printReport(withReview, name) {
     var frame = document.createElement('iframe');
     frame.setAttribute('aria-hidden', 'true');
     frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
@@ -2940,6 +2950,8 @@
     idoc.open();
     idoc.write(FORMATS.pdf.build(withReview));
     idoc.close();
+    // 인쇄 창(‘PDF로 저장’)이 이 이름을 기본 파일명으로 제안하도록 제목을 바꿉니다.
+    if (name) { try { idoc.title = name; } catch (e) {} }
     // 글꼴·그림이 자리를 잡을 시간을 준 뒤 인쇄 창을 엽니다.
     setTimeout(function () {
       frame.contentWindow.focus();
@@ -2950,15 +2962,17 @@
   }
 
   // withReview: true면 점검 결과까지, false면 작성 내용만 저장합니다.
-  function saveReport(kind, withReview) {
+  // name: 저장할 파일 이름(확장자 제외). 없으면 기본 이름을 씁니다.
+  function saveReport(kind, withReview, name) {
     var f = FORMATS[kind] || FORMATS.html;
-    if (f.print) { printReport(withReview); return; }
+    name = cleanName(name, withReview);
+    if (f.print) { printReport(withReview, name); return; }
     // 앞의 BOM은 워드·엑셀·메모장이 한글을 깨뜨리지 않고 열게 해 줍니다.
     var blob = new Blob(['﻿' + f.build(withReview)], { type: f.mime });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = (withReview ? '탐구계획서_점검결과_' : '탐구계획서_') + stamp().file + '.' + f.ext;
+    a.download = name + '.' + f.ext;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -4370,6 +4384,11 @@
   function doExport(withReview) {
     var kind = document.getElementById('fmt').value;
     showCaution(function () {
+      // 저장할 파일 이름을 먼저 정합니다(확장자는 자동으로 붙습니다).
+      var name = prompt('저장할 파일 이름을 정하세요.\n(확장자는 자동으로 붙습니다)', defaultName(withReview));
+      if (name === null) return;   // 취소하면 저장·제출하지 않습니다.
+      name = cleanName(name, withReview);
+
       // 자유탐구에서 '계획서 + 점검 결과'를 저장하는 것이 곧 '제출'입니다.
       // 제출하면 걸린 시간이 확정되고, 잠겨 있던 탐구 1·2·3이 다시 열립니다.
       var justSubmitted = false;
@@ -4381,14 +4400,13 @@
         renderSlotBar();
         justSubmitted = true;
       }
-      saveReport(kind, withReview);
+      saveReport(kind, withReview, name);
       if (kind === 'pdf')
-        toast('저장 창이 열리면 “PDF로 저장”을 선택하세요.');
+        toast('저장 창이 열리면 “PDF로 저장”을 선택하세요. 파일 이름: ' + name);
       else if (justSubmitted)
-        toast('자유탐구를 제출했습니다. 이제 다른 탐구도 볼 수 있어요.');
+        toast('자유탐구를 “' + name + '.' + FORMATS[kind].ext + '”(으)로 제출했습니다.');
       else
-        toast((withReview ? '계획서와 점검 결과를 ' : '계획서를 ') +
-          '.' + FORMATS[kind].ext + ' 파일로 저장했습니다.');
+        toast('“' + name + '.' + FORMATS[kind].ext + '” 파일로 저장했습니다.');
     }, isAssess(curSlot) && withReview ? '제출하기' : '확인하고 저장');
   }
   document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
