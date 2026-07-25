@@ -2008,6 +2008,18 @@
   //   · 서술문:     체지방량(kg)이 줄어든다.  ← 변인이 아니라 가설
   var NOTVAR = /(에 따른|에 따라|관계|미치는|비교해|알아보|조사해|어떻게 될|얼마나 될|일까|인가|\?|것인가)|[가-힣](다|요)[.!]?\s*$/;
 
+  // 값을 여러 개로 나눈 흔적이 있는가 — 숫자든(10/30/50mL) 이름이든(나무/유리/사포).
+  // 마찰력 실험의 '바닥 재질'처럼 범주형 조작 변인도 이렇게 값을 나눕니다.
+  function hasLevels(t) {
+    if (!t) return false;
+    if (/단계|가지|여러 ?가지|종류별|각각|각기/.test(t)) return true;
+    // 슬래시·가운뎃점·물결로 나눈 경우 (앞뒤 공백·단위 기호 허용): 나무/유리, 20℃ ~ 80℃
+    if (/[가-힣A-Za-z0-9℃℉%°)]\s*[\/·~]\s*[(가-힣A-Za-z0-9]/.test(t)) return true;
+    // 콤마로 셋 이상 나열: 빨강, 파랑, 초록
+    if ((t.match(/[,，]/g) || []).length >= 2) return true;
+    return false;
+  }
+
   function analyze() {
     var d = {};
     FIELDS.forEach(function (k) { d[k] = val(k); });
@@ -2172,18 +2184,21 @@
         addV('ok', '내가 값을 정할 수 있는 조건입니다.');
       }
 
-      if (/[,、]|\s와\s|\s과\s|그리고|및/.test(d.iv))
+      // '나무/유리/사포'처럼 값을 나눈 것은 변인이 둘인 게 아니라 한 변인을 여러 값으로 나눈 것입니다.
+      var levelsHere = hasLevels(d.iv);
+      var ivMulti = /[가-힣]{2,}\s*[와과]\s+[가-힣]{2,}/.test(d.iv) || /그리고|및/.test(d.iv) ||
+                    (/[,、]/.test(d.iv) && !levelsHere);
+      if (ivMulti)
         addV('ask', '조작 변인이 둘 이상으로 보입니다. 한 번에 하나만 바꿔야 무엇 때문에 결과가 달라졌는지 알 수 있습니다. 어느 것을 고를까요?', 'iv');
       else
         addV('ok', '바꾸는 조건이 하나로 정해졌습니다.');
 
       // 여러 값으로 나눈 계획은 조작 변인 칸이나 실험 과정 어느 쪽에 적어도 인정합니다.
-      var levelsHere = /[\/,~]\s*\d|\d\s*[\/,~]|단계|가지/.test(d.iv);
-      var levelsInProc = d.procedure && /(다르게|각각|씩|~|\/|단계|조건 [1-9]|[1-9]\s*가지)/.test(d.procedure);
+      var levelsInProc = d.procedure && (hasLevels(d.procedure) || /다르게|씩|조건 [1-9]/.test(d.procedure));
       if (levelsHere || levelsInProc)
         addV('ok', '조작 변인을 여러 값으로 나눈 것이 보입니다.');
       else if (d.procedure)
-        addV('ask', '조작 변인을 <b>몇 가지 값</b>으로 다르게 할 건가요? 예를 들어 10mL / 30mL / 50mL처럼 적어 보세요.', 'iv');
+        addV('ask', '조작 변인을 <b>몇 가지 값</b>으로 다르게 할 건가요? 나무/유리/사포처럼, 또는 10mL / 30mL / 50mL처럼 적어 보세요.', 'iv');
     }
 
     // 종속 변인 — 숫자로 재서 기록할 수 있는가?
@@ -2366,19 +2381,19 @@
     var railState = {}, railDone = {};
 
     result.groups.forEach(function (g) {
-      var worst = 'ok', okc = 0;
+      var worst = 'ok', okc = 0, hasFix = false;
       g.items.forEach(function (it) {
         counts[it[0]]++;
         if (it[0] === 'ok') okc++;
-        // 'ask'·'danger'가 붙은 칸은 학생 글씨를 빨간색으로 바꿉니다.
-        if (it[2] && (it[0] === 'ask' || it[0] === 'danger')) needFix[it[2]] = true;
+        // 'ask'·'danger'가 붙은 칸은 학생 글씨를 빨간색으로 바꿉니다(고쳐야 할 것).
+        if (it[2] && (it[0] === 'ask' || it[0] === 'danger')) { needFix[it[2]] = true; hasFix = true; }
         if (it[0] === 'danger') worst = 'danger';
         else if (it[0] === 'todo' && worst !== 'danger') worst = 'todo';
         else if (it[0] === 'ask' && worst === 'ok') worst = 'ask';
       });
       railState[g.name] = worst;
-      // 도장 조건: 통과 항목이 있고, 미작성·위험이 없음(조언은 허용).
-      railDone[g.name] = okc > 0 && worst !== 'todo' && worst !== 'danger';
+      // 도장 조건: 통과 항목이 있고, 미작성·위험·고쳐야 할 빨간 글씨가 하나도 없을 때만.
+      railDone[g.name] = okc > 0 && worst !== 'todo' && worst !== 'danger' && !hasFix;
 
       // 화면에서는 지금 단계의 항목만, 인쇄할 때는 전부 보여 줍니다.
       if (!printMode && g.name !== here) return;
@@ -2417,12 +2432,20 @@
       }
     });
 
-    // 단계가 방금 완성되어 도장이 찍히면, 바로 꽃가루와 응원 메시지를 띄웁니다.
+    // 단계가 방금 완성되어 도장이 찍히면, 타이핑이 멈춘 뒤에 꽃가루와 응원 메시지를 띄웁니다.
+    // 작성 중 순간적으로 조건이 맞아 미리 터지지 않도록, 입력이 멎을 때까지 미룹니다.
     // (첫 렌더에서 이미 완성돼 있던 단계는 축하하지 않습니다.)
-    if (railInited && justDone.length) {
-      var ci = justDone.indexOf(step) !== -1 ? step : justDone[0];
-      stepConfetti();
-      showPraise(STEPS[ci].praise, STEPS[ci].cheer);
+    if (railInited && justDone.length)
+      celebrate.want = justDone.indexOf(step) !== -1 ? step : justDone[0];
+    if (celebrate.want !== null) {
+      clearTimeout(celebrate.timer);
+      var wantStep = celebrate.want;
+      celebrate.timer = setTimeout(function () {
+        celebrate.want = null;
+        // 기다리는 동안 내용이 바뀌어 완성이 풀렸으면 축하하지 않습니다.
+        var li = document.querySelectorAll('#rail li')[wantStep];
+        if (li && li.classList.contains('stamped')) runCelebrate(wantStep);
+      }, 700);
     }
     railInited = true;
 
@@ -3138,6 +3161,12 @@
   var lastLevelNum = 1, levelInited = false;
   var prevItemState = {};   // 항목별 직전 상태 — 방금 통과한 항목을 톡 튀게 하는 데 씁니다.
   var railInited = false;   // 첫 렌더(저장된 계획서 불러오기)에서는 축하하지 않습니다.
+  var celebrate = { want: null, timer: 0 };  // 완성 축하 — 타이핑이 멈춘 뒤에 띄웁니다.
+
+  function runCelebrate(i) {
+    stepConfetti();
+    showPraise(STEPS[i].praise, STEPS[i].cheer);
+  }
 
   function renderLevel(counts) {
     var total = counts.ok + counts.ask + counts.todo + counts.danger;

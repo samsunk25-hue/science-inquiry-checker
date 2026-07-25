@@ -126,6 +126,39 @@ console.log('\n[ 변인 칸에 서술문을 쓴 경우 ]');
   line(got === want, want ? '문장' : '값', t.slice(0, 26), got ? '문장으로 감지' : '값으로 통과');
 });
 
+// ── 값을 여러 개로 나눈 흔적 (범주형 조작 변인 포함) ────────
+eval(grab(/function hasLevels\([\s\S]*?\n  \}/, 'hasLevels'));
+
+console.log('\n[ 값을 나눈 것으로 인정해야 하는 것 ]');
+[
+  '나무/유리/사포',            // 마찰력 — 범주형 바닥 재질
+  '바닥 재질(나무/유리/고무)',
+  '10mL / 30mL / 50mL',
+  '빨강, 파랑, 초록',          // 콤마 셋 이상
+  '20℃ ~ 80℃',
+  '세 가지 종류의 흙',
+  '경사면을 각각 다르게'
+].forEach(t => line(hasLevels(t), '나눔', t.slice(0, 24), hasLevels(t) ? '' : '← 나눈 것을 못 알아봄'));
+
+console.log('\n[ 값을 안 나눈 것 — 나눔으로 보면 안 되는 것 ]');
+[
+  '바닥 재질',
+  '물의 양',
+  '빛의 세기, 물의 양'         // 콤마 하나 = 서로 다른 두 변인
+].forEach(t => line(!hasLevels(t), '단일', t.slice(0, 24), hasLevels(t) ? '← 나눈 것으로 잘못 봄' : ''));
+
+// 조작 변인이 '둘 이상'인지 판정(콤마 셋 이상 나열은 값을 나눈 것)
+const ivMulti = iv => /[가-힣]{2,}\s*[와과]\s+[가-힣]{2,}/.test(iv) || /그리고|및/.test(iv) ||
+                      (/[,、]/.test(iv) && !hasLevels(iv));
+
+console.log('\n[ 조작 변인 — 둘 이상으로 지적해야 하는 것 ]');
+['빛의 세기와 물의 양', '온도 그리고 농도', '빛의 세기, 물의 양']
+  .forEach(t => line(ivMulti(t), '둘', t, ivMulti(t) ? '' : '← 못 잡음'));
+
+console.log('\n[ 조작 변인 — 하나로 봐야 하는 것 (값 나열 포함) ]');
+['바닥 재질', '바닥 재질(나무/유리/사포)', '흙의 종류: 모래, 진흙, 자갈', '물의 양']
+  .forEach(t => line(!ivMulti(t), '하나', t.slice(0, 24), ivMulti(t) ? '← 둘로 잘못 지적' : ''));
+
 // ── 비속어 · 줄임말 필터 ────────────────────────────────
 eval(grab(/var PROFANITY = new RegExp\(\[[\s\S]*?\]\.join\('\|'\)\);/, 'PROFANITY'));
 eval(grab(/var JAMO = \/.*?\/;/, 'JAMO'));
