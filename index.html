@@ -1057,6 +1057,352 @@
     color: var(--accent-ink);
   }
 
+  /* 선생님용 요약 열기 버튼 */
+  .intake-teacher {
+    flex-shrink: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 7px 13px;
+    cursor: pointer;
+  }
+  .intake-teacher:hover { border-color: var(--accent); color: var(--accent-ink); }
+
+  /* ---------- 안전 데이터 카드 (MSDS 요약) ---------- */
+  .msds { display: flex; flex-direction: column; gap: 10px; }
+  .msds-card {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 7px 7px 0;
+    background: var(--surface-2);
+    padding: 11px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .msds-card.mix, .msds-card.ban {
+    border-left-color: var(--danger);
+    background: var(--danger-soft);
+  }
+  .msds-name {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+  .msds-card.mix .msds-name, .msds-card.ban .msds-name { color: var(--danger); }
+  .msds-ban {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--danger);
+    color: #fff;
+  }
+  .msds-tags { margin: 0; display: flex; flex-wrap: wrap; gap: 5px; }
+  .msds-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+  .msds-row { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+  .msds-row b {
+    display: inline-block;
+    min-width: 62px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    font-weight: 700;
+  }
+  .msds-gear-lab {
+    margin: 4px 0 0;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+  }
+  .msds-gear { display: flex; flex-wrap: wrap; gap: 6px; }
+  .msds-foot {
+    margin: 2px 0 0;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-faint);
+    padding: 8px 10px;
+    background: var(--surface-2);
+    border-radius: 6px;
+  }
+
+  /* ---------- 오차 원인 미리 보기 ---------- */
+  .err-head {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .err-head b { color: var(--warn); }
+  .err-head span { font-weight: 400; color: var(--ink-faint); font-size: 12px; }
+  .err-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .err-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--line-strong);
+  }
+  .err-item.sys { border-left-color: var(--warn); }
+  .err-item.var { border-left-color: var(--accent); }
+  .err-kind {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .err-item.sys .err-kind { background: var(--warn-soft); color: var(--warn); }
+  .err-item.var .err-kind { background: var(--accent-soft); color: var(--accent-ink); }
+  .err-item b { font-size: 13px; color: var(--ink); font-weight: 800; }
+  .err-why { font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+  .err-ask { font-size: 12.5px; line-height: 1.55; color: var(--accent-ink); }
+  .err-foot {
+    margin: 8px 0 0;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-faint);
+  }
+
+  /* 그림 속 기구 표시 — '다른 기구 찾기' 접힘 */
+  .app-more { margin-top: 4px; }
+  .app-more summary {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    padding: 4px 0;
+  }
+  .app-more summary:hover { color: var(--accent-ink); }
+  .app-more .pick-group { margin-top: 6px; }
+
+  /* ---------- 맥락 맞춤형 탐구 틀 ---------- */
+  .gen-card {
+    margin-top: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gen-row {
+    margin: 0;
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .gen-row > span:nth-child(2) { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; }
+  /* [빈칸] — 학생이 채울 자리 (힌트 카드와 같은 모양) */
+  .gen-row em {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 1px 7px;
+    margin: 0 1px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px dashed var(--line-strong);
+    color: var(--ink-soft);
+  }
+  .gen-put {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    padding: 3px 9px;
+    cursor: pointer;
+  }
+  .gen-put:hover { filter: brightness(.97); }
+  .gen-act { display: flex; justify-content: flex-end; padding-top: 4px; border-top: 1px solid var(--line); }
+  .gen-all {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 6px 13px;
+    cursor: pointer;
+  }
+  .gen-all:hover { filter: brightness(1.06); }
+  .gen-more { display: flex; justify-content: flex-start; margin-top: 8px; }
+
+  /* ---------- 교육과정 이어 붙이기 ---------- */
+  .cur {
+    padding: 14px 20px 15px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .cur-title {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .cur-title span {
+    font-size: 9.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    letter-spacing: .04em;
+  }
+  .cur-row { margin: 0; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .cur-lab {
+    width: 100%;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .cur-chip {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink-faint);
+    cursor: help;
+  }
+  .cur-chip.on { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+  .cur-chip.area { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+  .cur-note { margin: 3px 0 0; font-size: 11px; line-height: 1.5; color: var(--ink-faint); }
+
+  /* 점검표 항목의 '앞뒤 맞추기' 표 */
+  .item .lg {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .06em;
+    font-weight: 700;
+    padding: 1px 6px;
+    margin-right: 6px;
+    border-radius: 3px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    vertical-align: 1px;
+  }
+
+  /* ---------- 선생님용 1차 분석 요약 ---------- */
+  .dash {
+    position: fixed; inset: 0; z-index: 70;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(36, 25, 32, .5);
+    padding: 16px;
+  }
+  .dash-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: min(760px, 100%);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .dash-head {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dash-title { margin: 0 0 3px; font-size: 15.5px; font-weight: 800; color: var(--ink); }
+  .dash-sub { margin: 0; font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+  .dash-close {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 14px; color: var(--ink-soft);
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 6px; width: 30px; height: 30px; cursor: pointer;
+  }
+  .dash-close:hover { color: var(--accent-ink); border-color: var(--accent); }
+  .dash-body { overflow-y: auto; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .dash-act {
+    display: flex; gap: 8px; justify-content: flex-end;
+    padding: 12px 18px; border-top: 1px solid var(--line);
+  }
+  .dash-act .primary {
+    font-size: 13px; font-weight: 700; color: #fff;
+    background: var(--accent); border: 1px solid var(--accent);
+    border-radius: 6px; padding: 7px 15px; cursor: pointer;
+  }
+  .dash-empty { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  .dash-tot {
+    margin: 0; font-size: 12.5px; color: var(--ink-soft);
+    background: var(--surface-2); border-radius: 7px; padding: 9px 12px; line-height: 1.6;
+  }
+  .dash-tot b { color: var(--ink); }
+  .dash-item {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 13px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .dash-item.need { border-left-color: var(--danger); background: var(--danger-soft); }
+  .dash-item.watch { border-left-color: var(--warn); background: var(--warn-soft); }
+  .dash-item.good { border-left-color: var(--ok); }
+  .dash-who {
+    margin: 0; font-size: 13.5px; font-weight: 800; color: var(--ink);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .dash-slot {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 3px;
+    background: var(--surface-2); color: var(--ink-soft);
+  }
+  .dash-flag {
+    font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+  }
+  .dash-flag.need { background: var(--danger); color: #fff; }
+  .dash-flag.watch { background: var(--warn); color: #fff; }
+  .dash-flag.good { background: var(--ok-soft); color: var(--ok); }
+  .dash-axes { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .dash-axis {
+    font-size: 11.5px; padding: 2px 9px; border-radius: 999px;
+    background: var(--surface-2); color: var(--ink-soft);
+  }
+  .dash-axis b { font-weight: 800; color: var(--ink); }
+  .dash-axis.bad { background: var(--danger-soft); color: var(--danger); }
+  .dash-axis.mid { background: var(--warn-soft); color: var(--warn); }
+  .dash-axis.ok  { background: var(--ok-soft); color: var(--ok); }
+  .dash-note { margin: 0; font-size: 12px; line-height: 1.55; color: var(--ink-soft); }
+  .dash-note b { color: var(--ink); }
+  .dash-topic { margin: 0; font-size: 12px; color: var(--ink-faint); overflow-wrap: anywhere; }
+
   /* ---------- report panel ---------- */
 
   .panel { position: sticky; top: 20px; }
@@ -1516,7 +1862,9 @@
       <div class="idbar">
         <label for="studentId">학번</label>
         <input type="text" id="studentId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="예) 10315">
-        <span class="idbar-note">공용 기기에서 <b>다른 학번</b>을 넣으면 이전 내용은 지워지고 새로 시작합니다. 학번은 이 기기에만 저장되고 전송·제출되지 않습니다.</span>
+        <label for="studentName">이름</label>
+        <input type="text" id="studentName" autocomplete="off" maxlength="20" placeholder="예) 김홍길">
+        <span class="idbar-note">공용 기기에서 <b>다른 학번</b>을 넣으면 이전 내용은 지워지고 새로 시작합니다. 학번·이름은 이 기기에만 저장되고, 내려받는 보고서와 파일 이름에만 들어갑니다.</span>
       </div>
 
       <div class="slotbar" id="slotbar" role="tablist" aria-label="탐구 고르기"></div>
@@ -1525,6 +1873,7 @@
       <div class="intake">
         <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
+        <button type="button" class="intake-teacher" id="dashBtn" title="이 기기에 저장된 계획서들을 학번별로 요약해 보여 줍니다. 선생님용입니다.">선생님용 요약</button>
         <button type="button" class="intake-install" id="installBtn" hidden>홈 화면에 추가</button>
         <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
@@ -1567,10 +1916,26 @@
             <textarea id="topic" rows="3" placeholder="예) 식물에 주는 물의 양이 다르면 자라는 정도도 달라질까?"></textarea>
           </div>
 
-          <div class="field">
+          <!-- 골라 넣는 예시는 연습(탐구 1·2·3)에서만 보입니다. 자유탐구(수행평가)에서는 숨깁니다. -->
+          <div class="field practice-only">
             <label>막혔다면 — 여기서 골라 바꿔 보기</label>
             <span class="sub">그대로 쓰지 말고, <b>내가 궁금한 것으로 바꿔서</b> 적어 보세요.</span>
             <div class="picks" id="ideas"></div>
+          </div>
+
+          <!-- 맥락 맞춤형 탐구 틀 만들기 -->
+          <div class="field practice-only">
+            <label>그래도 막혔다면 — 내 주변에서 탐구 틀 만들기</label>
+            <span class="sub">우리 동네·전통·생활 가운데 <b>관심 있는 쪽</b>과 <b>수준</b>을 고르면 탐구의 틀을 만들어 줍니다.
+              <b>[ ] 안은 내가 채워야</b> 점검을 통과합니다.</span>
+            <div class="picks">
+              <div class="pick-group" id="genCtx"><span class="pick-label">관심 있는 쪽</span></div>
+              <div class="pick-group" id="genLv"><span class="pick-label">수준</span></div>
+            </div>
+            <div id="genOut"></div>
+            <div class="gen-more">
+              <button type="button" class="device-btn" id="genAgain">다른 틀 보기 ↻</button>
+            </div>
           </div>
         </div>
       </section>
@@ -1655,6 +2020,21 @@
             <input type="file" id="deviceImg" accept="image/*" class="sr-only">
             <div class="device-box" id="deviceBox"></div>
           </div>
+
+          <!-- 그림 속 기구 표시하기 — 그림과 글이 맞는지 대조합니다 -->
+          <div class="field" id="deviceTagField" hidden>
+            <label>그림 속에 있는 것 표시하기</label>
+            <span class="sub">그림에 보이는 기구를 눌러 표시하면, <b>준비물·실험 과정의 글과 맞는지</b> 대조해 줍니다.
+              글로 설명하기 어려운 것도 그림으로 확인할 수 있습니다.</span>
+            <div class="picks" id="deviceTags"></div>
+          </div>
+
+          <!-- 오차 원인 미리 보기 -->
+          <div class="field">
+            <label>실험 전에 — 값이 어긋날 만한 곳 미리 보기</label>
+            <span class="sub">이 설계대로 실험하면 <b>어디서 값이 한쪽으로 치우치는지</b>, <b>무엇이 통제되지 않았는지</b>를 미리 짚어 줍니다.</span>
+            <div class="err" id="errBox"></div>
+          </div>
         </div>
       </section>
 
@@ -1690,6 +2070,14 @@
             무엇이 위험한지, 그래서 <b>무엇을 착용하고 어떻게 행동할지</b>를 구체적으로 적어야 합니다.
             <span>보안경 · 장갑 · 실험복 · 마스크 · 환기 · 손 씻기 · 뒷정리 · 선생님 확인</span>
           </p>
+          <!-- 안전 데이터 카드(MSDS 요약) — 준비물·과정에서 찾은 물질 -->
+          <div class="field">
+            <label>내 계획에서 찾은 물질 · 기구의 안전 데이터</label>
+            <span class="sub">준비물과 실험 과정에 적은 물질을 찾아, <b>위험 요인 · 필요한 보호구 · 다쳤을 때 · 끝난 뒤 처리</b>를 보여 줍니다.
+              <b>실제 MSDS를 대신하지 않습니다.</b></span>
+            <div class="msds" id="msdsBox"></div>
+          </div>
+
           <div class="field">
             <label>골라서 추가하기</label>
             <span class="sub">내 <b>실험 방법</b>에 맞는 항목만 골라 보여 줍니다. 눌러서 추가하고, 다시 누르면 빠집니다.</span>
@@ -1755,6 +2143,7 @@
           </div>
         </div>
 
+        <div class="cur" id="curriculum" hidden></div>
         <div id="safetyBanner"></div>
         <div id="report"></div>
 
@@ -1806,15 +2195,35 @@
 
 <div class="idgate" id="idgate" hidden role="dialog" aria-labelledby="gateTitle" aria-modal="true">
   <div class="idgate-card">
-    <p class="idgate-title" id="gateTitle">학번을 입력하세요</p>
+    <p class="idgate-title" id="gateTitle">학번과 이름을 입력하세요</p>
     <p class="idgate-sub">학번을 넣으면 그 학번으로 저장해 둔 <b>탐구 1·2·3</b>을 다시 불러옵니다.
        <b>자유탐구(수행평가)</b>는 늘 새로 시작합니다.</p>
-    <input type="text" id="gateId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="예) 10315">
+    <input type="text" id="gateId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="학번 예) 10315">
+    <input type="text" id="gateName" autocomplete="off" maxlength="20" placeholder="이름 예) 김홍길" style="margin-top:8px">
     <div class="idgate-act">
       <button type="button" id="gateSkip">학번 없이 시작</button>
       <button type="button" class="primary" id="gateStart">시작하기</button>
     </div>
-    <p class="idgate-note">학번은 이 기기에만 저장되고, 인터넷으로 전송하거나 제출 파일에 넣지 않습니다.</p>
+    <p class="idgate-note">학번·이름은 이 기기에만 저장되고 인터넷으로 전송하지 않습니다. 내려받는 보고서와 파일 이름에만 들어갑니다.</p>
+  </div>
+</div>
+
+<!-- 선생님용 1차 분석 요약 — 이 기기에 저장된 계획서만 봅니다 -->
+<div class="dash" id="dash" hidden role="dialog" aria-labelledby="dashTitle" aria-modal="true">
+  <div class="dash-card">
+    <div class="dash-head">
+      <div>
+        <p class="dash-title" id="dashTitle">선생님용 1차 분석 요약</p>
+        <p class="dash-sub">이 기기(브라우저)에 저장된 계획서만 읽어 <b>논리 · 변인 통제 · 안전</b> 세 갈래로 요약합니다.
+          아무 데도 전송하지 않습니다.</p>
+      </div>
+      <button type="button" class="dash-close" id="dashClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="dash-body" id="dashBody"></div>
+    <div class="dash-act">
+      <button type="button" class="device-btn" id="dashSave">요약을 파일로 저장</button>
+      <button type="button" class="primary" id="dashOk">닫기</button>
+    </div>
   </div>
 </div>
 
@@ -1837,9 +2246,11 @@
   var STORE_V = 'inquiry-plan-v2';
   var STORE_CUR = STORE_V + '::cur';
   var STORE_ID  = STORE_V + '::id';     // 마지막으로 쓴 학번(다음에 시작 화면에 미리 채웁니다)
+  var STORE_NAME = STORE_V + '::name';  // 마지막으로 쓴 이름(파일 이름·보고서 머리에 씁니다)
   // 저장은 '학번'별로 나눕니다. 탐구 1·2·3은 학번마다 따로 남아 다시 불러오고,
   // 자유탐구(수행평가)는 학번을 넣을 때마다 새로 시작합니다.
   var studentId = '';
+  var studentName = '';
   function scopeId() { return studentId || '_'; }   // 학번이 없으면 '_'(공용)
   function dataKey(k) { return STORE_V + '::u:' + scopeId() + '::' + k; }
   function imgKey(k)  { return dataKey(k) + '::img'; }
@@ -1847,6 +2258,7 @@
 
   var curSlot = 't1';
   var deviceImg = '';    // 현재 슬롯의 실험 장치 그림·사진 (데이터 URI, 선택)
+  var deviceTags = [];   // 그림 속에 무엇이 있는지 학생이 눌러 표시한 기구 이름
   var freeMeta = null;   // 자유탐구 과정 기록 — 아래 blankMeta() 참고
   var lastRec = {};      // 필드별 마지막으로 기록한 값 (같은 값 중복 기록 방지)
   var recTimers = {};    // 필드별 수정 이력 기록 디바운스 타이머
@@ -1956,6 +2368,241 @@
       terms: ['먹어','마셔','섭취','맛보','시식','먹는다','마신다'],
       ask: '실험실에서는 어떤 것도 먹거나 마시지 않는 것이 원칙입니다. 맛이나 냄새 대신 <b>측정 도구로 잴 수 있는 값</b>으로 바꿀 수 있을까요?' }
   ];
+
+  /* ---------- 안전 데이터 카드 (MSDS 요약) ----------
+     학교에서 자주 쓰는 물질·기구를 준비물·실험 과정에서 찾아, 위험 요인과
+     반드시 착용해야 할 보호구를 카드로 펼쳐 줍니다.
+
+     이 표는 실제 MSDS(물질안전보건자료)를 대신하지 않습니다. 여기에 없는
+     물질은 지도교사가 직접 확인해야 합니다. 그래서 카드마다 '선생님 확인'
+     문구를 함께 띄웁니다.
+
+     terms 에 학교에서 부르는 다른 이름을 넣어 두면 그것도 함께 찾습니다.
+     gear 는 안전 계획 칸에 그대로 넣을 수 있는 문장이어야 합니다
+     (SAFETY_PICKS 의 문장과 같은 형태로 맞춰 두면 버튼 상태도 함께 맞습니다). */
+  var CHEM = [
+    { name: '묽은 염산(HCl)', terms: ['염산', 'HCl'],
+      ghs: ['피부·눈 부식'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '실험복(앞치마)을 착용한다.'],
+      care: '묽게 만들 때는 <b>물에 산을 조금씩</b> 넣습니다. 반대로 하면 열이 나며 튈 수 있습니다.',
+      first: '피부나 눈에 닿으면 바로 흐르는 물로 15분 이상 씻고 선생님께 알립니다.',
+      waste: '싱크대에 그냥 붓지 않습니다. 중화한 뒤 선생님 안내에 따라 버립니다.' },
+
+    { name: '황산(H₂SO₄)', terms: ['황산'],
+      ghs: ['강한 부식', '물과 섞일 때 발열'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '실험복(앞치마)을 착용한다.'],
+      care: '물에 넣는 순간 <b>끓을 만큼 열이 납니다.</b> 중학교 탐구에서는 이미 묽게 만들어 둔 것만 씁니다.',
+      first: '닿았으면 즉시 물로 오래 씻습니다. 옷에 묻은 곳은 벗어 냅니다.',
+      waste: '반드시 선생님께 넘깁니다. 학생이 직접 버리지 않습니다.' },
+
+    { name: '수산화나트륨(NaOH·가성소다)', terms: ['수산화나트륨', '가성소다', 'NaOH'],
+      ghs: ['피부·눈 부식', '녹을 때 발열'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '실험복(앞치마)을 착용한다.'],
+      care: '알갱이가 손에 닿으면 미끈거리며 살을 녹입니다. 물에 녹일 때 <b>뜨거워집니다.</b>',
+      first: '닿았으면 미끈거림이 없어질 때까지 흐르는 물로 씻습니다.',
+      waste: '중화한 뒤 선생님 안내에 따라 버립니다.' },
+
+    { name: '과산화수소수', terms: ['과산화수소', '옥시풀'],
+      ghs: ['피부 자극', '산소 발생'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.'],
+      care: '금속·효소(감자·간)와 닿으면 <b>거품이 갑자기 늘어납니다.</b> 뚜껑을 막아 두지 않습니다.',
+      first: '피부가 하얗게 되면 물로 씻고 선생님께 알립니다.',
+      waste: '물로 충분히 묽게 하여 버립니다.' },
+
+    { name: '아세톤', terms: ['아세톤'],
+      ghs: ['인화성', '증기 흡입'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '창문을 열어 환기한다.'],
+      care: '불씨 근처에서는 절대 열지 않습니다. 스타이로폼·플라스틱을 녹입니다.',
+      first: '어지러우면 바로 창가로 가서 바깥 공기를 쉽니다.',
+      waste: '싱크대에 붓지 않습니다. 선생님께 넘깁니다.' },
+
+    // '알코올램프'는 아래 따로 있는 카드가 맡습니다. 그래서 '알코올' 뒤에
+    // '램프'가 붙은 경우는 여기서 빼 둡니다.
+    { name: '에탄올(소독용 알코올)', terms: ['에탄올', '에틸알코올', '소독용 ?알코올', '알코올(?!램프|램푸|성)'],
+      ghs: ['인화성'],
+      gear: ['보안경을 착용한다.', '창문을 열어 환기한다.'],
+      care: '<b>불꽃이 보이지 않게 타오릅니다.</b> 가열 중인 기구 옆에 병을 두지 않습니다.',
+      first: '옷에 불이 붙으면 뛰지 말고 바닥에 굴러 끕니다.',
+      waste: '뚜껑을 닫아 보관하고 남은 것은 선생님께 돌려 드립니다.' },
+
+    { name: '메탄올(메틸알코올)', terms: ['메탄올', '메틸알코올'],
+      ban: true,
+      ghs: ['실명 위험', '인화성'],
+      gear: ['선생님께 먼저 확인받는다.'],
+      care: '<b>중학교 탐구에서는 쓰지 않습니다.</b> 증기만 마셔도 눈을 다칠 수 있습니다. 에탄올로 바꿀 수 있는지 선생님과 의논하세요.',
+      first: '마셨거나 어지러우면 즉시 알리고 바깥 공기를 쉽니다.',
+      waste: '학생이 다루지 않습니다.' },
+
+    { name: '아이오딘(요오드) 용액', terms: ['아이오딘', '요오드', '루골'],
+      ghs: ['옷·피부 착색', '자극성'],
+      gear: ['실험용 장갑을 착용한다.', '실험복(앞치마)을 착용한다.'],
+      care: '한 방울로도 옷에 지워지지 않는 물이 듭니다. 스포이트로 조금만 씁니다.',
+      first: '피부에 묻으면 물과 비누로 씻습니다.',
+      waste: '많은 물에 묽게 하여 버립니다.' },
+
+    { name: '질산은(AgNO₃)', terms: ['질산은'],
+      ghs: ['피부 착색·자극'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.'],
+      care: '피부에 닿으면 <b>며칠 지나 검게 변합니다.</b> 반드시 장갑을 끼고 다룹니다.',
+      first: '닿은 곳을 바로 물로 씻습니다.',
+      waste: '은이 섞인 물은 따로 모아 선생님께 넘깁니다.' },
+
+    { name: '황산구리(CuSO₄)', terms: ['황산구리', '황산 구리'],
+      ghs: ['삼키면 유해', '수생 생물에 유해'],
+      gear: ['실험용 장갑을 착용한다.', '끝나면 도구를 제자리에 두고 손을 씻는다.'],
+      care: '푸른 결정이 예뻐 보이지만 <b>먹으면 안 되는 물질</b>입니다. 가루가 날리지 않게 다룹니다.',
+      first: '입에 들어갔으면 뱉고 물로 입을 헹군 뒤 알립니다.',
+      waste: '하수구에 버리지 않습니다. 선생님께 넘깁니다.' },
+
+    { name: '락스(차아염소산나트륨)', terms: ['락스', '표백제', '차아염소산'],
+      ghs: ['부식성', '유독 기체 발생'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '창문을 열어 환기한다.'],
+      care: '<b>다른 세제나 산과 절대 섞지 않습니다.</b> 아래 “섞으면 안 되는 조합”을 함께 보세요.',
+      first: '냄새에 기침이 나면 즉시 창가로 나가 바깥 공기를 쉽니다.',
+      waste: '많은 물로 흘려 보내되, 다른 약품과 같은 통에 붓지 않습니다.' },
+
+    { name: '암모니아수', terms: ['암모니아'],
+      ghs: ['자극성 기체', '눈 손상'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.', '창문을 열어 환기한다.'],
+      care: '<b>냄새를 직접 맡지 않습니다.</b> 병을 열 때 얼굴을 멀리합니다.',
+      first: '눈이 아프면 물로 오래 씻고 선생님께 알립니다.',
+      waste: '뚜껑을 닫고 환기가 되는 곳에 두었다가 선생님께 넘깁니다.' },
+
+    { name: '식초·아세트산', terms: ['식초', '아세트산', '빙초산', '구연산'],
+      ghs: ['눈 자극'],
+      gear: ['보안경을 착용한다.'],
+      care: '묽은 식초도 눈에 들어가면 아픕니다. <b>락스와 절대 섞지 않습니다.</b>',
+      first: '눈에 들어가면 물로 씻습니다.',
+      waste: '많은 물로 흘려 보냅니다.' },
+
+    { name: '드라이아이스', terms: ['드라이아이스'],
+      ghs: ['초저온 화상', '밀폐 시 파열', '질식'],
+      gear: ['실험용 장갑을 착용한다.', '창문을 열어 환기한다.'],
+      care: '<b>맨손으로 잡으면 살이 붙습니다.</b> 병이나 페트병에 넣고 막으면 터집니다.',
+      first: '하얗게 얼었으면 비비지 말고 미지근한 물에 담그고 알립니다.',
+      waste: '넓고 환기되는 곳에 두어 저절로 없어지게 합니다.' },
+
+    { name: '액체질소', terms: ['액체질소'],
+      ban: true,
+      ghs: ['초저온 화상', '질식'],
+      gear: ['선생님께 먼저 확인받는다.'],
+      care: '<b>학생이 직접 다루지 않습니다.</b> 필요하면 선생님이 시범으로만 보여 줍니다.',
+      first: '피부에 닿았으면 문지르지 말고 즉시 알립니다.',
+      waste: '선생님이 처리합니다.' },
+
+    { name: '마그네슘 리본·금속 가루', terms: ['마그네슘', '금속 가루', '알루미늄 가루', '철 가루'],
+      ghs: ['강한 빛', '급격한 연소'],
+      gear: ['보안경을 착용한다.', '실험용 장갑을 착용한다.'],
+      care: '타는 빛을 <b>맨눈으로 오래 보지 않습니다.</b> 물로는 꺼지지 않습니다.',
+      first: '불이 붙으면 물을 붓지 말고 모래로 덮거나 선생님을 부릅니다.',
+      waste: '식은 뒤 선생님 안내에 따라 버립니다.' },
+
+    { name: '알코올램프·가스버너', terms: ['알코올램프', '알콜램프', '가스버너', '분젠버너', '토치', '휴대용 가스'],
+      ghs: ['화상', '화재'],
+      gear: ['보안경을 착용한다.', '긴 머리는 묶는다.', '불을 켠 주변에 종이나 옷을 두지 않는다.'],
+      care: '켜는 순서와 <b>끄는 순서</b>를 미리 정해 둡니다. 가열한 기구는 겉이 식어도 뜨겁습니다.',
+      first: '화상을 입으면 찬물에 10분 이상 대고 선생님께 알립니다.',
+      waste: '끝나면 불을 끄고 뚜껑·밸브를 닫았는지 다시 확인합니다.' },
+
+    { name: '유리 기구(비커·시험관)', terms: ['비커', '시험관', '플라스크', '유리관', '유리막대', '눈금실린더'],
+      ghs: ['깨짐·베임'],
+      gear: ['유리 기구는 책상 가장자리에 두지 않는다.', '깨진 유리는 손으로 줍지 않고 선생님께 알린다.'],
+      care: '갑자기 뜨겁거나 차가워지면 금이 갑니다. 시험관 입구를 사람 쪽으로 향하지 않습니다.',
+      first: '베였으면 흐르는 물로 씻고 선생님께 알립니다.',
+      waste: '깨진 유리는 일반 쓰레기통에 넣지 않고 선생님께 알립니다.' },
+
+    { name: '미생물 배양', terms: ['배양', '세균', '대장균', '곰팡이', '미생물', '효모', '이스트', '페트리'],
+      ghs: ['감염 가능'],
+      gear: ['실험용 장갑을 착용한다.', '기른 미생물은 뚜껑을 함부로 열지 않는다.', '생물을 만진 뒤에는 손을 씻는다.'],
+      care: '자란 뒤에는 <b>뚜껑을 테이프로 봉해 둔 채로만</b> 관찰합니다. 얼굴을 가까이 대지 않습니다.',
+      first: '엎질렀으면 만지지 말고 즉시 선생님께 알립니다.',
+      waste: '봉한 채로 선생님께 넘깁니다. 쓰레기통에 그냥 버리지 않습니다.' },
+
+    { name: '전원 장치·전기분해', terms: ['전기분해', '전원 장치', '콘센트', '220', '어댑터', '감전'],
+      ghs: ['감전', '전선 과열'],
+      gear: ['젖은 손으로 전기 장치를 만지지 않는다.', '전선이 벗겨진 곳이 없는지 확인한다.', '실험이 끝나면 전원을 끈다.'],
+      care: '물을 쓰는 실험에서는 <b>콘센트 대신 전지</b>를 쓸 수 있는지 먼저 살펴봅니다.',
+      first: '따끔하거나 타는 냄새가 나면 바로 전원을 끄고 알립니다.',
+      waste: '전원을 끄고 전선을 정리해 반납합니다.' },
+
+    { name: '수은 온도계', terms: ['수은'],
+      ban: true,
+      ghs: ['중금속 증기'],
+      gear: ['선생님께 먼저 확인받는다.'],
+      care: '<b>깨지면 증기가 나옵니다.</b> 알코올(붉은 액체) 온도계나 디지털 온도계로 바꾸세요.',
+      first: '깨졌으면 만지거나 쓸지 말고 창문을 열고 즉시 알립니다.',
+      waste: '선생님이 전용 방법으로 처리합니다.' },
+
+    { name: '뜨거운 물·수증기', terms: ['뜨거운 물', '끓인 물', '수증기', '중탕'],
+      ghs: ['화상'],
+      gear: ['실험용 장갑을 착용한다.', '뜨거운 물체는 집게로 옮긴다.'],
+      care: '<b>수증기는 끓는 물보다 더 심한 화상</b>을 입힙니다. 뚜껑은 얼굴 반대쪽으로 엽니다.',
+      first: '데었으면 찬물에 10분 이상 대고 선생님께 알립니다.',
+      waste: '완전히 식은 뒤에 옮기고 버립니다.' }
+  ].map(function (c) {
+    // terms 에는 '알코올(?!램프)'처럼 정규식을 쓸 수 있게 해 둡니다.
+    c.re = new RegExp(c.terms.join('|'));
+    return c;
+  });
+
+  // 섞으면 안 되는 조합 — 한쪽 목록과 다른 쪽 목록이 함께 나오면 경고합니다.
+  var MIX_RISK = [
+    { a: ['락스', '표백제', '차아염소산'],
+      b: ['식초', '아세트산', '빙초산', '구연산', '염산', '황산', '변기 세정제', '산성 세정제'],
+      what: '염소 기체',
+      why: '조금만 마셔도 목과 폐를 다칩니다. 이 두 가지는 같은 그릇·같은 하수구에도 넣지 않습니다.' },
+    { a: ['락스', '표백제', '차아염소산'],
+      b: ['암모니아', '요소', '소변'],
+      what: '클로라민 기체',
+      why: '눈과 목이 심하게 아프고 숨쉬기 어려워집니다.' },
+    { a: ['과산화수소', '옥시풀'],
+      b: ['아세톤'],
+      what: '터질 수 있는 물질',
+      why: '두 가지를 섞는 실험은 중학교에서 하지 않습니다. 다른 방법을 선생님과 찾아보세요.' },
+    { a: ['수산화나트륨', '가성소다'],
+      b: ['알루미늄', '알루미늄박', '알루미늄 포일', '은박지'],
+      what: '수소 기체',
+      why: '불이 붙기 쉬운 기체가 빠르게 나오고 용기가 뜨거워집니다.' },
+    { a: ['염산', '황산', '식초', '아세트산'],
+      b: ['마그네슘', '아연', '철 가루', '알루미늄'],
+      what: '수소 기체',
+      why: '불씨가 있으면 “퍽” 소리와 함께 탑니다. 근처에서 불을 켜지 않습니다.' },
+    { a: ['드라이아이스', '액체질소'],
+      b: ['페트병', '밀폐', '뚜껑을 닫', '유리병'],
+      what: '용기 파열',
+      why: '기체로 바뀌며 부피가 크게 늘어 용기가 터집니다. 뚜껑을 막지 않습니다.' },
+    { a: ['황산'],
+      b: ['물에 붓', '물을 부'],
+      what: '끓어 넘침',
+      why: '진한 황산에 물을 부으면 순간적으로 끓어 튑니다. 반드시 <b>물에 산을</b> 조금씩 넣습니다.' }
+  ];
+
+  // 준비물·실험 과정에서 안전 데이터 카드에 있는 물질을 찾습니다.
+  function chemHits(d) {
+    var hay = [d.materials, d.procedure, d.topic, d.iv].join(' ');
+    return CHEM.filter(function (c) { return c.re.test(hay); });
+  }
+
+  // 섞으면 안 되는 조합을 찾습니다.
+  function mixHits(d) {
+    var hay = [d.materials, d.procedure].join(' ');
+    return MIX_RISK.filter(function (r) {
+      return r.a.some(function (t) { return hay.indexOf(t) !== -1; }) &&
+             r.b.some(function (t) { return hay.indexOf(t) !== -1; });
+    });
+  }
+
+  // 감지된 물질이 요구하는 보호구 가운데, 안전 계획에 아직 없는 것만 모읍니다.
+  function missingGear(d, hits) {
+    var have = d.safety || '';
+    var need = [];
+    hits.forEach(function (c) {
+      c.gear.forEach(function (g) {
+        if (have.indexOf(g) === -1 && need.indexOf(g) === -1) need.push(g);
+      });
+    });
+    return need;
+  }
 
   /* ---------- analysis ---------- */
 
@@ -2190,17 +2837,339 @@
     return false;
   }
 
-  function analyze() {
+  /* ---------- 오차 원인 미리 보기 ----------
+     설계한 대로 실험하면 값이 어느 쪽으로 치우칠지, 무엇이 통제되지 않았는지를
+     실험 전에 짚어 줍니다. 규칙마다
+       on    — 이 위험을 살펴볼 실험인지 (준비물·과정·변인 전체에서 찾습니다)
+       guard — 이미 대비해 두었으면 말하지 않습니다
+     로 나누어, 잘 써 둔 학생에게 같은 말을 반복하지 않게 했습니다.
+     kind 는 '계통'(값이 한쪽으로 치우치는 오차)과 '변인'(통제되지 않은 조건)입니다. */
+  var ERROR_RULES = [
+    { label: '온도 재기', kind: '계통',
+      on: /온도|℃|가열|끓|데우|식히|미지근|찬물|더운물/,
+      guard: /담그|잠기게|깊이|초 뒤|초 후|분 뒤|같은 깊이|같은 위치에 온도계/,
+      err: '온도계를 담그는 깊이와 읽는 시각이 매번 다르면, 값이 실제보다 계속 낮거나 계속 높게 나옵니다.',
+      ask: '온도계를 <b>어디까지 담그고 몇 초 뒤에</b> 읽을지 과정에 정해 둘까요?' },
+
+    { label: '부피 재기', kind: '계통',
+      on: /눈금실린더|메스실린더|눈금원통|계량컵|mL|ml|리터|부피/,
+      guard: /눈높이|눈 높이|아래쪽 눈금|오목한|수평인 곳|평평한 곳/,
+      err: '눈금을 위에서 내려다보거나 아래에서 올려다보면 매번 같은 양만큼 잘못 읽습니다.',
+      ask: '눈금을 <b>눈높이에서</b> 읽고, 오목한 면의 <b>아래쪽</b>을 기준으로 하기로 정해 볼까요?' },
+
+    { label: '무게 재기', kind: '계통',
+      on: /저울|무게|질량|\bg\b|kg|그램/,
+      guard: /영점|0점|빈 (그릇|용기|비커)|용기 무게|풍량|평평한 곳|수평/,
+      err: '담는 그릇의 무게를 빼지 않으면 모든 값이 그릇 무게만큼 크게 나옵니다.',
+      ask: '빈 그릇을 먼저 올려 <b>영점을 맞추거나</b> 그릇 무게를 빼기로 적어 둘까요?' },
+
+    { label: '시간 재기', kind: '계통',
+      on: /초시계|스톱워치|타이머|걸린 ?시간|초\b|몇 초|반응 ?시간/,
+      guard: /같은 사람이|한 사람이|동시에 누|신호에 맞|자동|영상|촬영해 세|프레임/,
+      err: '손으로 누르는 초시계는 누르는 순간이 늘 조금씩 늦어, 걸린 시간이 실제보다 길게 나옵니다.',
+      ask: '<b>같은 사람이</b> 끝까지 재고, 시작·끝 신호를 무엇으로 할지 정해 볼까요?' },
+
+    { label: '길이·자라는 정도 재기', kind: '계통',
+      on: /길이|자\b|줄자|cm|mm|키\b|높이|자란|성장/,
+      guard: /어디부터|기준점|밑동|화분 흙 위|같은 곳|표시해 두|바닥부터/,
+      err: '어디서부터 어디까지 재는지 정해 두지 않으면, 잰 사람과 잰 날마다 기준이 달라집니다.',
+      ask: '<b>어디부터 어디까지</b> 잴지(예: 흙 위부터 가장 긴 잎 끝까지) 정해 둘까요?' },
+
+    { label: '끝나는 시점 정하기', kind: '계통',
+      on: /녹|용해|반응|사라질 때까지|없어질 때까지|색이 변할 때까지|다 될 때까지/,
+      guard: /완전히 보이지 않|바닥에 남은 것이 없|같은 색 견본|색 견본|기준으로 정|판단 기준/,
+      err: '“다 녹았다”를 눈으로 판단하면 사람마다 시점이 달라 걸린 시간이 크게 흔들립니다.',
+      ask: '<b>어떤 상태를 “끝”으로 볼지</b> 한 문장으로 정해 둘까요? (예: 바닥에 알갱이가 하나도 안 보일 때)' },
+
+    { label: '젓는 정도', kind: '계통',
+      on: /녹|용해|저어|섞|용액|설탕|소금/,
+      guard: /젓지 않|같은 속도로|초에 (한|1) ?번|같은 횟수|\d+ ?번 젓|젓는 횟수/,
+      err: '젓는 세기와 횟수가 다르면, 조작 변인이 아닌 저은 정도 때문에 결과가 달라집니다.',
+      ask: '모든 컵을 <b>같은 방법으로 몇 번</b> 저을지 정해 볼까요? (또는 아예 젓지 않기)' },
+
+    { label: '색으로 판단하기', kind: '계통',
+      on: /지시약|리트머스|BTB|페놀프탈레인|색이 ?변|색 ?변화|아이오딘|요오드/,
+      guard: /색 견본|표준색|같은 조명|사진을 찍어|pH ?측정기|색깔표/,
+      err: '색은 조명과 보는 사람에 따라 달라 보여, 같은 결과를 다르게 기록하게 됩니다.',
+      ask: '<b>색 견본을 옆에 두거나</b> 같은 조명에서 사진을 찍어 비교해 볼까요?' },
+
+    { label: '식물 개체 차이', kind: '변인',
+      on: /씨앗|콩나물|강낭콩|화분|식물|잎|줄기|싹|발아/,
+      guard: /같은 크기의 씨앗|굵기가 비슷|고르게 골라|여러 개의 평균|각 화분에 \d+ ?개|개체를 \d+/,
+      err: '씨앗과 개체마다 원래 크기가 달라, 조작 변인 때문인지 개체 차이인지 구별할 수 없습니다.',
+      ask: '<b>크기가 비슷한 씨앗</b>을 고르고, 한 조건에 <b>여러 개체</b>를 두어 평균을 낼까요?' },
+
+    { label: '빛이 닿는 위치', kind: '변인',
+      on: /식물|화분|씨앗|싹|잎|광합성|자란/,
+      guard: /같은 (곳|장소|자리)|같은 창가|위치를 바꿔|자리를 돌려|조도|같은 빛/,
+      err: '창가에 가까운 화분만 빛을 더 받아, 물의 양이 아니라 빛 때문에 결과가 달라집니다.',
+      ask: '화분을 <b>같은 빛을 받는 자리</b>에 두거나, 며칠마다 자리를 돌려 줄까요?' },
+
+    { label: '사람을 대상으로 한 측정', kind: '변인',
+      on: /맥박|심박|심장 ?박동|집중|기억|암기|성적|점수|반응 ?시간|체지방|몸무게|호흡수|설문/,
+      guard: /같은 시각|같은 시간대|같은 사람|다른 문제|순서를 바꿔|충분히 쉬|휴식 후/,
+      err: '같은 사람이 두 번째로 하면 익숙해져 점수가 올라갑니다(연습 효과). 시간대와 컨디션도 영향을 줍니다.',
+      ask: '<b>같은 시각에</b> 재고, 두 번째에는 <b>비슷하지만 다른 문제</b>를 쓰거나 순서를 바꿔 볼까요?' },
+
+    { label: '전지가 닳는 것', kind: '변인',
+      on: /전지|건전지|전구|전류|전압|모터|회로/,
+      guard: /새 전지|같은 전지|전압을 확인|전원 장치|같은 새것/,
+      err: '실험을 이어 하는 동안 전지가 닳아, 뒤에 한 조건이 늘 불리하게 나옵니다.',
+      ask: '조건마다 <b>새 전지</b>를 쓰거나, 순서를 바꿔 두 번 해 볼까요?' },
+
+    { label: '바닥과 표면 상태', kind: '변인',
+      on: /마찰|미끄|경사|굴러|굴리|빗면|바닥|나무판|사포/,
+      guard: /같은 곳에서|같은 바닥|먼지를 닦|매번 닦|같은 자리/,
+      err: '먼지나 닳은 자리 때문에 같은 바닥에서도 미끄러짐이 달라집니다.',
+      ask: '매번 <b>같은 자리에서</b> 하고, 시작 전에 바닥을 닦기로 적어 둘까요?' },
+
+    { label: '주변 소리·빛', kind: '변인',
+      on: /소음|데시벨|소리|조도|밝기|lx|빛의 세기/,
+      guard: /같은 (장소|교실)|주변 소리를|불을 끄|같은 조명|창문을 닫/,
+      err: '지나가는 사람이나 켜진 형광등처럼, 실험과 상관없는 소리·빛이 함께 측정됩니다.',
+      ask: '<b>같은 장소·같은 조명</b>에서 재고, 재는 동안 무엇을 멈출지 정해 볼까요?' },
+
+    { label: '바깥에서 재기', kind: '변인',
+      on: /운동장|야외|바깥|밖에서|화단|하천|바람|날씨/,
+      guard: /같은 날|같은 시각|바람이 없|실내에서|같은 날씨/,
+      err: '날마다 날씨가 달라, 바꾼 조건이 아니라 그날의 바람·햇빛이 결과를 바꿉니다.',
+      ask: '<b>같은 날 같은 시각에</b> 모든 조건을 재거나, 날씨를 함께 기록할까요?' },
+
+    { label: '한 번만 재기', kind: '계통',
+      on: /./,
+      guard: /반복|3회|3번|세 번|5회|여러 번|다시 한 ?번|평균/,
+      err: '한 번만 잰 값은 <b>우연히 튄 값인지 늘 그런 값인지</b> 구별할 수 없습니다. 위에 적은 치우침이 있는지조차 확인할 수 없습니다.',
+      ask: '같은 조건을 <b>3번 이상</b> 재서 평균을 내고, 값이 얼마나 흔들리는지도 함께 적어 볼까요?' }
+  ];
+
+  // 이 설계에서 일어날 만한 오차를 골라 냅니다.
+  function errorRisks(d) {
+    var hay = [d.iv, d.dv, d.cv, d.materials, d.procedure, d.topic].join(' ');
+    // 설계를 아직 쓰지 않았으면 미리 보기를 띄우지 않습니다.
+    if (!d.procedure && !d.materials) return [];
+    var out = [];
+    ERROR_RULES.forEach(function (r) {
+      if (!r.on.test(hay)) return;
+      // 대비책은 과정·통제 변인 어느 쪽에 적어도 인정합니다.
+      if (r.guard && r.guard.test(d.procedure + ' ' + d.cv + ' ' + d.safety)) return;
+      out.push(r);
+    });
+    return out;
+  }
+
+  /* ---------- 실험 장치 그림 점검 ----------
+     그림 속에 무엇이 있는지 학생이 직접 눌러 표시하면, 준비물·실험 과정의
+     글과 맞는지 대조합니다. 글로 설명하기 어려운 학생도 그림으로 설계의
+     빠진 곳을 확인할 수 있습니다. */
+  var APPARATUS = [
+    { n: '비커',        t: ['비커'] },
+    { n: '시험관',      t: ['시험관'] },
+    { n: '눈금실린더',  t: ['눈금실린더', '메스실린더', '눈금원통', '계량컵'] },
+    { n: '스포이트',    t: ['스포이트', '주사기', '피펫'] },
+    { n: '온도계',      t: ['온도계'] },
+    { n: '자·줄자',     t: ['줄자', '삼각자', '자로 ', '자를 대', '자 하나', 'cm 자'] },
+    { n: '저울',        t: ['저울'] },
+    { n: '초시계',      t: ['초시계', '스톱워치', '타이머'] },
+    { n: '알코올램프',  t: ['알코올램프', '알콜램프'] },
+    { n: '가스버너',    t: ['가스버너', '분젠버너', '토치'] },
+    { n: '삼발이·스탠드', t: ['삼발이', '스탠드', '쇠그물', '석쇠'] },
+    { n: '집게',        t: ['집게', '핀셋'] },
+    { n: '깔때기·거름종이', t: ['깔때기', '거름종이'] },
+    { n: '유리막대',    t: ['유리막대', '젓는 막대'] },
+    { n: '수조·물통',   t: ['수조', '물통', '대야'] },
+    { n: '화분',        t: ['화분'] },
+    { n: '페트리 접시', t: ['페트리', '배양 접시'] },
+    { n: '현미경',      t: ['현미경'] },
+    { n: '돋보기',      t: ['돋보기', '확대경', '루페'] },
+    { n: '전지',        t: ['전지', '건전지'] },
+    { n: '전구',        t: ['전구', '꼬마전구'] },
+    { n: '전선·스위치', t: ['전선', '스위치', '집게 전선'] },
+    { n: '전류계·전압계', t: ['전류계', '전압계', '검류계', '멀티미터'] },
+    { n: '자석',        t: ['자석'] },
+    { n: '용수철',      t: ['용수철', '스프링', '고무줄'] },
+    { n: '추',          t: ['무게추', '추를 ', '추 하나', '추 여러'] },
+    { n: '나무판·빗면', t: ['나무판', '빗면', '경사면', '경사로'] },
+    { n: '각도기',      t: ['각도기'] },
+    { n: '페트병',      t: ['페트병', '플라스틱병'] },
+    { n: '촛불',        t: ['촛불', '양초'] },
+    { n: '풍선',        t: ['풍선'] },
+    { n: '실·끈',       t: ['노끈', '실을 ', '실로 ', '실에 ', '끈을 ', '끈으로'] },
+    { n: '카메라·휴대전화', t: ['카메라', '휴대전화', '스마트폰', '촬영'] }
+  ].map(function (a) {
+    a.re = new RegExp(a.t.join('|'));
+    return a;
+  });
+
+  // 준비물·실험 과정의 글에서 기구를 찾습니다.
+  function apparatusInText(d) {
+    var hay = (d.materials || '') + ' ' + (d.procedure || '');
+    return APPARATUS.filter(function (a) { return a.re.test(hay); }).map(function (a) { return a.n; });
+  }
+
+  /* ---------- 2022 개정 교육과정 이어 붙이기 ----------
+     학생이 쓴 주제·가설·변인에서 어느 영역의 탐구인지 찾고, 이 계획서로
+     확인할 수 있는 탐구 기능과 교과 역량을 태그로 붙입니다.
+
+     성취기준 번호([9과○○-○○])는 학교·학년에 따라 다르게 짚어야 하므로
+     자동으로 붙이지 않습니다. 영역과 탐구 기능까지만 추천하고, 번호는
+     선생님이 교육과정 문서를 보고 확정하도록 남겨 둡니다. */
+  var CUR_AREAS = [
+    // '온도'처럼 어느 탐구에나 나오는 낱말은 넣지 않았습니다. 통제 변인으로만
+    // 적어 둔 '온도' 때문에 엉뚱한 영역으로 끌려가지 않게 하기 위한 것입니다.
+    { name: '운동과 에너지',
+      re: /속도|속력|가속|마찰|탄성|용수철|운동량|낙하|경사|빗면|진자|일의 ?양|일률|에너지|열량|비열|열 ?전도|대류|복사|단열|보온|식는 ?속도|빛의|그림자|반사|굴절|렌즈|소리의|음파|진동|파장|진동수|전기|전류|전압|저항|회로|전구|건전지|자석|자기장|나침반|도르래|지레|기압|부력|밀도/,
+      ex: '힘과 운동 · 열 · 빛과 파동 · 전기와 자기 · 일과 에너지' },
+    { name: '물질',
+      re: /용해|녹(?!색|음|화)|농도|용액|용질|용매|염기|산성|알칼리|중화|지시약|리트머스|BTB|페놀프탈레인|pH|화학 ?반응|반응 ?속도|연소|산화|기체|산소|이산화탄소|수소|끓는점|어는점|녹는점|증발|응결|상태 ?변화|입자|분자|원자|결정|금속|염산|황산|수산화|과산화수소|아세톤|에탄올|세제|세정|표백|락스|얼룩|비누|발효|이스트/,
+      ex: '물질의 성질 · 상태 변화 · 산과 염기 · 화학 반응' },
+    { name: '생명',
+      re: /식물|씨앗|발아|콩나물|잎|줄기|뿌리|광합성|호흡|증산|동물|곤충|물고기|달팽이|세포|효소|소화|맥박|심장|심박|체온|근육|미생물|세균|곰팡이|효모|이스트|배양|생물|생태|먹이/,
+      ex: '생물의 구조와 기능 · 생명의 연속성 · 생물과 환경' },
+    { name: '지구와 우주',
+      re: /기온|강수|습도|바람|풍속|기압|구름|날씨|일기|암석|퇴적|침식|풍화|지층|화석|흙\b|모래|자갈|지진|화산|해양|조수|별\b|달\b|태양|행성|계절|일조/,
+      ex: '지구의 구조 · 대기와 해양 · 태양계와 별' },
+    { name: '과학과 사회',
+      re: /재활용|분리 ?배출|쓰레기|플라스틱|미세 ?먼지|미세 ?플라스틱|오염|환경 ?보호|에너지 ?절약|절전|단열|친환경|적정 ?기술|안전|전통|발효|장독|한지|염색|온돌/,
+      ex: '과학과 기술 · 과학과 환경 · 과학의 사회적 활용' }
+  ];
+
+  // 디지털 도구를 쓴 흔적 — 2022 개정 총론의 디지털 소양과 이어집니다.
+  var DIGITAL = /센서|측정기|앱\b|어플|애플리케이션|스마트폰|휴대전화|카메라|촬영|녹화|영상|스프레드시트|엑셀|표 계산|그래프로 그|데이터|디지털 ?온도계|조도계|소음 ?측정|타이머 앱/;
+
+  // 이 계획서로 확인할 수 있는 탐구 기능. done 은 그 단계가 실제로 통과했는지입니다.
+  var CUR_SKILLS = [
+    { name: '문제 인식',        group: '탐구 주제',    why: '궁금한 점을 스스로 질문으로 만들었습니다.' },
+    { name: '가설 설정',        group: '가설',        why: '검증할 수 있는 예상을 조건과 결과로 세웠습니다.' },
+    { name: '변인 통제',        group: '변인 통제',    why: '바꿀 것 하나를 정하고 나머지를 고정했습니다.' },
+    { name: '탐구 설계·수행',   group: '탐구 설계',    why: '다른 사람이 따라 할 수 있게 절차와 측정을 정했습니다.' },
+    { name: '추리·예상',        group: '결과 예측',    why: '실험 전에 결과와 그 까닭을 예상했습니다.' },
+    { name: '안전 고려',        group: '현실성과 안전', why: '위험을 찾고 대비책을 함께 세웠습니다.' }
+  ];
+
+  // 교과 역량 — 어떤 탐구 기능이 갖춰졌을 때 근거가 되는지로 이어 붙입니다.
+  var CUR_COMPETENCE = [
+    { name: '과학적 탐구 능력',   need: ['변인 통제', '탐구 설계·수행'] },
+    { name: '과학적 사고력',      need: ['가설 설정', '추리·예상'] },
+    { name: '과학적 문제 해결력', need: ['문제 인식', '안전 고려'] },
+    { name: '과학적 의사소통 능력', need: ['탐구 설계·수행'] }
+  ];
+
+  /* ---------- 맥락 맞춤형 탐구 틀 ----------
+     첫 화면에서 아무것도 못 쓰고 멈추는 학생에게, 우리 동네·전통·생활에서
+     출발하는 탐구의 '틀'을 만들어 줍니다. [ ] 자리는 반드시 학생이 채워야
+     하며, 채우지 않으면 점검표가 통과시키지 않습니다(답을 대신 쓰지 않기).
+     lv 1=기초 2=보통 3=도전 */
+  var CONTEXT_BANK = [
+    { key: 'local', label: '우리 지역 · 학교',
+      seeds: [
+        { lv: 1, q: '학교 안 [장소 ①]과 [장소 ②] 가운데 어디가 더 시원할까?',
+          iv: '기온을 재는 장소([장소 ①] / [장소 ②] / [장소 ③])',
+          dv: '기온(℃)',
+          cv: '재는 시각, 온도계를 두는 높이, 온도계 종류, 재는 사람' },
+        { lv: 2, q: '흙의 종류가 다르면 [빗물]이 빠지는 데 걸리는 시간도 달라질까?',
+          iv: '흙의 종류(운동장 흙 / 화단 흙 / [내가 고른 흙])',
+          dv: '물 200mL가 다 빠지는 데 걸린 시간(초)',
+          cv: '흙의 양, 물의 양, 페트병 크기, 붓는 속도, 흙을 다지는 정도' },
+        { lv: 3, q: '우리 학교에서 [소음]이 가장 심한 시간은 언제이고, 무엇이 그것을 바꿀까?',
+          iv: '측정 시각(수업 중 / 쉬는 시간 / [내가 고른 시각])',
+          dv: '소음 크기(dB) 3회 평균',
+          cv: '재는 장소, 측정기와 거리, 창문 상태, 재는 사람' }
+      ] },
+
+    { key: 'tradition', label: '전통 기술 · 먹거리',
+      seeds: [
+        { lv: 1, q: '[한지]와 [일반 종이] 가운데 어느 것이 물을 더 잘 빨아들일까?',
+          iv: '종이의 종류(한지 / 일반 종이 / [내가 고른 종이])',
+          dv: '물이 번진 지름(mm)',
+          cv: '물의 양, 물방울을 떨어뜨리는 높이, 기다리는 시간, 종이 크기' },
+        { lv: 2, q: '[온도]가 다르면 발효되는 정도도 달라질까?',
+          iv: '반죽을 두는 온도([  ]℃ / [  ]℃ / [  ]℃)',
+          dv: '30분 뒤 부풀어 오른 높이(mm)',
+          cv: '이스트의 양, 밀가루와 물의 양, 그릇 크기, 반죽하는 시간' },
+        { lv: 3, q: '옹기(숨 쉬는 그릇)와 [유리병]에 담아 두면 [무엇]이 다르게 변할까?',
+          iv: '담아 두는 그릇의 종류(옹기 / 유리병 / [내가 고른 그릇])',
+          dv: '[3일 뒤 물의 무게 변화(g)]',
+          cv: '처음 담은 양, 두는 장소와 온도, 뚜껑 상태, 지나는 시간' }
+      ] },
+
+    { key: 'life', label: '생활 속 문제',
+      seeds: [
+        { lv: 1, q: '[얼음]을 무엇으로 싸 두면 가장 늦게 녹을까?',
+          iv: '싸는 재료(수건 / 알루미늄박 / [내가 고른 재료])',
+          dv: '얼음이 다 녹는 데 걸린 시간(분)',
+          cv: '얼음의 크기와 무게, 두는 장소와 온도, 싸는 두께, 그릇 종류' },
+        { lv: 2, q: '[세제]의 양이 많을수록 얼룩이 더 잘 지워질까?',
+          iv: '세제의 양([  ]mL / [  ]mL / [  ]mL)',
+          dv: '남은 얼룩의 밝기(사진으로 비교한 단계)',
+          cv: '물의 양과 온도, 천의 종류와 크기, 담가 두는 시간, 문지르는 횟수' },
+        { lv: 3, q: '[충전기]를 꽂아 둔 채로 두면 정말 전기가 새어 나갈까?',
+          iv: '꽂아 두는 상태(뽑음 / 꽂고 사용 안 함 / [내가 고른 상태])',
+          dv: '[10분 동안 쓴 전력량(Wh)]',
+          cv: '측정 시간, 같은 기기, 같은 콘센트, 주변 기기 사용 여부' }
+      ] },
+
+    { key: 'body', label: '내 몸 · 운동',
+      seeds: [
+        { lv: 1, q: '[제자리 뛰기]를 한 뒤 맥박이 얼마나 빨라질까?',
+          iv: '운동한 시간(0분 / [  ]분 / [  ]분)',
+          dv: '1분 동안의 맥박 수(회)',
+          cv: '재는 사람, 재는 시각, 운동 방법, 재기 전 쉬는 시간' },
+        { lv: 2, q: '[주변 소리]가 있으면 외우는 개수가 달라질까?',
+          iv: '주변 소리의 종류(조용함 / 음악 / [내가 고른 소리])',
+          dv: '2분 뒤 기억한 낱말 개수(개)',
+          cv: '낱말의 개수와 난이도, 외우는 시간, 하는 시각, 사람 수' },
+        { lv: 3, q: '[잠자는 시간]에 따라 다음 날 [반응 시간]이 달라질까?',
+          iv: '전날 잠자는 시간([  ]시간 / [  ]시간)',
+          dv: '자 떨어뜨리기로 잰 반응 시간(cm) 5회 평균',
+          cv: '재는 시각, 재는 방법과 사람, 카페인 섭취 여부, 측정 전 연습 횟수' }
+      ] },
+
+    { key: 'green', label: '환경 · 재활용',
+      seeds: [
+        { lv: 1, q: '[비닐]과 [종이]는 물속에서 어느 것이 먼저 부서질까?',
+          iv: '재료의 종류(비닐 / 종이 / [내가 고른 재료])',
+          dv: '2주 뒤 남은 무게(g)',
+          cv: '조각의 크기와 처음 무게, 물의 양, 두는 장소와 온도, 지나는 기간' },
+        { lv: 2, q: '[단열재]를 무엇으로 하면 컵 안의 물이 가장 늦게 식을까?',
+          iv: '감싸는 재료(신문지 / 뽁뽁이 / [내가 고른 재료])',
+          dv: '20분 뒤 물의 온도(℃)',
+          cv: '처음 물의 온도와 양, 컵 종류, 감싸는 두께, 두는 장소' },
+        { lv: 3, q: '[미세 플라스틱]은 어디에서 더 많이 나올까?',
+          iv: '빨아 보는 옷의 종류(면 / 합성섬유 / [내가 고른 옷])',
+          dv: '거름종이에 걸러진 조각의 개수(개)',
+          cv: '물의 양, 빠는 시간과 세기, 옷의 무게, 거름종이 종류' }
+      ] }
+  ];
+
+  function analyze(dIn) {
     var d = {};
-    FIELDS.forEach(function (k) { d[k] = val(k); });
+    // 화면에서 읽는 것이 기본이고, 저장해 둔 계획서를 넘겨 주면 그것을 봅니다
+    // (교사용 요약 화면에서 다른 학번의 계획서를 점검할 때 씁니다).
+    if (dIn) FIELDS.forEach(function (k) { d[k] = (dIn[k] || '').trim(); });
+    else FIELDS.forEach(function (k) { d[k] = val(k); });
+    var tags = dIn ? (dIn.deviceTags || []) : deviceTags;
+    var hasFigure = dIn ? !!dIn.hasImg : !!deviceImg;
 
     var groups = [];
 
-    // add(상태, 문구, 고쳐야 할 칸) — 세 번째 값이 있으면 그 칸의 글씨가 빨간색이 됩니다.
+    // add(상태, 문구, 고쳐야 할 칸, 갈래) — 세 번째 값이 있으면 그 칸의 글씨가 빨간색이 됩니다.
+    // 네 번째 값 'logic' 은 '앞뒤 맞추기'(단계끼리 어긋난 곳)라는 작은 표를 답니다.
     function mk(arr, defField) {
-      return function (state, text, field) {
-        arr.push([state, text, field === undefined ? defField : field]);
+      return function (state, text, field, kind) {
+        arr.push([state, text, field === undefined ? defField : field, kind || '']);
       };
+    }
+
+    // 틀에서 가져온 [ ] 자리를 아직 채우지 않았는지 봅니다.
+    function checkTemplate(add, fields) {
+      fields.forEach(function (f) {
+        var v = d[f];
+        if (!v) return;
+        var slots = v.match(/\[[^\[\]]{1,24}\]/g);
+        if (!slots) return;
+        add('todo', '탐구 틀에서 가져온 <b>' + slots.slice(0, 3).map(esc).join(' ') +
+          '</b> 자리를 아직 채우지 않았습니다. 대괄호 안을 <b>내 탐구의 내용으로</b> 바꿔 주세요.', f);
+      });
     }
 
     // 다른 칸에 들어가야 할 내용이 섞여 있으면 어디로 옮길지 알려 줍니다.
@@ -2262,6 +3231,7 @@
     var tp = [], addT = mk(tp, 'topic');
     checkWriting(addT, ['topic']);
     checkMisplaced(addT, ['topic']);
+    checkTemplate(addT, ['topic']);
 
     // 변인 통제가 사실상 불가능한 주제는 다른 주제로 이끌어 줍니다.
     if (d.topic) {
@@ -2294,6 +3264,7 @@
     /* --- 가설 --- */
     var h = [], addH = mk(h, 'hypothesis');
     checkWriting(addH, ['hypothesis']);
+    checkTemplate(addH, ['hypothesis']);
     if (!d.hypothesis) {
       addH('todo', '가설을 아직 쓰지 않았습니다.');
     } else {
@@ -2328,6 +3299,11 @@
       if (/(좋다|나쁘다|더 좋을|예쁘|맛있|재미)/.test(d.hypothesis)) {
         addH('ask', '“좋다·예쁘다”처럼 사람마다 다르게 느끼는 말이 있습니다. 숫자로 잴 수 있는 표현으로 바꿀 수 있을까요?');
       }
+
+      // 앞뒤 맞추기 — 주제에서 궁금해한 것을 가설이 이어받고 있는가?
+      if (d.topic && !mentions(d.hypothesis, d.topic) && !mentions(d.topic, d.hypothesis))
+        addH('ask', '주제에서 궁금해한 것과 가설이 <b>서로 다른 것</b>을 말하는 것 같습니다. ' +
+          '가설은 주제로 세운 질문에 대한 <b>나의 대답</b>입니다. 주제의 말을 가설에도 넣어 볼까요?', 'hypothesis', 'logic');
     }
     groups.push({ name: '가설', items: h });
 
@@ -2417,6 +3393,24 @@
     if (dupCv.length)
       addV('ask', '“' + dupCv.join('”, “') + '”은 조작 변인과 같은 것으로 보입니다. 바꿀 것과 고정할 것 중 어느 쪽인지 정해 볼까요?', 'cv');
 
+    // 앞뒤 맞추기 ① 재는 값을 고정하겠다고 적었는가
+    var dvInCv = cvList.filter(function (c) { return d.dv && sameVariable(c, d.dv); });
+    if (dvInCv.length)
+      addV('ask', '“' + dvInCv.join('”, “') + '”은 이 실험에서 <b>재는 값</b>(종속 변인)입니다. ' +
+        '재는 값을 고정해 버리면 무엇이 달라졌는지 확인할 수 없습니다. 고정해야 하는 것은 무엇일까요?', 'cv', 'logic');
+
+    // 앞뒤 맞추기 ② 고정한다고 적은 조건이 실험 과정에 실제로 나오는가
+    if (cvList.length && d.procedure && d.procedure.replace(/\s/g, '').length >= 30) {
+      var cvGhost = cvList.filter(function (c) {
+        return !mentions(d.procedure, c) && !mentions(d.materials, c);
+      });
+      if (cvGhost.length)
+        addV('ask', '“' + cvGhost.slice(0, 3).join('”, “') + '”을 고정한다고 적었지만, ' +
+          '실험 과정에는 <b>어떻게 같게 맞추는지</b>가 보이지 않습니다. 과정에 한 줄 넣어 볼까요?', 'procedure', 'logic');
+    }
+
+    checkTemplate(addV, ['iv', 'dv', 'cv']);
+
     groups.push({ name: '변인 통제', items: v });
 
     /* --- 설계 --- */
@@ -2467,7 +3461,51 @@
         addS('ask', '“대조군”이라고 적었지만, <b>실제로 어떤 조건을 그대로 둘지</b>가 안 보입니다. 예를 들어 “물을 주지 않는 화분”처럼 구체적으로 정해 볼까요?', 'procedure');
       else
         addS('ask', '비교 대상(대조군)이 있나요? 조건을 바꾸지 않은 경우도 함께 두면 차이를 확인하기 쉽습니다.', 'procedure');
+
+      // 앞뒤 맞추기 ③ 과정에서 쓰는 기구가 준비물에도 있는가
+      if (d.materials) {
+        var ghostTool = APPARATUS.filter(function (a) {
+          return a.re.test(d.procedure) && !a.re.test(d.materials);
+        }).map(function (a) { return a.n; });
+        if (ghostTool.length)
+          addS('ask', '실험 과정에서 <b>' + ghostTool.slice(0, 3).join(' · ') +
+            '</b>을(를) 쓰는데 준비물에는 없습니다. 준비물에도 적어 둘까요?', 'materials', 'logic');
+      }
+
+      // 앞뒤 맞추기 ④ 조작 변인을 다르게 하기 전에 이미 재고 있지는 않은가
+      var lines = pLines.map(function (x) { return x.trim(); });
+      var iMake = -1, iMeasure = -1;
+      lines.forEach(function (l, i) {
+        if (iMake === -1 && /(다르게|씩 (다|넣|담|준)|조건 [1-9]|각각 다|바꿔 가며|나눠 담)/.test(l)) iMake = i;
+        if (iMeasure === -1 && /(잰다|재어|재고|측정|기록한다|기록하고|관찰하여 적)/.test(l)) iMeasure = i;
+      });
+      if (iMake > 0 && iMeasure !== -1 && iMeasure < iMake)
+        addS('ask', '<b>' + (iMeasure + 1) + '번째 줄</b>에서 벌써 재고 있는데, 조건을 다르게 하는 것은 <b>' +
+          (iMake + 1) + '번째 줄</b>입니다. 무엇을 바꾼 <b>뒤에</b> 재야 차이를 알 수 있습니다. 순서를 바꿔 볼까요?',
+          'procedure', 'logic');
     }
+
+    // 앞뒤 맞추기 ⑤ 실험 장치 그림과 글이 맞는가
+    if (hasFigure) {
+      var inText = apparatusInText(d);
+      if (!tags.length) {
+        addS('ask', '실험 장치 그림을 올렸습니다. 그림 속에 <b>무엇이 들어 있는지</b> 눌러 표시해 두면, ' +
+          '준비물·실험 과정과 맞는지 대조해 드립니다.', null, 'logic');
+      } else {
+        var onlyFig = tags.filter(function (t) { return inText.indexOf(t) === -1; });
+        var onlyText = inText.filter(function (t) { return tags.indexOf(t) === -1; });
+        if (onlyFig.length)
+          addS('ask', '그림에는 <b>' + onlyFig.slice(0, 3).join(' · ') +
+            '</b>이(가) 있는데 준비물·과정의 글에는 없습니다. 글에도 적어 둘까요?', 'materials', 'logic');
+        if (onlyText.length)
+          addS('ask', '글에 나오는 <b>' + onlyText.slice(0, 3).join(' · ') +
+            '</b>은(는) 그림에서 어디에 놓이나요? 그림에 함께 그리거나, 그림 표시를 눌러 주세요.', null, 'logic');
+        if (!onlyFig.length && !onlyText.length)
+          addS('ok', '그림 속 장치와 준비물·과정의 글이 서로 맞습니다.', null, 'logic');
+      }
+    }
+
+    checkTemplate(addS, ['materials', 'procedure']);
     groups.push({ name: '탐구 설계', items: s });
 
     /* --- 결과 예측 --- */
@@ -2485,7 +3523,32 @@
       // 근거는 있으면 칭찬하되, 없다고 빨간 질문으로 막지는 않습니다(예측 질문은 힌트로 안내).
       if (REASON.test(d.predict))
         addP('ok', '왜 그렇게 될지 근거도 함께 들었습니다.', null);
+
+      // 앞뒤 맞추기 ⑥ 가설과 예측이 서로 반대를 말하고 있지 않은가
+      var UP   = /(증가|늘어|늘고|커지|커질|커진|길어|높아|많아|빨라|올라|오른|잘 자|더 (많|길|높|크|빠|잘))/;
+      var DOWN = /(감소|줄어|줄고|작아|짧아|낮아|적어|느려|내려|떨어|시들|덜 |더 (적|짧|낮|작|느))/;
+      if (d.hypothesis) {
+        var hUp = UP.test(d.hypothesis), hDown = DOWN.test(d.hypothesis);
+        var pUp = UP.test(d.predict),    pDown = DOWN.test(d.predict);
+        if ((hUp && !hDown && pDown && !pUp) || (hDown && !hUp && pUp && !pDown))
+          addP('ask', '가설과 예측이 <b>서로 반대 방향</b>을 말하고 있습니다. ' +
+            '둘 중 어느 쪽이 내 생각인가요? 아니면 예측에 “예상과 다르면”을 적은 것인가요?', 'predict', 'logic');
+
+        // 가설을 그대로 옮겨 적었는지
+        var hCore = d.hypothesis.replace(/[\s.,·]/g, '');
+        var pCore = d.predict.replace(/[\s.,·]/g, '');
+        if (hCore.length >= 12 && pCore.indexOf(hCore.slice(0, 12)) !== -1 &&
+            pCore.length < hCore.length * 1.6 && !REASON.test(d.predict))
+          addP('ask', '예측이 <b>가설과 거의 같은 문장</b>입니다. 예측에는 가설을 다시 쓰는 대신 ' +
+            '<b>값이 어느 정도로 나올지</b>와 <b>왜 그렇게 생각하는지</b>를 적어 볼까요?', 'predict', 'logic');
+      }
+
+      // 앞뒤 맞추기 ⑦ 예측에 재는 값이 들어 있는가
+      if (d.dv && !mentions(d.predict, d.dv))
+        addP('ask', '예측에 <b>재는 값</b>(' + esc(d.dv) + ')이 보이지 않습니다. ' +
+          '무엇이 얼마나 달라질지로 적어 볼까요?', 'predict', 'logic');
     }
+    checkTemplate(addP, ['predict']);
     groups.push({ name: '결과 예측', items: pr });
 
     /* --- 안전 --- */
@@ -2515,8 +3578,36 @@
     // 뒷정리로 인정할 표현
     var CLEANUP = /(정리|정돈|청소|치운|치우|폐기|버린|버리|씻|반납|반환|제자리|원래 ?자리|원위치|닦|끈다|끄고|잠근다)/;
 
+    // 안전 데이터 카드에서 찾은 물질과 '섞으면 안 되는 조합'
+    var chem = chemHits(d);
+    var mix = mixHits(d);
+
     var safe = [], addF = mk(safe, 'safety');
     checkWriting(addF, ['safety']);
+    checkTemplate(addF, ['safety']);
+
+    // 학교에서 학생이 직접 다루지 않는 물질
+    chem.filter(function (c) { return c.ban; }).forEach(function (c) {
+      addF('danger', '<strong>' + c.name + ' — 학생이 직접 다루지 않습니다.</strong> ' + c.care, null);
+    });
+
+    // 섞으면 안 되는 조합 — 가장 먼저, 가장 강하게 짚습니다.
+    mix.forEach(function (r) {
+      addF('danger', '<strong>섞으면 안 됩니다 — ' + r.what + '</strong> ' + r.why +
+        ' 이 계획에 두 가지가 함께 들어 있습니다. <b>선생님께 먼저 보여 주세요.</b>', null);
+    });
+
+    // 감지된 물질이 요구하는 보호구가 안전 계획에 아직 없을 때
+    if (chem.length) {
+      var need = missingGear(d, chem);
+      if (need.length)
+        addF('ask', '아래 <b>안전 데이터</b>에서 찾은 물질에 필요한 ' +
+          '<b>' + need.slice(0, 3).map(function (g) { return g.replace(/\.$/, ''); }).join(' · ') +
+          '</b>이(가) 안전 계획에 없습니다. 안전 데이터 카드의 버튼으로 넣을 수 있습니다.', 'safety');
+      else
+        addF('ok', '찾아낸 물질에 필요한 보호구를 모두 적었습니다.', null);
+    }
+
     if (!d.materials && !d.procedure) {
       addF('todo', '준비물과 과정을 쓰면 위험 요소를 확인해 드립니다.', null);
     } else if (!hits.length) {
@@ -2553,7 +3644,63 @@
 
     groups.push({ name: '현실성과 안전', items: safe });
 
-    return { groups: groups, hits: hits };
+    return {
+      groups: groups,
+      hits: hits,
+      chem: chem,          // 안전 데이터 카드에서 찾은 물질
+      mix: mix,            // 섞으면 안 되는 조합
+      errors: errorRisks(d),   // 이대로 하면 생길 만한 오차
+      data: d
+    };
+  }
+
+  /* ---------- 2022 개정 교육과정 이어 붙이기 ---------- */
+  // 계획서에서 영역·탐구 기능·교과 역량을 뽑습니다. 점검 결과(result)를 함께
+  // 넘겨야, '갖췄다'를 실제 통과 여부로 판단할 수 있습니다.
+  function curriculumOf(result) {
+    var d = result.data;
+    var text = [d.topic, d.hypothesis, d.iv, d.dv, d.cv, d.materials, d.procedure].join(' ');
+
+    // 영역 — 겹치는 낱말의 '가지 수'가 가장 많은 쪽을 앞에 둡니다.
+    // 같은 낱말이 여러 번 나온 것으로는 앞서지 않게, 서로 다른 낱말만 셉니다.
+    var areas = CUR_AREAS.map(function (a) {
+      var re = new RegExp(a.re.source, 'g');
+      var seen = {};
+      (text.match(re) || []).forEach(function (w) { seen[w] = 1; });
+      return { name: a.name, ex: a.ex, n: Object.keys(seen).length };
+    }).filter(function (a) { return a.n > 0; })
+      .sort(function (x, y) { return y.n - x.n; })
+      .slice(0, 2);
+
+    // 단계별 통과 여부 — 통과 항목이 있고 미작성·위험·고칠 곳이 없어야 '갖춤'입니다.
+    var state = {};
+    result.groups.forEach(function (g) {
+      var ok = 0, block = 0;
+      g.items.forEach(function (it) {
+        if (it[0] === 'ok') ok++;
+        else if (it[0] === 'todo' || it[0] === 'danger') block++;
+        else if (it[0] === 'ask') block++;
+      });
+      state[g.name] = { done: ok > 0 && block === 0, started: g.items.some(function (it) { return it[0] !== 'todo'; }) };
+    });
+
+    var skills = CUR_SKILLS.map(function (s) {
+      var st = state[s.group] || {};
+      return { name: s.name, why: s.why, done: !!st.done };
+    });
+
+    var got = skills.filter(function (s) { return s.done; }).map(function (s) { return s.name; });
+    var comp = CUR_COMPETENCE.map(function (c) {
+      return {
+        name: c.name,
+        done: c.need.every(function (n) { return got.indexOf(n) !== -1; }),
+        need: c.need
+      };
+    });
+    if (DIGITAL.test(text))
+      comp.push({ name: '디지털·AI 소양', done: true, need: ['디지털 도구로 측정·기록'] });
+
+    return { areas: areas, skills: skills, comp: comp };
   }
 
   /* ---------- render ---------- */
@@ -2595,8 +3742,10 @@
         if (justOk && (was === 'ask' || was === 'danger') && isAssess(curSlot) && freeMeta)
           freeMeta.fixCount++;
         prevItemState[key] = it[0];
+        // 단계끼리 어긋난 곳은 작은 표를 달아, 그 칸만의 문제가 아님을 알려 줍니다.
+        var badge = it[3] === 'logic' ? '<span class="lg">앞뒤 맞추기</span>' : '';
         html += '<li class="item ' + it[0] + (justOk ? ' just-ok' : '') +
-          '"><span class="dot"></span><span>' + it[1] + '</span></li>';
+          '"><span class="dot"></span><span>' + badge + it[1] + '</span></li>';
       });
       html += '</ul></section>';
     });
@@ -2654,6 +3803,10 @@
     syncPicks();
     filterPicks();
     renderSummary();
+    renderCurriculum(result);
+    renderMsds(result);
+    renderErrors(result);
+    renderDeviceTags();
 
     // 삼각플라스크 친구의 표정 — 지금 계획서 상태를 얼굴로 알려 줍니다.
     var mood = counts.danger ? 'st-bad'
@@ -2760,6 +3913,96 @@
       revs;
   }
 
+  // 점검 결과에 덧붙이는 세 가지 — 교육과정 이어 붙이기 · 안전 데이터 · 오차 미리 보기.
+  // 학생에게는 확인표, 선생님에게는 과정 중심 평가의 근거가 됩니다.
+  function buildExtraHtml(r) {
+    var c = curriculumOf(r);
+    var out = '';
+
+    out += '<section class="blk"><h3>교육과정 이어 붙이기 (2022 개정)</h3><ul>' +
+      '<li class="ok"><span class="m">영역</span>' +
+        (c.areas.length ? c.areas.map(function (a) { return esc(a.name) + ' — ' + esc(a.ex); }).join(' / ')
+                        : '주제에서 영역을 찾지 못했습니다') + '</li>' +
+      c.skills.map(function (s) {
+        return '<li class="' + (s.done ? 'ok' : 'todo') + '"><span class="m">' +
+          (s.done ? '갖춤' : '아직') + '</span><b>' + esc(s.name) + '</b> — ' + esc(s.why) + '</li>';
+      }).join('') +
+      c.comp.map(function (s) {
+        return '<li class="' + (s.done ? 'ok' : 'todo') + '"><span class="m">' +
+          (s.done ? '근거' : '아직') + '</span>' + esc(s.name) +
+          ' <span style="color:#8a949d">(' + esc(s.need.join(' + ')) + ')</span></li>';
+      }).join('') +
+      '</ul><p style="font-size:12px;color:#8a949d;margin:6px 0 0">' +
+      '영역·기능은 쓴 내용에서 찾아 추천한 것입니다. 성취기준 번호는 지도교사가 확정합니다.</p></section>';
+
+    if (r.chem.length || r.mix.length) {
+      out += '<section class="blk"><h3>안전 데이터 요약 (MSDS 요약 · 실제 MSDS를 대신하지 않음)</h3><ul>' +
+        r.mix.map(function (m) {
+          return '<li class="danger"><span class="m">금지</span><b>섞으면 안 됨 — ' + esc(m.what) +
+            '</b> ' + stripTags(m.why) + '</li>';
+        }).join('') +
+        r.chem.map(function (x) {
+          return '<li class="' + (x.ban ? 'danger' : 'ask') + '"><span class="m">' +
+            (x.ban ? '금지' : '주의') + '</span><b>' + esc(x.name) + '</b> — ' +
+            esc(x.ghs.join(' · ')) + ' / 보호구: ' +
+            esc(x.gear.map(function (g) { return g.replace(/\.$/, ''); }).join(', ')) +
+            ' / 끝난 뒤: ' + stripTags(x.waste) + '</li>';
+        }).join('') +
+        '</ul></section>';
+    }
+
+    if (r.errors.length) {
+      out += '<section class="blk"><h3>실험 전 오차 미리 보기 (' + r.errors.length + '곳)</h3><ul>' +
+        r.errors.map(function (e) {
+          return '<li class="ask"><span class="m">' + (e.kind === '계통' ? '치우침' : '변인') +
+            '</span><b>' + esc(e.label) + '</b> — ' + stripTags(e.err) + ' → ' + stripTags(e.ask) + '</li>';
+        }).join('') +
+        '</ul></section>';
+    }
+
+    return out;
+  }
+
+  function buildExtraText(r, THIN) {
+    var c = curriculumOf(r);
+    var out = [];
+
+    out.push('■ 교육과정 이어 붙이기 (2022 개정)', THIN);
+    out.push('  영역: ' + (c.areas.length ? c.areas.map(function (a) { return a.name; }).join(' / ') : '(찾지 못함)'));
+    out.push('  탐구 기능: ' + c.skills.map(function (s) {
+      return (s.done ? '[갖춤] ' : '[아직] ') + s.name;
+    }).join('  '));
+    out.push('  교과 역량: ' + c.comp.map(function (s) {
+      return (s.done ? '[근거] ' : '[아직] ') + s.name;
+    }).join('  '));
+    out.push('  * 성취기준 번호는 지도교사가 확정합니다.', '');
+
+    if (r.chem.length || r.mix.length) {
+      out.push('■ 안전 데이터 요약 (실제 MSDS를 대신하지 않음)', THIN);
+      r.mix.forEach(function (m) {
+        out.push('  [금지] 섞으면 안 됨 — ' + m.what + ': ' + stripTags(m.why));
+      });
+      r.chem.forEach(function (x) {
+        out.push('  [' + (x.ban ? '금지' : '주의') + '] ' + x.name + ' — ' + x.ghs.join(' · '));
+        out.push('        보호구: ' + x.gear.map(function (g) { return g.replace(/\.$/, ''); }).join(', '));
+        out.push('        끝난 뒤: ' + stripTags(x.waste));
+      });
+      out.push('');
+    }
+
+    if (r.errors.length) {
+      out.push('■ 실험 전 오차 미리 보기 (' + r.errors.length + '곳)', THIN);
+      r.errors.forEach(function (e) {
+        out.push('  [' + (e.kind === '계통' ? '치우침' : '변인') + '] ' + e.label);
+        out.push('        ' + stripTags(e.err));
+        out.push('        → ' + stripTags(e.ask));
+      });
+      out.push('');
+    }
+
+    return out;
+  }
+
   function buildReport(withReview) {
     var r = analyze();
     var t = stamp();
@@ -2777,7 +4020,12 @@
     if (deviceImg)
       plan += '<section class="blk"><h3>실험 장치 그림·사진</h3>' +
         '<img src="' + deviceImg + '" alt="실험 장치 그림" ' +
-        'style="max-width:100%;border:1px solid #d8dde1;border-radius:6px;break-inside:avoid"></section>';
+        'style="max-width:100%;border:1px solid #d8dde1;border-radius:6px;break-inside:avoid">' +
+        (deviceTags.length
+          ? '<p style="margin:6px 0 0;font-size:13px;background:#f4f6f7;border-radius:5px;padding:8px 11px">' +
+            '<b>그림 속 장치</b> ' + esc(deviceTags.join(' · ')) + '</p>'
+          : '') +
+        '</section>';
 
     var review = r.groups.map(function (g) {
       return '<section class="blk"><h3>' + g.name + '</h3><ul>' +
@@ -2798,7 +4046,7 @@
         '<div class="sum"><span>전체 <b>' + total + '</b>항목</span><span>통과 <b>' + counts.ok + '</b></span>' +
         '<span>확인 필요 <b>' + counts.ask + '</b></span><span>미작성 <b>' + counts.todo + '</b></span>' +
         '<span>위험 <b>' + counts.danger + '</b></span></div>' +
-        review
+        review + buildExtraHtml(r)
       : '';
     var title = withReview ? '탐구 계획서 및 점검 결과' : '탐구 계획서';
     var footer = withReview
@@ -2839,12 +4087,21 @@
       '@media print{body{padding:0}}' +
       '</style></head><body>' +
       '<h1>과학 탐구 계획서' + (withReview ? ' · 점검 결과' : '') + '</h1>' +
-      '<p class="meta">저장 시각 ' + t.human + '</p>' +
+      '<p class="meta">' + (whoLine() ? esc(whoLine()) + ' · ' : '') + '저장 시각 ' + t.human + '</p>' +
       (withReview ? warn : '') +
       (withReview ? '<h2>Ⅰ. 계획서 전문</h2>' : '') + plan +
       reviewBlock +
       (withReview ? buildAssessHtml() : '') +
       '<footer>' + footer + '</footer></body></html>';
+  }
+
+  // 보고서 머리에 적을 '학번 · 이름 · 탐구'
+  function whoLine() {
+    var w = [];
+    if (studentId) w.push('학번 ' + studentId);
+    if (studentName) w.push('이름 ' + studentName);
+    if (w.length) w.push(slotOf(curSlot).label);
+    return w.join(' · ');
   }
 
   function stripTags(s) {
@@ -2861,7 +4118,8 @@
     var RULE = '='.repeat(52), THIN = '-'.repeat(52);
     var out = [];
 
-    out.push('과학 탐구 계획서' + (withReview ? ' · 점검 결과' : ''), '저장 시각 ' + t.human, RULE, '');
+    out.push('과학 탐구 계획서' + (withReview ? ' · 점검 결과' : ''),
+      (whoLine() ? whoLine() + ' · ' : '') + '저장 시각 ' + t.human, RULE, '');
 
     if (withReview && r.hits.length) {
       out.push('[ 안전 확인 필요 ]',
@@ -2881,7 +4139,9 @@
       out.push('');
     });
     // 텍스트 파일에는 그림을 담을 수 없어, 있는지만 알려 줍니다.
-    out.push('■ 실험 장치 그림·사진', '   ' + (deviceImg ? '(그림 첨부함 — PDF·웹 문서로 저장하면 함께 보입니다)' : '(없음)'), '');
+    out.push('■ 실험 장치 그림·사진', '   ' + (deviceImg ? '(그림 첨부함 — PDF·웹 문서로 저장하면 함께 보입니다)' : '(없음)'));
+    if (deviceTags.length) out.push('   그림 속 장치: ' + deviceTags.join(' · '));
+    out.push('');
 
     if (withReview) {
       out.push(RULE, 'Ⅱ. 점검 결과', RULE, '');
@@ -2892,6 +4152,7 @@
         });
         out.push('');
       });
+      buildExtraText(r, THIN).forEach(function (l) { out.push(l); });
       out.push(THIN,
         '이 점검 결과는 계획서의 형식을 자동으로 확인한 것입니다.',
         '탐구 내용의 과학적 타당성과 실제 안전 여부는 지도교사의 확인이 필요합니다.');
@@ -2930,8 +4191,11 @@
   };
 
   // 기본 파일 이름 — 사용자가 저장할 때 원하는 이름으로 바꿀 수 있습니다.
+  // 예) 2103 김홍길 탐구1 — 학번·이름이 비어 있으면 그 자리는 빼고 붙입니다.
   function defaultName(withReview) {
-    return (withReview ? '탐구계획서_점검결과_' : '탐구계획서_') + stamp().file;
+    var parts = [studentId, studentName, slotOf(curSlot).label.replace(/\s+/g, '')]
+      .filter(function (x) { return x; });
+    return parts.join(' ') || ((withReview ? '탐구계획서_점검결과_' : '탐구계획서_') + stamp().file);
   }
   // 파일 이름에 쓸 수 없는 문자를 정리합니다.
   function cleanName(name, withReview) {
@@ -2939,8 +4203,8 @@
     return name || defaultName(withReview);
   }
 
-  // PDF는 파일로 바로 만들 수 없어, 계획서를 숨은 창에 담아 브라우저의
-  // '인쇄 → PDF로 저장' 기능으로 넘깁니다. 이 앱 밖으로는 아무것도 보내지 않습니다.
+  // PDF 도구를 받지 못했을 때(오프라인 첫 사용 등) 쓰는 예비 방법입니다.
+  // 계획서를 숨은 창에 담아 브라우저의 '인쇄 → PDF로 저장' 기능으로 넘깁니다.
   function printReport(withReview, name) {
     var frame = document.createElement('iframe');
     frame.setAttribute('aria-hidden', 'true');
@@ -2963,10 +4227,12 @@
 
   // withReview: true면 점검 결과까지, false면 작성 내용만 저장합니다.
   // name: 저장할 파일 이름(확장자 제외). 없으면 기본 이름을 씁니다.
-  function saveReport(kind, withReview, name) {
+  // done(ok): 파일을 내려받았으면 true. PDF는 만드는 데 잠깐 걸려 끝난 뒤에 부릅니다.
+  function saveReport(kind, withReview, name, done) {
     var f = FORMATS[kind] || FORMATS.html;
     name = cleanName(name, withReview);
-    if (f.print) { printReport(withReview, name); return; }
+    done = done || function () {};
+    if (f.print) { makePdf(withReview, name, done); return; }
     // 앞의 BOM은 워드·엑셀·메모장이 한글을 깨뜨리지 않고 열게 해 줍니다.
     var blob = new Blob(['﻿' + f.build(withReview)], { type: f.mime });
     var url = URL.createObjectURL(blob);
@@ -2977,6 +4243,149 @@
     a.click();
     document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    done(true);
+  }
+
+  /* ---------- PDF 파일 바로 만들기 ---------- */
+  // 인쇄 창을 거치지 않고 .pdf 파일을 만들어 '다운로드' 폴더에 바로 내려받습니다.
+  // 계획서를 숨은 창에 그린 뒤 그림으로 찍어(html2canvas) A4 쪽으로 나눠 담습니다(jsPDF).
+  // 모든 작업은 이 기기 안에서 이루어지고, 계획서 내용은 어디로도 보내지 않습니다.
+  var PDF_LIBS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
+  ];
+  var pdfLibsReady = null;
+
+  function loadScript(src) {
+    return new Promise(function (ok, fail) {
+      var sc = document.createElement('script');
+      sc.src = src;
+      sc.onload = ok;
+      sc.onerror = fail;
+      document.head.appendChild(sc);
+    });
+  }
+  function loadPdfLibs() {
+    if (window.html2canvas && window.jspdf) return Promise.resolve();
+    if (!pdfLibsReady) {
+      pdfLibsReady = Promise.all(PDF_LIBS.map(loadScript))
+        .catch(function (e) { pdfLibsReady = null; throw e; });
+    }
+    return pdfLibsReady;
+  }
+
+  var PDF_W = 760;          // 계획서를 그릴 너비(px)
+  var PDF_MARGIN = 14;      // 쪽 여백(mm)
+
+  function makePdf(withReview, name, done) {
+    loadPdfLibs().then(function () {
+      return renderPdf(withReview, name);
+    }).then(function () {
+      done(true);
+    }).catch(function () {
+      // 인터넷이 안 되어 도구를 못 받았으면 예전처럼 인쇄 창으로 넘깁니다.
+      printReport(withReview, name);
+      done(false);
+    });
+  }
+
+  function renderPdf(withReview, name) {
+    var frame = document.createElement('iframe');
+    frame.setAttribute('aria-hidden', 'true');
+    frame.style.cssText = 'position:fixed;left:-10000px;top:0;width:' + PDF_W + 'px;height:1200px;border:0;';
+    document.body.appendChild(frame);
+    var idoc = frame.contentWindow.document;
+    idoc.open();
+    // 화면용 여백은 걷어 내고(쪽 여백은 PDF가 줍니다), 인쇄 때만 보이던 쪽 머리말을 보이게 합니다.
+    idoc.write(buildReport(withReview).replace('</style>',
+      'body{max-width:none;margin:0;padding:0}' +
+      '.pagehead{display:block;font-size:12px;color:#8a949d;margin:0 0 14px;' +
+      'padding-bottom:8px;border-bottom:1px solid #d8dde1}</style>'));
+    idoc.close();
+
+    function cleanup() { if (frame.parentNode) frame.parentNode.removeChild(frame); }
+
+    // 글꼴·그림이 자리를 잡은 뒤에 찍습니다.
+    var imgs = Array.prototype.map.call(idoc.images, function (im) {
+      return im.complete ? null : new Promise(function (ok) { im.onload = im.onerror = ok; });
+    }).filter(Boolean);
+    var fonts = idoc.fonts && idoc.fonts.ready ? idoc.fonts.ready : Promise.resolve();
+
+    return Promise.all(imgs.concat([fonts])).then(function () {
+      var body = idoc.body;
+      var top0 = body.getBoundingClientRect().top;
+      var height = Math.ceil(body.scrollHeight);
+      var breaks = pdfBreaks(idoc, top0);
+      return window.html2canvas(body, {
+        scale: 2, backgroundColor: '#ffffff', logging: false,
+        width: PDF_W, height: height, windowWidth: PDF_W, windowHeight: height
+      }).then(function (canvas) {
+        var pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+        var pageW = pdf.internal.pageSize.getWidth(), pageH = pdf.internal.pageSize.getHeight();
+        var mmPerPx = (pageW - PDF_MARGIN * 2) / PDF_W;
+        var sliceMax = Math.floor((pageH - PDF_MARGIN * 2) / mmPerPx);   // 한 쪽에 들어가는 높이(px)
+        var k = canvas.width / PDF_W;
+
+        var y = 0, first = true;
+        while (y < height - 1) {
+          var end = nextBreak(breaks, y, sliceMax, height);
+          var part = document.createElement('canvas');
+          part.width = canvas.width;
+          part.height = Math.max(1, Math.round((end - y) * k));
+          var ctx = part.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, part.width, part.height);
+          ctx.drawImage(canvas, 0, Math.round(y * k), part.width, part.height, 0, 0, part.width, part.height);
+          if (!first) pdf.addPage();
+          pdf.addImage(part.toDataURL('image/jpeg', 0.92), 'JPEG',
+            PDF_MARGIN, PDF_MARGIN, PDF_W * mmPerPx, (end - y) * mmPerPx);
+          first = false;
+          y = end;
+        }
+        pdf.setProperties({ title: name });
+        pdf.save(name + '.pdf');
+        cleanup();
+      });
+    }).catch(function (e) { cleanup(); throw e; });
+  }
+
+  // 쪽을 나눌 수 있는 자리(블록 사이)와 꼭 새 쪽에서 시작할 자리를 모읍니다.
+  function pdfBreaks(idoc, top0) {
+    var soft = [], keep = [], forced = [];
+    Array.prototype.forEach.call(idoc.body.querySelectorAll('*'), function (n) {
+      var cs = idoc.defaultView.getComputedStyle(n);
+      if (cs.display === 'inline' || cs.display === 'none' || cs.position === 'absolute') return;
+      var r = n.getBoundingClientRect();
+      if (!r.height) return;
+      var t = r.top - top0, b = r.bottom - top0;
+      soft.push(b);
+      if (cs.breakInside === 'avoid' || cs.pageBreakInside === 'avoid') keep.push([t, b]);
+      if (cs.breakBefore === 'page' || cs.pageBreakBefore === 'always') forced.push(t);
+    });
+    // 'break-inside:avoid' 상자 안쪽에서 나누는 것은 되도록 피합니다.
+    var good = soft.filter(function (y) {
+      return !keep.some(function (k) { return y > k[0] + 1 && y < k[1] - 1; });
+    });
+    var num = function (a, b) { return a - b; };
+    return { good: good.sort(num), soft: soft.sort(num), forced: forced.sort(num) };
+  }
+
+  function nextBreak(br, y, sliceMax, height) {
+    var limit = y + sliceMax;
+    // 이 쪽 안에 '새 쪽에서 시작' 자리가 있으면 거기서 끊습니다.
+    for (var i = 0; i < br.forced.length; i++) {
+      if (br.forced[i] > y + 20 && br.forced[i] <= limit) return br.forced[i];
+    }
+    if (height <= limit) return height;
+    // 쪽의 절반은 채우면서 가장 아래쪽의 좋은 자리 → 아무 블록 사이 → 그냥 자르기 순서로 고릅니다.
+    function pick(list) {
+      var best = -1;
+      list.forEach(function (b) { if (b > y + sliceMax * 0.5 && b <= limit) best = b; });
+      return best;
+    }
+    var b = pick(br.good);
+    if (b < 0) b = pick(br.soft);
+    return b < 0 ? limit : Math.ceil(b);
   }
 
   /* ---------- storage ---------- */
@@ -2987,6 +4396,7 @@
     try {
       var d = { at: new Date().toISOString() };
       FIELDS.forEach(function (k) { d[k] = el[k].value; });
+      if (deviceTags.length) d.deviceTags = deviceTags;
       if (isAssess(curSlot) && freeMeta) d.meta = freeMeta;
       localStorage.setItem(dataKey(curSlot), JSON.stringify(d));
 
@@ -3026,6 +4436,7 @@
   function loadSlot() {
     FIELDS.forEach(function (k) { el[k].value = ''; });
     deviceImg = '';
+    deviceTags = [];
     freeMeta = isAssess(curSlot) ? blankMeta() : null;
     var note = document.getElementById('savedNote');
     try {
@@ -3034,6 +4445,7 @@
       if (raw) {
         var d = JSON.parse(raw);
         FIELDS.forEach(function (k) { if (typeof d[k] === 'string') el[k].value = d[k]; });
+        if (Array.isArray(d.deviceTags)) deviceTags = d.deviceTags.slice();
         if (isAssess(curSlot) && d.meta) freeMeta = d.meta;
         any = FIELDS.some(function (k) { return el[k].value.trim(); });
         if (d.at && any) {
@@ -3131,6 +4543,11 @@
     tm.textContent = '⏱ ' + fmtElapsed(elapsedMs());
     bar.appendChild(tm);
 
+    // 자유탐구(수행평가)에서는 골라 넣는 예시를 숨깁니다.
+    Array.prototype.forEach.call(document.querySelectorAll('.practice-only'), function (f) {
+      f.hidden = isAssess(curSlot);
+    });
+
     var note = document.getElementById('assessNote');
     if (isAssess(curSlot)) {
       note.hidden = false;
@@ -3179,17 +4596,26 @@
     toast(v ? ('“' + v + '” 학번으로 시작합니다.') : '학번 없이 시작합니다.');
   }
 
+  function setName(v) {
+    studentName = (v || '').trim();
+    try { localStorage.setItem(STORE_NAME, studentName); } catch (e) {}
+    var top = document.getElementById('studentName');
+    if (top && top.value !== studentName) top.value = studentName;
+  }
+
   /* ---------- 첫 화면 학번 입력 ---------- */
   function showIdGate() {
     var gate = document.getElementById('idgate');
     var input = document.getElementById('gateId');
     if (!gate) return;
     input.value = studentId;
+    document.getElementById('gateName').value = studentName;
     gate.hidden = false;
     setTimeout(function () { input.focus(); }, 60);
   }
   function submitIdGate() {
     var v = document.getElementById('gateId').value.trim();
+    setName(document.getElementById('gateName').value);
     applyId(v);
     document.getElementById('idgate').hidden = true;
     var top = document.getElementById('studentId');
@@ -3241,7 +4667,9 @@
         deviceImg = cv.toDataURL('image/jpeg', 0.82);
         saveDeviceImg();
         renderDeviceImg();
-        toast('실험 장치 그림을 넣었습니다.');
+        // 그림이 들어오면 '그림 속에 있는 것 표시하기'가 바로 열려야 합니다.
+        render();
+        toast('실험 장치 그림을 넣었습니다. 그림 속에 있는 것을 눌러 표시해 보세요.');
       };
       img.onerror = function () { toast('이 그림 파일은 열 수 없어요.'); };
       img.src = reader.result;
@@ -3273,7 +4701,9 @@
         document.getElementById('deviceImg').click();
       });
       box.querySelector('#deviceRemove').addEventListener('click', function () {
-        deviceImg = ''; saveDeviceImg(); renderDeviceImg(); toast('실험 장치 그림을 뺐습니다.');
+        deviceImg = ''; deviceTags = [];
+        saveDeviceImg(); renderDeviceImg(); render();
+        toast('실험 장치 그림을 뺐습니다.');
       });
     } else {
       box.innerHTML = '<label for="deviceImg" class="device-add">＋ 그림·사진 고르기</label>';
@@ -3392,7 +4822,8 @@
 
   function syncPicks() {
     var lines = safetyLines();
-    var buttons = document.querySelectorAll('#safetyPicks .pick');
+    // 안전 데이터 카드의 보호구 버튼도 같은 기준으로 켜고 끕니다.
+    var buttons = document.querySelectorAll('#safetyPicks .pick, #msdsBox .pick');
     Array.prototype.forEach.call(buttons, function (b) {
       var on = lines.indexOf(b.getAttribute('data-text')) !== -1;
       b.classList.toggle('on', on);
@@ -4149,6 +5580,518 @@
         : '');
   }
 
+  /* ---------- 교육과정 이어 붙이기 화면 ---------- */
+  // 학생에게는 '내 탐구가 교과의 어디에 닿아 있는지'를, 선생님에게는
+  // 과정 중심 평가의 근거를 보여 줍니다.
+
+  function renderCurriculum(result) {
+    var box = document.getElementById('curriculum');
+    if (!box) return;
+    var c = curriculumOf(result);
+    if (!c.areas.length && !c.skills.some(function (s) { return s.done; })) {
+      box.hidden = true;
+      return;
+    }
+    box.hidden = false;
+
+    var areas = c.areas.length
+      ? c.areas.map(function (a) {
+          return '<span class="cur-chip area" title="' + esc(a.ex) + '">' + esc(a.name) + '</span>';
+        }).join('')
+      : '<span class="cur-chip off">주제를 쓰면 영역을 찾아 줍니다</span>';
+
+    var skills = c.skills.map(function (s) {
+      return '<span class="cur-chip' + (s.done ? ' on' : ' off') + '" title="' + esc(s.why) + '">' +
+        (s.done ? '✓ ' : '') + esc(s.name) + '</span>';
+    }).join('');
+
+    var comp = c.comp.map(function (s) {
+      return '<span class="cur-chip' + (s.done ? ' on' : ' off') + '" title="' +
+        esc(s.need.join(' + ') + '이(가) 갖춰지면 근거가 됩니다') + '">' +
+        (s.done ? '✓ ' : '') + esc(s.name) + '</span>';
+    }).join('');
+
+    box.innerHTML =
+      '<p class="cur-title">교육과정 이어 붙이기 <span>2022 개정</span></p>' +
+      '<p class="cur-row"><span class="cur-lab">영역</span>' + areas + '</p>' +
+      '<p class="cur-row"><span class="cur-lab">탐구 기능</span>' + skills + '</p>' +
+      '<p class="cur-row"><span class="cur-lab">교과 역량</span>' + comp + '</p>' +
+      '<p class="cur-note">영역과 기능은 쓴 내용에서 <b>찾아 추천한 것</b>입니다. ' +
+      '성취기준 번호는 학년과 진도에 따라 달라지므로 <b>선생님이 확정</b>합니다.</p>';
+  }
+
+  /* ---------- 안전 데이터 카드 (MSDS 요약) ---------- */
+
+  function renderMsds(result) {
+    var box = document.getElementById('msdsBox');
+    if (!box) return;
+    var chem = result.chem, mix = result.mix;
+
+    // 같은 내용을 다시 그리지 않습니다(누르는 중에 카드가 접히지 않게).
+    var sign = chem.map(function (c) { return c.name; }).join('|') + '#' +
+               mix.map(function (m) { return m.what; }).join('|') + '#' +
+               missingGear(result.data, chem).length;
+    if (box.dataset.sign === sign) { syncPicks(); return; }
+    box.dataset.sign = sign;
+
+    if (!chem.length && !mix.length) {
+      box.innerHTML = '<p class="picks-note">준비물과 실험 과정을 적으면, 거기에 나온 ' +
+        '<b>물질과 기구의 안전 데이터</b>를 찾아서 여기에 펼쳐 줍니다.</p>';
+      return;
+    }
+
+    var html = '';
+
+    mix.forEach(function (r) {
+      html += '<div class="msds-card mix">' +
+        '<p class="msds-name">섞으면 안 되는 조합 — ' + esc(r.what) + ' 발생</p>' +
+        '<p class="msds-row">' + r.why + '</p>' +
+        '</div>';
+    });
+
+    chem.forEach(function (c) {
+      var gear = c.gear.map(function (g) {
+        return '<button type="button" class="pick" data-text="' + esc(g) + '">' +
+          esc(g.replace(/\.$/, '')) + '</button>';
+      }).join('');
+      html += '<div class="msds-card' + (c.ban ? ' ban' : '') + '">' +
+        '<p class="msds-name">' + esc(c.name) +
+          (c.ban ? '<span class="msds-ban">학생 사용 금지</span>' : '') + '</p>' +
+        '<p class="msds-tags">' + c.ghs.map(function (g) {
+          return '<span class="msds-tag">' + esc(g) + '</span>';
+        }).join('') + '</p>' +
+        '<p class="msds-row"><b>다룰 때</b> ' + c.care + '</p>' +
+        '<p class="msds-row"><b>다쳤을 때</b> ' + c.first + '</p>' +
+        '<p class="msds-row"><b>끝난 뒤</b> ' + c.waste + '</p>' +
+        '<p class="msds-gear-lab">필요한 보호구 · 눌러서 안전 계획에 넣기</p>' +
+        '<div class="msds-gear">' + gear + '</div>' +
+        '</div>';
+    });
+
+    html += '<p class="msds-foot">이 카드는 학교에서 자주 쓰는 물질을 정리한 <b>요약</b>입니다. ' +
+      '실제 MSDS(물질안전보건자료)를 대신하지 않으며, 여기 없는 물질은 <b>반드시 선생님께 확인</b>하세요.</p>';
+
+    box.innerHTML = html;
+    syncPicks();
+  }
+
+  /* ---------- 오차 원인 미리 보기 ---------- */
+
+  function renderErrors(result) {
+    var box = document.getElementById('errBox');
+    if (!box) return;
+    var risks = result.errors;
+
+    var sign = risks.map(function (r) { return r.label; }).join('|');
+    if (box.dataset.sign === sign) return;
+    box.dataset.sign = sign;
+
+    if (!risks.length) {
+      box.innerHTML = '<p class="picks-note">준비물과 실험 과정을 적으면, ' +
+        '<b>이대로 실험했을 때 값이 어긋날 만한 곳</b>을 미리 짚어 줍니다.</p>';
+      return;
+    }
+
+    var shown = risks.slice(0, 5);
+    box.innerHTML =
+      '<p class="err-head">이대로 하면 <b>' + risks.length + '곳</b>에서 값이 어긋날 수 있어요' +
+        (risks.length > shown.length ? ' <span>(먼저 ' + shown.length + '개만 보여 줍니다)</span>' : '') + '</p>' +
+      '<ul class="err-list">' +
+      shown.map(function (r) {
+        return '<li class="err-item ' + (r.kind === '계통' ? 'sys' : 'var') + '">' +
+          '<span class="err-kind">' + (r.kind === '계통' ? '한쪽으로 치우침' : '통제 안 된 조건') + '</span>' +
+          '<b>' + esc(r.label) + '</b>' +
+          '<span class="err-why">' + r.err + '</span>' +
+          '<span class="err-ask">' + r.ask + '</span>' +
+          '</li>';
+      }).join('') +
+      '</ul>' +
+      '<p class="err-foot">여기에 답하면 실험을 <b>다시 하지 않아도 되는 값</b>을 얻을 수 있습니다. ' +
+      '대비책은 <b>실험 과정</b>이나 <b>통제 변인</b> 칸에 적으면 이 목록에서 사라집니다.</p>';
+  }
+
+  /* ---------- 실험 장치 그림 표시하기 ---------- */
+
+  function renderDeviceTags() {
+    var wrap = document.getElementById('deviceTagField');
+    var box = document.getElementById('deviceTags');
+    if (!wrap || !box) return;
+
+    // 그림이 없으면 표시할 것도 없습니다.
+    if (!deviceImg) { wrap.hidden = true; box.dataset.sign = ''; return; }
+    wrap.hidden = false;
+
+    var d = {};
+    FIELDS.forEach(function (k) { d[k] = val(k); });
+    var inText = apparatusInText(d);
+
+    // 글에서 찾은 기구와 이미 표시한 기구를 앞줄에 둡니다.
+    var front = APPARATUS.filter(function (a) {
+      return inText.indexOf(a.n) !== -1 || deviceTags.indexOf(a.n) !== -1;
+    });
+    var rest = APPARATUS.filter(function (a) { return front.indexOf(a) === -1; });
+
+    // 내용이 그대로면 다시 그리지 않습니다('다른 기구 찾기'가 저절로 닫히지 않게).
+    var sign = front.map(function (a) { return a.n; }).join('|') + '#' + deviceTags.join('|');
+    if (box.dataset.sign === sign) return;
+    box.dataset.sign = sign;
+
+    function chip(a) {
+      var on = deviceTags.indexOf(a.n) !== -1;
+      return '<button type="button" class="pick' + (on ? ' on' : '') +
+        '" data-app="' + esc(a.n) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' +
+        esc(a.n) + '</button>';
+    }
+
+    box.innerHTML =
+      (front.length
+        ? '<div class="pick-group"><span class="pick-label">글에 나온 것 · 표시한 것</span>' +
+          front.map(chip).join('') + '</div>'
+        : '<p class="picks-note">그림 속에 보이는 기구를 아래에서 눌러 표시해 주세요.</p>') +
+      '<details class="app-more"><summary>다른 기구 찾기</summary>' +
+      '<div class="pick-group">' + rest.map(chip).join('') + '</div></details>';
+  }
+
+  function toggleDeviceTag(name) {
+    var i = deviceTags.indexOf(name);
+    if (i === -1) deviceTags.push(name);
+    else deviceTags.splice(i, 1);
+    render();   // render 안에서 표시 상태와 점검표를 함께 다시 그립니다
+  }
+
+  /* ---------- 맥락 맞춤형 탐구 틀 생성기 ---------- */
+  // 무엇을 궁금해할지조차 막힌 학생에게, 우리 동네·전통·생활에서 출발하는
+  // 탐구의 '틀'을 만들어 줍니다. [ ] 자리는 학생이 채워야 통과합니다.
+
+  var genCtx = 'local', genLv = 1, genPick = 0;
+
+  function buildGen() {
+    var ctx = document.getElementById('genCtx');
+    var lv = document.getElementById('genLv');
+    if (!ctx || !lv) return;
+
+    CONTEXT_BANK.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pick' + (c.key === genCtx ? ' on' : '');
+      b.textContent = c.label;
+      b.setAttribute('data-ctx', c.key);
+      ctx.appendChild(b);
+    });
+    [[1, '기초'], [2, '보통'], [3, '도전']].forEach(function (p) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pick' + (p[0] === genLv ? ' on' : '');
+      b.textContent = p[1];
+      b.setAttribute('data-lv', String(p[0]));
+      lv.appendChild(b);
+    });
+
+    ctx.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-ctx]');
+      if (!b) return;
+      genCtx = b.getAttribute('data-ctx');
+      genPick = 0;
+      syncGenButtons();
+      renderGen();
+    });
+    lv.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-lv]');
+      if (!b) return;
+      genLv = parseInt(b.getAttribute('data-lv'), 10);
+      genPick = 0;
+      syncGenButtons();
+      renderGen();
+    });
+
+    document.getElementById('genAgain').addEventListener('click', function () {
+      genPick++;
+      renderGen();
+    });
+
+    // 만들어진 틀을 각 칸에 넣습니다.
+    document.getElementById('genOut').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-put]');
+      if (!b) return;
+      var f = b.getAttribute('data-put');
+      var text = b.getAttribute('data-val');
+      if (f === 'all') {
+        var seed = currentSeed();
+        if (!seed) return;
+        el.topic.value = seed.q;
+        el.iv.value = seed.iv;
+        el.dv.value = seed.dv;
+        el.cv.value = seed.cv;
+        render();
+        toast('탐구 틀을 주제·변인 칸에 넣었습니다. [ ] 안을 내 것으로 바꿔 주세요.');
+        return;
+      }
+      el[f].value = text;
+      render();
+      el[f].focus();
+      toast(fieldLabel(f) + ' 칸에 넣었습니다. [ ] 안을 내 것으로 바꿔 주세요.');
+    });
+
+    renderGen();
+  }
+
+  function syncGenButtons() {
+    Array.prototype.forEach.call(document.querySelectorAll('#genCtx button'), function (b) {
+      b.classList.toggle('on', b.getAttribute('data-ctx') === genCtx);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#genLv button'), function (b) {
+      b.classList.toggle('on', parseInt(b.getAttribute('data-lv'), 10) === genLv);
+    });
+  }
+
+  // 고른 맥락·수준에 맞는 씨앗을 고릅니다. 없으면 그 맥락의 다른 수준에서 찾습니다.
+  function seedsFor() {
+    var bank = CONTEXT_BANK.filter(function (c) { return c.key === genCtx; })[0];
+    if (!bank) return [];
+    var exact = bank.seeds.filter(function (s) { return s.lv === genLv; });
+    return exact.length ? exact : bank.seeds;
+  }
+
+  function currentSeed() {
+    var list = seedsFor();
+    if (!list.length) return null;
+    return list[genPick % list.length];
+  }
+
+  function renderGen() {
+    var out = document.getElementById('genOut');
+    if (!out) return;
+    var s = currentSeed();
+    if (!s) { out.innerHTML = ''; return; }
+
+    function slot(t) {
+      return esc(t).replace(/\[([^\[\]]+)\]/g, '<em>$1</em>');
+    }
+    function put(f, v, label) {
+      return '<button type="button" class="gen-put" data-put="' + f + '" data-val="' + esc(v) + '">' +
+        label + '</button>';
+    }
+
+    out.innerHTML =
+      '<div class="gen-card">' +
+        '<p class="gen-row"><span class="ex-tag">주제 질문</span><span>' + slot(s.q) + '</span>' +
+          put('topic', s.q, '주제 칸에') + '</p>' +
+        '<p class="gen-row"><span class="ex-tag">바꿀 것</span><span>' + slot(s.iv) + '</span>' +
+          put('iv', s.iv, '조작 변인 칸에') + '</p>' +
+        '<p class="gen-row"><span class="ex-tag">잴 것</span><span>' + slot(s.dv) + '</span>' +
+          put('dv', s.dv, '종속 변인 칸에') + '</p>' +
+        '<p class="gen-row"><span class="ex-tag">고정할 것</span><span>' + slot(s.cv) + '</span>' +
+          put('cv', s.cv, '통제 변인 칸에') + '</p>' +
+        '<div class="gen-act">' +
+          '<button type="button" class="gen-all" data-put="all">네 칸에 한꺼번에 넣기</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------- 선생님용 1차 분석 요약 ----------
+     이 기기(브라우저)에 저장된 계획서를 모두 읽어, 학생 화면과 똑같은 규칙으로
+     한 번 훑고 학번별 요약으로 바꿉니다. 어디로도 전송하지 않습니다.
+
+     세 갈래로 나눠 보여 줍니다.
+       논리    — 주제 · 가설 · 결과 예측
+       변인    — 변인 통제
+       안전    — 현실성과 안전
+     그리고 '집중 지원'(위험·미작성이 많은 학생)을 맨 위로 올립니다. */
+
+  var DASH_AXES = [
+    { key: '논리', groups: ['탐구 주제', '가설', '결과 예측'] },
+    { key: '변인', groups: ['변인 통제'] },
+    { key: '설계', groups: ['탐구 설계'] },
+    { key: '안전', groups: ['현실성과 안전'] }
+  ];
+
+  // 저장된 계획서를 모두 모읍니다.
+  function collectPlans() {
+    var out = [];
+    var re = new RegExp('^' + STORE_V.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+      '::u:(.*?)::(t1|t2|t3|free)$');
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        var m = k && k.match(re);
+        if (!m) continue;
+        var raw = localStorage.getItem(k);
+        if (!raw) continue;
+        var d;
+        try { d = JSON.parse(raw); } catch (e) { continue; }
+        var any = FIELDS.some(function (f) { return (d[f] || '').trim() !== ''; });
+        if (!any) continue;
+        d.hasImg = !!localStorage.getItem(k + '::img');
+        out.push({ id: m[1] === '_' ? '(학번 없음)' : m[1], slot: m[2], data: d });
+      }
+    } catch (e) { /* 저장을 읽을 수 없는 브라우저 */ }
+    return out;
+  }
+
+  // 계획서 한 부를 세 갈래로 요약합니다.
+  function scorePlan(entry) {
+    var r = analyze(entry.data);
+    var by = {};
+    r.groups.forEach(function (g) {
+      var c = { ok: 0, ask: 0, todo: 0, danger: 0 };
+      g.items.forEach(function (it) { c[it[0]]++; });
+      by[g.name] = c;
+    });
+
+    var axes = DASH_AXES.map(function (a) {
+      var c = { ok: 0, ask: 0, todo: 0, danger: 0 };
+      a.groups.forEach(function (n) {
+        var x = by[n] || {};
+        c.ok += x.ok || 0; c.ask += x.ask || 0; c.todo += x.todo || 0; c.danger += x.danger || 0;
+      });
+      var total = c.ok + c.ask + c.todo + c.danger;
+      return { key: a.key, pct: total ? Math.round(c.ok / total * 100) : 0, c: c, total: total };
+    });
+
+    var todo = 0, danger = 0, ask = 0, ok = 0;
+    axes.forEach(function (a) { todo += a.c.todo; danger += a.c.danger; ask += a.c.ask; ok += a.c.ok; });
+
+    // 무엇을 먼저 도와야 하는지 — 한 줄로 정리합니다.
+    var why = [];
+    if (r.mix.length) why.push('<b>섞으면 안 되는 조합</b>이 들어 있습니다');
+    if (r.chem.some(function (c) { return c.ban; })) why.push('<b>학생이 다루면 안 되는 물질</b>이 있습니다');
+    if (danger) why.push('안전 확인이 필요한 항목 ' + danger + '개');
+    var weak = axes.filter(function (a) { return a.total && a.pct < 50; })
+      .map(function (a) { return a.key });
+    if (weak.length) why.push(weak.join(' · ') + '이(가) 절반을 넘지 못했습니다');
+    if (todo) why.push('아직 쓰지 않은 항목 ' + todo + '개');
+    if (!why.length) why.push('형식 점검을 대체로 통과했습니다. ' +
+      (ask ? '더 생각해 볼 항목 ' + ask + '개가 남았습니다.' : '내용의 타당성만 확인해 주세요.'));
+
+    var level = (r.mix.length || danger || todo >= 4) ? 'need'
+              : (ask >= 4 || weak.length) ? 'watch' : 'good';
+
+    // 자유탐구(수행평가)의 과정 기록
+    var meta = entry.data.meta;
+    var proc = '';
+    if (entry.slot === 'free' && meta && meta.startedAt) {
+      proc = '걸린 시간 ' + fmtElapsed((meta.submittedAt || Date.now()) - meta.startedAt) +
+        ' · 스스로 고친 횟수 ' + (meta.fixCount || 0) + '회' +
+        (meta.submitted ? ' · 제출 완료' : ' · <b>아직 제출하지 않음</b>');
+    }
+
+    return { axes: axes, level: level, why: why, r: r, proc: proc, ask: ask, todo: todo, danger: danger };
+  }
+
+  var LEVEL_LABEL = { need: '집중 지원', watch: '살펴보기', good: '괜찮음' };
+  var SLOT_ORDER = { free: 0, t1: 1, t2: 2, t3: 3 };
+
+  function renderDash() {
+    var body = document.getElementById('dashBody');
+    var plans = collectPlans();
+
+    if (!plans.length) {
+      body.innerHTML = '<p class="dash-empty">이 기기에 저장된 계획서가 아직 없습니다.<br>' +
+        '학생이 같은 브라우저에서 계획서를 쓰면 여기에 학번별로 모입니다. ' +
+        '기기마다 따로 저장되므로, <b>다른 기기에서 쓴 계획서는 보이지 않습니다.</b></p>';
+      return;
+    }
+
+    var scored = plans.map(function (p) {
+      var s = scorePlan(p);
+      return { p: p, s: s };
+    }).sort(function (a, b) {
+      var rank = { need: 0, watch: 1, good: 2 };
+      if (rank[a.s.level] !== rank[b.s.level]) return rank[a.s.level] - rank[b.s.level];
+      if (a.p.id !== b.p.id) return a.p.id < b.p.id ? -1 : 1;
+      return SLOT_ORDER[a.p.slot] - SLOT_ORDER[b.p.slot];
+    });
+
+    var need = scored.filter(function (x) { return x.s.level === 'need'; }).length;
+    var watch = scored.filter(function (x) { return x.s.level === 'watch'; }).length;
+    var ids = {};
+    scored.forEach(function (x) { ids[x.p.id] = 1; });
+
+    var html = '<p class="dash-tot">계획서 <b>' + scored.length + '부</b> · 학생 <b>' +
+      Object.keys(ids).length + '명</b>' +
+      ' — 집중 지원 <b>' + need + '명분</b> · 살펴보기 <b>' + watch + '명분</b></p>';
+
+    scored.forEach(function (x) {
+      var axes = x.s.axes.map(function (a) {
+        var cls = !a.total ? '' : a.pct < 50 ? 'bad' : a.pct < 80 ? 'mid' : 'ok';
+        return '<span class="dash-axis ' + cls + '">' + a.key + ' <b>' + a.pct + '%</b></span>';
+      }).join('');
+
+      html += '<div class="dash-item ' + x.s.level + '">' +
+        '<p class="dash-who">' + esc(x.p.id) +
+          '<span class="dash-slot">' + esc(slotOf(x.p.slot).label) + '</span>' +
+          '<span class="dash-flag ' + x.s.level + '">' + LEVEL_LABEL[x.s.level] + '</span></p>' +
+        '<p class="dash-topic">' + (x.p.data.topic ? esc(x.p.data.topic) : '<i>주제 미작성</i>') + '</p>' +
+        '<p class="dash-axes">' + axes + '</p>' +
+        '<p class="dash-note">' + x.s.why.join(' · ') + '</p>' +
+        (x.s.proc ? '<p class="dash-topic">' + x.s.proc + '</p>' : '') +
+        '</div>';
+    });
+
+    html += '<p class="msds-foot">이 요약은 <b>형식 점검을 한 번 훑은 결과</b>입니다. ' +
+      '탐구가 과학적으로 타당한지, 안전한지는 선생님이 직접 확인해야 합니다.</p>';
+
+    body.innerHTML = html;
+  }
+
+  function openDash() {
+    if (!confirm('선생님용 요약을 엽니다.\n\n이 기기에 저장된 모든 학번의 계획서를 요약해서 보여 줍니다.\n계속할까요?'))
+      return;
+    save();   // 지금 쓰고 있는 내용도 요약에 넣습니다
+    renderDash();
+    document.getElementById('dash').hidden = false;
+  }
+
+  function closeDash() { document.getElementById('dash').hidden = true; }
+
+  // 요약을 파일 하나로 저장합니다(반별 기록·상담 자료용).
+  function saveDash() {
+    var t = stamp();
+    var body = document.getElementById('dashBody').innerHTML;
+    var html = '<!doctype html><html lang="ko"><head><meta charset="utf-8">' +
+      '<title>탐구 계획서 1차 분석 요약 ' + t.file + '</title>' +
+      '<style>' +
+      'body{font-family:"Malgun Gothic","맑은 고딕",sans-serif;max-width:800px;margin:32px auto;padding:0 18px;color:#20242a;line-height:1.6}' +
+      'h1{font-size:19px;margin:0 0 4px}.when{color:#79838b;font-size:12.5px;margin:0 0 20px}' +
+      '.dash-item{border:1px solid #e3e7ea;border-left:4px solid #c9ced3;border-radius:0 8px 8px 0;' +
+      'padding:11px 14px;margin:0 0 10px}' +
+      '.dash-item.need{border-left-color:#a22633;background:#fbf3f4}' +
+      '.dash-item.watch{border-left-color:#8f5400;background:#fdf8ee}' +
+      '.dash-item.good{border-left-color:#256b4e}' +
+      '.dash-who{margin:0 0 3px;font-size:14.5px;font-weight:700}' +
+      '.dash-slot,.dash-flag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;' +
+      'background:#eef1f3;color:#55606a;margin-left:7px}' +
+      '.dash-flag.need{background:#a22633;color:#fff}.dash-flag.watch{background:#8f5400;color:#fff}' +
+      '.dash-flag.good{background:#e2f0e9;color:#256b4e}' +
+      '.dash-axes{margin:5px 0}.dash-axis{font-size:12px;padding:2px 9px;border-radius:999px;' +
+      'background:#eef1f3;color:#55606a;margin-right:5px}' +
+      '.dash-axis.bad{background:#fbe8ea;color:#a22633}.dash-axis.mid{background:#faf0dd;color:#8f5400}' +
+      '.dash-axis.ok{background:#e2f0e9;color:#256b4e}' +
+      '.dash-note{margin:3px 0 0;font-size:13px}.dash-topic{margin:0;font-size:12.5px;color:#79838b}' +
+      '.dash-tot{background:#f4f6f7;border-radius:7px;padding:10px 13px;font-size:13px}' +
+      '.msds-foot{font-size:12px;color:#79838b;background:#f4f6f7;border-radius:6px;padding:9px 12px}' +
+      '</style></head><body>' +
+      '<h1>탐구 계획서 1차 분석 요약</h1>' +
+      '<p class="when">' + t.human + ' · 이 기기에 저장된 계획서만 담았습니다</p>' +
+      body +
+      '</body></html>';
+
+    var name = prompt('저장할 파일 이름을 정하세요.\n(확장자는 자동으로 붙습니다)', '1차분석요약_' + t.file);
+    if (name === null) return;
+    name = cleanName(name, false);
+
+    var blob = new Blob(['﻿' + html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = name + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('“' + name + '.html” 파일로 저장했습니다.');
+  }
+
   /* ---------- 단계 진행 ---------- */
 
   // 인쇄 중에는 점검표에 모든 단계의 항목을 펼칩니다.
@@ -4249,7 +6192,7 @@
         if (!has) { toast('지울 내용이 없습니다.'); return; }
         if (!confirm('“' + s.label + '” 단계에 쓴 내용을 지울까요?')) return;
         s.fields.forEach(function (f) { el[f].value = ''; });
-        if (s.id === 's-design') { deviceImg = ''; saveDeviceImg(); renderDeviceImg(); }
+        if (s.id === 's-design') { deviceImg = ''; deviceTags = []; saveDeviceImg(); renderDeviceImg(); }
         render();
         toast(s.label + ' 단계를 지웠습니다.');
       });
@@ -4262,7 +6205,7 @@
     if (!has) { toast('지울 내용이 없습니다.'); return; }
     if (!confirm('작성한 내용을 모두 지울까요? 되돌릴 수 없습니다.')) return;
     FIELDS.forEach(function (f) { el[f].value = ''; });
-    deviceImg = ''; saveDeviceImg(); renderDeviceImg();
+    deviceImg = ''; deviceTags = []; saveDeviceImg(); renderDeviceImg();
     if (isAssess(curSlot)) { freeMeta = blankMeta(); stopTimer(); }
     try { localStorage.removeItem(dataKey(curSlot)); } catch (e) { /* 저장이 막혀 있어도 화면은 지워집니다 */ }
     lastRec = {};
@@ -4400,13 +6343,16 @@
         renderSlotBar();
         justSubmitted = true;
       }
-      saveReport(kind, withReview, name);
-      if (kind === 'pdf')
-        toast('저장 창이 열리면 “PDF로 저장”을 선택하세요. 파일 이름: ' + name);
-      else if (justSubmitted)
-        toast('자유탐구를 “' + name + '.' + FORMATS[kind].ext + '”(으)로 제출했습니다.');
-      else
-        toast('“' + name + '.' + FORMATS[kind].ext + '” 파일로 저장했습니다.');
+      if (kind === 'pdf') toast('PDF 파일을 만드는 중이에요…');
+      saveReport(kind, withReview, name, function (ok) {
+        var file = '“' + name + '.' + FORMATS[kind].ext + '”';
+        if (!ok)
+          toast('인터넷이 안 되어 인쇄 창을 열었어요. “PDF로 저장”을 선택하세요. 파일 이름: ' + name);
+        else if (justSubmitted)
+          toast('자유탐구를 ' + file + '(으)로 제출했습니다. 다운로드 폴더를 확인하세요.');
+        else
+          toast(file + ' 파일을 다운로드 폴더에 저장했습니다.');
+      });
     }, isAssess(curSlot) && withReview ? '제출하기' : '확인하고 저장');
   }
   document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
@@ -4418,6 +6364,30 @@
     e.target.value = '';
   });
 
+  // 안전 데이터 카드의 보호구 버튼 — 카드를 다시 그려도 동작하도록 위임합니다.
+  document.getElementById('msdsBox').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-text]');
+    if (b) togglePick(b.getAttribute('data-text'));
+  });
+
+  // 그림 속 기구 표시 버튼
+  document.getElementById('deviceTags').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-app]');
+    if (b) toggleDeviceTag(b.getAttribute('data-app'));
+  });
+
+  // 선생님용 요약
+  document.getElementById('dashBtn').addEventListener('click', openDash);
+  document.getElementById('dashClose').addEventListener('click', closeDash);
+  document.getElementById('dashOk').addEventListener('click', closeDash);
+  document.getElementById('dashSave').addEventListener('click', saveDash);
+  document.getElementById('dash').addEventListener('click', function (e) {
+    if (e.target.id === 'dash') closeDash();   // 바깥을 누르면 닫습니다
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !document.getElementById('dash').hidden) closeDash();
+  });
+
   // 학번 — 위쪽 칸에서 바꾸면 그 학번의 탐구를 불러오고 자유탐구는 새로 시작합니다.
   document.getElementById('studentId').addEventListener('change', onIdChange);
   // 첫 화면 학번 게이트
@@ -4425,19 +6395,27 @@
   document.getElementById('gateId').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') submitIdGate();
   });
+  document.getElementById('studentName').addEventListener('change', function (e) { setName(e.target.value); });
+  document.getElementById('gateName').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') submitIdGate();
+  });
   document.getElementById('gateSkip').addEventListener('click', function () {
     document.getElementById('gateId').value = '';
+    document.getElementById('gateName').value = '';
     submitIdGate();
   });
 
   buildPicks();
   buildIdeas();
+  buildGen();
   buildExamples();
   buildBubbles();
   buildClearButtons();
   buildRail();
   migrateOld();
   try { studentId = localStorage.getItem(STORE_ID) || ''; } catch (e) {}
+  try { studentName = localStorage.getItem(STORE_NAME) || ''; } catch (e) {}
+  document.getElementById('studentName').value = studentName;
   try { var savedCur = localStorage.getItem(STORE_CUR); if (savedCur && slotOf(savedCur).k === savedCur) curSlot = savedCur; } catch (e) {}
   document.getElementById('studentId').value = studentId;
   loadSlot();

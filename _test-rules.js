@@ -406,5 +406,236 @@ const good = [
 const gb = Object.keys(badProcedureLines(good)).length;
 line(gb === 0, '정상', `문제 줄 ${gb}개`, gb === 0 ? '' : '← 정상 줄을 잘못 잡음');
 
+// ── 안전 데이터 카드(MSDS 요약) ──────────────────────────
+eval(grab(/var CHEM = \[[\s\S]*?\n  \}\);/, 'CHEM'));
+eval(grab(/var MIX_RISK = \[[\s\S]*?\n  \];/, 'MIX_RISK'));
+eval(grab(/function chemHits\([\s\S]*?\n  \}/, 'chemHits'));
+eval(grab(/function mixHits\([\s\S]*?\n  \}/, 'mixHits'));
+eval(grab(/function missingGear\([\s\S]*?\n  \}/, 'missingGear'));
+
+const plan = (o) => Object.assign(
+  { topic: '', hypothesis: '', iv: '', dv: '', cv: '', materials: '', procedure: '', predict: '', safety: '' }, o);
+
+console.log('\n[ 안전 데이터 — 준비물에서 물질을 찾아야 하는 것 ]');
+[
+  ['묽은 염산 20mL, 비커 3개', '묽은 염산(HCl)'],
+  ['수산화나트륨 알갱이 5g', '수산화나트륨(NaOH·가성소다)'],
+  ['드라이아이스 100g, 페트병', '드라이아이스'],
+  ['알코올램프, 삼발이, 쇠그물', '알코올램프·가스버너'],
+  ['배양 접시에 곰팡이를 기른다', '미생물 배양'],
+  ['수은 온도계로 잰다', '수은 온도계']
+].forEach(([mat, want]) => {
+  const got = chemHits(plan({ materials: mat })).map(c => c.name);
+  const ok = got.indexOf(want) !== -1;
+  line(ok, '감지', mat.slice(0, 24), ok ? '' : `← ${want} 못 찾음`);
+});
+
+console.log('\n[ 안전 데이터 — 엉뚱한 물질을 끌어오지 않는지 ]');
+[
+  // '알코올램프'는 램프 카드가 맡습니다. 소독용 에탄올 카드까지 겹쳐 뜨면 안 됩니다.
+  ['알코올램프, 삼발이', '에탄올(소독용 알코올)'],
+  // '초시계'의 '초'를 양초로 보면 안 됩니다.
+  ['초시계로 시간을 잰다', '알코올램프·가스버너']
+].forEach(([mat, notWant]) => {
+  const got = chemHits(plan({ materials: mat })).map(c => c.name);
+  const ok = got.indexOf(notWant) === -1;
+  line(ok, '오탐', mat.slice(0, 24), ok ? '' : `← ${notWant} 카드가 잘못 떴음`);
+});
+
+console.log('\n[ 안전 데이터 — 학생이 다루면 안 되는 물질 ]');
+[['메탄올 10mL', '메탄올(메틸알코올)'], ['액체질소', '액체질소'], ['수은', '수은 온도계']]
+  .forEach(([mat, want]) => {
+    const got = chemHits(plan({ materials: mat })).filter(c => c.ban).map(c => c.name);
+    const ok = got.indexOf(want) !== -1;
+    line(ok, '금지', mat, ok ? '' : '← 금지로 표시되지 않음');
+  });
+
+console.log('\n[ 섞으면 안 되는 조합 — 찾아야 하는 것 ]');
+[
+  ['락스와 식초를 섞는다', '염소 기체'],
+  ['락스에 암모니아수를 넣는다', '클로라민 기체'],
+  ['수산화나트륨 용액에 알루미늄박을 넣는다', '수소 기체'],
+  ['묽은 염산에 마그네슘 리본을 넣는다', '수소 기체'],
+  ['드라이아이스를 페트병에 넣고 뚜껑을 닫는다', '용기 파열']
+].forEach(([proc, want]) => {
+  const got = mixHits(plan({ procedure: proc })).map(m => m.what);
+  const ok = got.indexOf(want) !== -1;
+  line(ok, '조합', proc.slice(0, 26), ok ? '' : `← ${want} 못 찾음`);
+});
+
+console.log('\n[ 섞으면 안 되는 조합 — 한쪽만 있으면 경고하지 않아야 하는 것 ]');
+['락스로 소독한다', '식초 100mL를 붓는다', '드라이아이스를 넓은 그릇에 둔다', '마그네슘 리본을 태운다']
+  .forEach(t => {
+    const n = mixHits(plan({ procedure: t })).length;
+    line(n === 0, '정상', t, n === 0 ? '' : '← 헛경고');
+  });
+
+console.log('\n[ 보호구 — 안전 계획에 이미 적었으면 다시 요구하지 않기 ]');
+{
+  const p = plan({ materials: '묽은 염산 20mL' });
+  const before = missingGear(p, chemHits(p)).length;
+  const p2 = plan({
+    materials: '묽은 염산 20mL',
+    safety: chemHits(p)[0].gear.join('\n')
+  });
+  const after = missingGear(p2, chemHits(p2)).length;
+  line(before > 0 && after === 0, '보호구', `${before}개 → ${after}개`,
+    before > 0 && after === 0 ? '' : '← 보호구 대조가 어긋남');
+}
+
+console.log('\n[ 안전 데이터 표의 형식 ]');
+{
+  const badGear = CHEM.filter(c => c.gear.some(g => !/\.$/.test(g)));
+  line(badGear.length === 0, '문장', `보호구 ${CHEM.length}개 물질`,
+    badGear.length === 0 ? '' : `← 마침표 없음: ${badGear.map(c => c.name).join(', ')}`);
+  const missing = CHEM.filter(c => !c.name || !c.terms.length || !c.ghs.length ||
+    !c.gear.length || !c.care || !c.first || !c.waste);
+  line(missing.length === 0, '빠짐', `항목 ${CHEM.length}개`,
+    missing.length === 0 ? '' : `← 빠진 칸: ${missing.map(c => c.name).join(', ')}`);
+}
+
+// ── 오차 원인 미리 보기 ──────────────────────────────────
+eval(grab(/var ERROR_RULES = \[[\s\S]*?\n  \];/, 'ERROR_RULES'));
+eval(grab(/function errorRisks\([\s\S]*?\n  \}/, 'errorRisks'));
+
+const risks = (o) => errorRisks(plan(o)).map(r => r.label);
+
+console.log('\n[ 오차 — 찾아내야 하는 것 ]');
+[
+  [{ dv: '물의 온도(℃)', procedure: '1. 온도계로 물의 온도를 잰다.' }, '온도 재기'],
+  [{ materials: '눈금실린더', procedure: '1. 물 100mL를 눈금실린더로 담는다.' }, '부피 재기'],
+  [{ materials: '전자저울', procedure: '1. 저울로 소금의 무게를 잰다.' }, '무게 재기'],
+  [{ materials: '초시계', procedure: '1. 초시계로 걸린 시간을 잰다.' }, '시간 재기'],
+  [{ materials: '강낭콩 씨앗 12개, 화분 4개', procedure: '1. 화분에 씨앗을 심는다.' }, '식물 개체 차이'],
+  [{ dv: '1분 동안의 맥박 수', procedure: '1. 운동 뒤 맥박을 센다.' }, '사람을 대상으로 한 측정'],
+  [{ materials: '건전지, 전구', procedure: '1. 회로를 꾸며 전구를 켠다.' }, '전지가 닳는 것'],
+  [{ procedure: '1. 소금을 넣고 저어서 녹는 시간을 잰다.' }, '젓는 정도'],
+  [{ procedure: '1. 물 200mL에 소금을 넣는다.' }, '한 번만 재기']
+].forEach(([o, want]) => {
+  const got = risks(o);
+  const ok = got.indexOf(want) !== -1;
+  line(ok, '오차', want, ok ? '' : `← 못 찾음 (찾은 것: ${got.join(', ') || '없음'})`);
+});
+
+console.log('\n[ 오차 — 이미 대비했으면 말하지 않아야 하는 것 ]');
+[
+  [{ dv: '물의 온도(℃)', procedure: '1. 온도계를 물에 5cm 깊이로 담그고 30초 뒤에 읽는다.' }, '온도 재기'],
+  [{ materials: '눈금실린더', procedure: '1. 눈금을 눈높이에서 오목한 면의 아래쪽으로 읽는다.' }, '부피 재기'],
+  [{ materials: '초시계', procedure: '1. 같은 사람이 초시계로 잰다.' }, '시간 재기'],
+  [{ procedure: '1. 소금을 넣고 10번 젓는다.' }, '젓는 정도'],
+  [{ procedure: '1. 온도를 3회 반복해서 재어 평균을 낸다.' }, '한 번만 재기'],
+  [{ cv: '화분을 같은 곳에 둔다', materials: '화분 4개',
+     procedure: '1. 씨앗을 심는다. 2. 3회 반복해서 평균을 낸다.' }, '빛이 닿는 위치']
+].forEach(([o, gone]) => {
+  const got = risks(o);
+  const ok = got.indexOf(gone) === -1;
+  line(ok, '대비', gone, ok ? '' : '← 대비했는데도 또 지적함');
+});
+
+console.log('\n[ 오차 — 설계를 쓰지 않았으면 아무 말도 하지 않기 ]');
+{
+  const n = risks({ topic: '물의 양에 따라 식물이 자라는 정도가 달라질까?' }).length;
+  line(n === 0, '침묵', `${n}개`, n === 0 ? '' : '← 설계 전에 앞서 나감');
+}
+
+// ── 실험 장치 그림 대조 ──────────────────────────────────
+eval(grab(/var APPARATUS = \[[\s\S]*?\n  \}\);/, 'APPARATUS'));
+eval(grab(/function apparatusInText\([\s\S]*?\n  \}/, 'apparatusInText'));
+
+console.log('\n[ 글에서 기구를 찾아내기 ]');
+[
+  ['비커 3개, 온도계 1개', ['비커', '온도계']],
+  ['눈금실린더로 물 100mL를 담는다', ['눈금실린더']],
+  ['알코올램프와 삼발이를 놓는다', ['알코올램프', '삼발이·스탠드']],
+  ['30cm 자로 줄기의 길이를 잰다', ['자·줄자']],
+  ['건전지와 꼬마전구를 전선으로 잇는다', ['전지', '전구', '전선·스위치']]
+].forEach(([text, want]) => {
+  const got = apparatusInText({ materials: text, procedure: '' });
+  const ok = want.every(w => got.indexOf(w) !== -1);
+  line(ok, '기구', text.slice(0, 26), ok ? '' : `← 찾은 것: ${got.join(', ') || '없음'}`);
+});
+
+console.log('\n[ 기구 이름 규칙이 엉뚱한 것을 잡지 않는지 ]');
+[
+  ['자석의 세기를 잰다', '자·줄자'],       // '자석'의 '자'를 자로 보면 안 됨
+  ['3초마다 기록한다', '촛불'],             // '초'를 양초로 보면 안 됨
+  ['실험을 반복한다', '실·끈']              // '실험'의 '실'을 실로 보면 안 됨
+].forEach(([text, notWant]) => {
+  const got = apparatusInText({ materials: '', procedure: text });
+  const ok = got.indexOf(notWant) === -1;
+  line(ok, '오탐', text, ok ? '' : `← ${notWant}로 잘못 봄`);
+});
+
+// ── 2022 개정 교육과정 이어 붙이기 ───────────────────────
+eval(grab(/var CUR_AREAS = \[[\s\S]*?\n  \];/, 'CUR_AREAS'));
+eval(grab(/var DIGITAL = \/.*?\/;/, 'DIGITAL'));
+
+// 앱과 같은 판정 — 같은 낱말이 여러 번 나온 것으로는 앞서지 않게 '가지 수'를 셉니다.
+const areaOf = (text) => CUR_AREAS
+  .map(a => ({
+    name: a.name,
+    n: new Set(text.match(new RegExp(a.re.source, 'g')) || []).size
+  }))
+  .filter(a => a.n > 0).sort((x, y) => y.n - x.n).map(a => a.name)[0];
+
+console.log('\n[ 교육과정 영역 찾기 ]');
+[
+  ['경사가 급할수록 공이 더 멀리 굴러갈까? 빗면의 각도와 속력', '운동과 에너지'],
+  ['물의 온도가 높을수록 소금이 빨리 녹을까? 용해 속도와 농도', '물질'],
+  ['빛의 색깔에 따라 식물의 광합성량이 달라질까? 잎과 줄기', '생명'],
+  ['모래의 굵기에 따라 퇴적되는 지층과 침식량이 달라질까? 강수량', '지구와 우주'],
+  ['플라스틱 재활용과 분리 배출로 미세 플라스틱 오염을 줄일까?', '과학과 사회'],
+  // 통제 변인으로 적은 '온도' 때문에 열 실험으로 끌려가서는 안 됩니다.
+  ['락스의 양이 많을수록 얼룩이 빨리 지워질까? 락스, 식초, 물의 온도, 온도계', '물질'],
+  // 단열·보온은 반대로 열 실험이어야 합니다.
+  ['단열재를 무엇으로 하면 컵 안의 물이 가장 늦게 식을까? 뽁뽁이, 온도계', '운동과 에너지']
+].forEach(([text, want]) => {
+  const got = areaOf(text);
+  line(got === want, '영역', want, got === want ? '' : `← ${got || '못 찾음'}`);
+});
+
+console.log('\n[ 디지털 도구를 쓴 흔적 ]');
+[
+  ['조도계 앱으로 밝기를 측정한다', true],
+  ['영상을 촬영해 프레임으로 센다', true],
+  ['자로 길이를 재어 공책에 적는다', false]
+].forEach(([text, want]) => {
+  const got = DIGITAL.test(text);
+  line(got === want, want ? '감지' : '정상', text.slice(0, 24), got === want ? '' : '← 어긋남');
+});
+
+// ── 맥락 맞춤형 탐구 틀 ──────────────────────────────────
+eval(grab(/var CONTEXT_BANK = \[[\s\S]*?\n  \];/, 'CONTEXT_BANK'));
+
+console.log('\n[ 탐구 틀 — 학생이 채울 자리가 반드시 있어야 하는 것 ]');
+{
+  const seeds = CONTEXT_BANK.reduce((a, c) => a.concat(c.seeds), []);
+  const noSlotQ = seeds.filter(s => !/\[[^\[\]]+\]/.test(s.q));
+  line(noSlotQ.length === 0, '주제', `씨앗 ${seeds.length}개`,
+    noSlotQ.length === 0 ? '' : `← 빈칸 없는 주제 ${noSlotQ.length}개`);
+
+  const noSlotIv = seeds.filter(s => !/\[[^\[\]]+\]/.test(s.iv));
+  line(noSlotIv.length === 0, '조작', `씨앗 ${seeds.length}개`,
+    noSlotIv.length === 0 ? '' : `← 빈칸 없는 조작 변인 ${noSlotIv.length}개`);
+
+  const thinCv = seeds.filter(s => s.cv.split(',').length < 3);
+  line(thinCv.length === 0, '통제', '고정할 조건 3가지 이상',
+    thinCv.length === 0 ? '' : `← 3가지 미만 ${thinCv.length}개`);
+
+  const lvs = CONTEXT_BANK.filter(c => ![1, 2, 3].every(l => c.seeds.some(s => s.lv === l)));
+  line(lvs.length === 0, '수준', `맥락 ${CONTEXT_BANK.length}개`,
+    lvs.length === 0 ? '' : `← 수준이 빠진 맥락: ${lvs.map(c => c.label).join(', ')}`);
+}
+
+console.log('\n[ 탐구 틀 — 종속 변인이 잴 수 있는 값인가 ]');
+CONTEXT_BANK.forEach(c => {
+  const bad = c.seeds.filter(s => {
+    const t = s.dv.replace(/\[|\]/g, '');
+    return !(DIM.test(t) || UNIT.test(t) || SELF_UNIT.test(t));
+  });
+  line(bad.length === 0, '잴값', c.label,
+    bad.length === 0 ? '' : `← 잴 수 없는 값: ${bad.map(s => s.dv).join(' / ')}`);
+});
+
 console.log(`\n${fail === 0 ? '모든 검사를 통과했습니다.' : '실패 ' + fail + '건'}\n`);
 process.exit(fail === 0 ? 0 : 1);
