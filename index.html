@@ -592,6 +592,26 @@
   .idgate-act button.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
   .idgate-act button:hover { filter: brightness(.98); }
   .idgate-note { font-size: 11px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+  .idgate-pane[hidden] { display: none; }
+  /* 첫 화면 — 학생 / 선생님 고르기 */
+  .role-pick { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 14px; }
+  .role-btn {
+    display: flex; align-items: center; gap: 14px; text-align: left; width: 100%;
+    padding: 16px 16px; border-radius: 12px; cursor: pointer;
+    border: 1.5px solid var(--line); background: var(--surface); color: var(--ink);
+    font: inherit;
+  }
+  .role-btn:hover, .role-btn:focus-visible { border-color: var(--accent); background: var(--accent-soft); outline: none; }
+  .role-btn.student { border-color: var(--accent); }
+  .role-ico { font-size: 28px; line-height: 1; flex-shrink: 0; }
+  .role-txt { display: flex; flex-direction: column; gap: 2px; }
+  .role-txt b { font-size: 16px; }
+  .role-txt span { font-size: 12.5px; color: var(--ink-soft); }
+  .gate-back {
+    display: inline-block; margin: 0 0 10px; padding: 0; border: 0; background: none; cursor: pointer;
+    font: inherit; font-size: 12.5px; color: var(--ink-soft);
+  }
+  .gate-back:hover { color: var(--accent-ink); }
 
   /* 학번 입력 바 (공용 기기에서 학생 구분·초기화) */
   .idbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
@@ -2163,7 +2183,26 @@
 
 <div class="idgate" id="idgate" hidden role="dialog" aria-labelledby="gateTitle" aria-modal="true">
   <div class="idgate-card">
-    <p class="idgate-title" id="gateTitle">학번과 이름을 입력하세요</p>
+    <!-- 1단계: 누구로 들어갈지 고릅니다 -->
+    <div class="idgate-pane" id="gateRole">
+      <p class="idgate-title" id="gateTitle">이대로 실험해도 될까?</p>
+      <p class="idgate-sub">누구로 들어갈지 골라 주세요.</p>
+      <div class="role-pick">
+        <button type="button" class="role-btn student" id="roleStudent">
+          <span class="role-ico" aria-hidden="true">🧪</span>
+          <span class="role-txt"><b>학생</b><span>탐구 계획서를 쓰고 점검받아 제출합니다</span></span>
+        </button>
+        <button type="button" class="role-btn" id="roleTeacher">
+          <span class="role-ico" aria-hidden="true">🍎</span>
+          <span class="role-txt"><b>선생님</b><span>이메일로 로그인해 학생 제출을 학번별로 봅니다</span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2단계(학생): 학번·이름 -->
+    <div class="idgate-pane" id="gateStu" hidden>
+    <button type="button" class="gate-back" id="gateBack">← 처음으로</button>
+    <p class="idgate-title">학번과 이름을 입력하세요</p>
     <p class="idgate-sub">학번을 넣으면 그 학번으로 저장해 둔 <b>탐구 1·2·3</b>을 다시 불러옵니다.
        <b>자유탐구(수행평가)</b>는 늘 새로 시작합니다.</p>
     <input type="text" id="gateId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="학번 예) 10315">
@@ -2173,6 +2212,7 @@
       <button type="button" class="primary" id="gateStart">시작하기</button>
     </div>
     <p class="idgate-note">학번·이름은 보고서와 파일 이름에 들어가고, “계획서 + 점검 결과”를 저장할 때 선생님께만 함께 제출됩니다.</p>
+    </div>
   </div>
 </div>
 
@@ -2183,7 +2223,7 @@
       <h1 id="tmTitle">교사모드 · 제출 확인</h1>
       <span class="tm-who" id="tmWho"></span>
       <button type="button" id="tmLogout" hidden>로그아웃</button>
-      <button type="button" id="tmClose">학생 화면으로</button>
+      <button type="button" id="tmClose">처음 화면으로</button>
     </div>
     <p class="tm-sub">학생이 <b>“계획서 + 점검 결과 저장”</b>(자유탐구는 <b>제출하기</b>)을 누르면 구글 시트에 쌓이고, 여기서 학번별로 봅니다.</p>
 
@@ -4588,13 +4628,21 @@
   }
 
   /* ---------- 첫 화면 학번 입력 ---------- */
+  // 첫 화면 — 먼저 학생/선생님을 고르고, 학생이면 학번·이름을 받습니다.
   function showIdGate() {
     var gate = document.getElementById('idgate');
-    var input = document.getElementById('gateId');
     if (!gate) return;
+    document.getElementById('gateRole').hidden = false;
+    document.getElementById('gateStu').hidden = true;
+    gate.hidden = false;
+    setTimeout(function () { document.getElementById('roleStudent').focus(); }, 60);
+  }
+  function showStudentGate() {
+    var input = document.getElementById('gateId');
     input.value = studentId;
     document.getElementById('gateName').value = studentName;
-    gate.hidden = false;
+    document.getElementById('gateRole').hidden = true;
+    document.getElementById('gateStu').hidden = false;
     setTimeout(function () { input.focus(); }, 60);
   }
   function submitIdGate() {
@@ -6203,6 +6251,7 @@
   function closeTeacher() {
     tmEl('tmode').hidden = true;
     if (location.hash === '#teacher') history.replaceState(null, '', location.pathname + location.search);
+    showIdGate();
   }
   function tmShowLogin() {
     tmEl('tmLogin').hidden = false;
@@ -6319,6 +6368,9 @@
   }
 
   tmEl('tmOpen').addEventListener('click', openTeacher);
+  tmEl('roleStudent').addEventListener('click', showStudentGate);
+  tmEl('roleTeacher').addEventListener('click', openTeacher);
+  tmEl('gateBack').addEventListener('click', showIdGate);
   tmEl('tmClose').addEventListener('click', closeTeacher);
   tmEl('tmLogout').addEventListener('click', tmLogout);
   tmEl('tmReload').addEventListener('click', tmLoad);
