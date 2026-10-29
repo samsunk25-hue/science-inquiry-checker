@@ -1,6 +1,6 @@
 // 서비스워커 — 앱을 통째로 캐시해 인터넷 없이도 열리게 합니다.
 // 파일이 몇 개뿐이라 설치 시 미리 받아 두고, 이후에는 캐시에서 바로 냅니다.
-const CACHE = 'inquiry-checker-v4';
+const CACHE = 'inquiry-checker-v5';
 const ASSETS = [
   './',
   './index.html',

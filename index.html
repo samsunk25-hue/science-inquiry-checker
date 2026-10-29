@@ -496,6 +496,76 @@
   .device-btn.danger { color: var(--accent-ink); border-color: var(--accent); background: var(--accent-soft); }
 
   /* 첫 화면 학번 입력 게이트 */
+  /* 교사모드 열기 버튼 */
+  .intake-teacher {
+    flex-shrink: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 7px 13px;
+    cursor: pointer;
+  }
+  .intake-teacher:hover { border-color: var(--accent); color: var(--accent-ink); }
+
+  /* ---------- 교사모드 (제출 확인) ---------- */
+  .tmode { position: fixed; inset: 0; z-index: 70; overflow-y: auto; background: var(--ground); }
+  .tmode[hidden] { display: none; }
+  .tm-wrap { max-width: 980px; margin: 0 auto; padding: 22px 16px 60px; }
+  .tm-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 4px; }
+  .tm-top h1 { font-size: 21px; margin: 0; margin-right: auto; }
+  .tm-who { font-size: 12.5px; color: var(--ink-soft); }
+  .tm-sub { margin: 0 0 16px; font-size: 13px; color: var(--ink-soft); }
+  .tm-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; }
+  .tm-bar[hidden] { display: none; }
+  .tmode input, .tmode select, .tmode button {
+    font: inherit; font-size: 14px; padding: 8px 11px; border-radius: 7px;
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  }
+  .tmode input:focus, .tmode select:focus { outline: none; border-color: var(--accent); }
+  .tmode button { cursor: pointer; font-weight: 700; }
+  .tmode button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tm-bar input { flex: 1 1 180px; min-width: 0; }
+  .tm-msg { font-size: 13.5px; color: var(--ink-soft); margin: 10px 0; }
+  .tm-msg.err { color: var(--danger); }
+  .tm-tot { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; }
+  .tm-tot b { color: var(--ink); }
+  .tm-stu { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 0 0 10px; overflow: hidden; }
+  .tm-stu-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; padding: 11px 14px; background: var(--surface-2); }
+  .tm-stu-id { font-weight: 800; font-size: 15.5px; }
+  .tm-stu-name { font-weight: 700; }
+  .tm-stu-cnt { margin-left: auto; font-size: 12px; color: var(--ink-soft); }
+  details.tm-item { border-top: 1px solid var(--line); }
+  details.tm-item.old { opacity: .6; }
+  details.tm-item > summary {
+    list-style: none; cursor: pointer; padding: 10px 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
+  }
+  details.tm-item > summary::-webkit-details-marker { display: none; }
+  details.tm-item > summary::before { content: "▸"; color: var(--ink-faint); }
+  details.tm-item[open] > summary::before { content: "▾"; }
+  .tm-slot { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); }
+  .tm-when { font-size: 12.5px; color: var(--ink-soft); }
+  .tm-topic { flex: 1 1 260px; min-width: 0; font-size: 13.5px; overflow-wrap: anywhere; }
+  .tm-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tm-chip { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .tm-chip.ok { background: var(--ok-soft); color: var(--ok); }
+  .tm-chip.ask { background: var(--warn-soft); color: var(--warn); }
+  .tm-chip.todo { background: var(--surface-2); color: var(--ink-soft); }
+  .tm-chip.danger { background: var(--danger-soft); color: var(--danger); }
+  .tm-old { font-size: 11.5px; color: var(--ink-faint); }
+  pre.tm-text {
+    margin: 0; padding: 12px 16px 16px; white-space: pre-wrap; overflow-wrap: anywhere;
+    font-family: inherit; font-size: 13.5px; border-top: 1px dashed var(--line);
+  }
+  .tm-rep { border-top: 1px dashed var(--line); background: #fff; }
+  .tm-rep-act { display: flex; justify-content: flex-end; padding: 10px 14px 0; background: var(--surface); }
+  .tm-rep-act button { font-size: 13px; padding: 6px 12px; }
+  iframe.tm-frame { display: block; width: 100%; border: 0; min-height: 200px; background: #fff; }
+  .tm-help { font-size: 12.5px; color: var(--ink-soft); margin-top: 28px; }
+
   .idgate {
     position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center;
     background: rgba(20, 12, 18, .55); backdrop-filter: blur(4px); padding: 20px;
@@ -1733,7 +1803,7 @@
     <div>
       <p class="eyebrow">중학교 과학 탐구 · 계획서 점검</p>
       <h1>이대로 실험해도 될까?</h1>
-      <p>계획서를 쓰는 동안 오른쪽 점검표가 실시간으로 확인합니다. 빠진 곳과 더 생각해 볼 곳을 짚어 주지만, <strong>답을 대신 써 주지는 않습니다.</strong> 인터넷 연결 없이 이 화면 안에서만 동작합니다.</p>
+      <p>계획서를 쓰는 동안 오른쪽 점검표가 실시간으로 확인합니다. 빠진 곳과 더 생각해 볼 곳을 짚어 주지만, <strong>답을 대신 써 주지는 않습니다.</strong> 점검은 인터넷 연결 없이 이 화면 안에서 이루어집니다.</p>
     </div>
     <!-- 완성도에 따라 액체가 차오르고 표정이 바뀌는 플라스크 친구 -->
     <svg class="hero-flask" id="heroFlask" viewBox="0 0 48 58" aria-hidden="true">
@@ -1775,6 +1845,7 @@
         <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
         <button type="button" class="intake-install" id="installBtn" hidden>홈 화면에 추가</button>
+        <button type="button" class="intake-teacher" id="tmOpen" title="선생님이 이메일로 로그인해 학생들이 제출한 계획서를 학번별로 봅니다.">교사모드</button>
         <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
 
@@ -2102,6 +2173,40 @@
       <button type="button" class="primary" id="gateStart">시작하기</button>
     </div>
     <p class="idgate-note">학번·이름은 보고서와 파일 이름에 들어가고, “계획서 + 점검 결과”를 저장할 때 선생님께만 함께 제출됩니다.</p>
+  </div>
+</div>
+
+<!-- 교사모드 — 이메일·비밀번호로 로그인하면 구글 시트에 모인 제출을 학번별로 봅니다 -->
+<div class="tmode" id="tmode" hidden role="dialog" aria-modal="true" aria-labelledby="tmTitle">
+  <div class="tm-wrap">
+    <div class="tm-top">
+      <h1 id="tmTitle">교사모드 · 제출 확인</h1>
+      <span class="tm-who" id="tmWho"></span>
+      <button type="button" id="tmLogout" hidden>로그아웃</button>
+      <button type="button" id="tmClose">학생 화면으로</button>
+    </div>
+    <p class="tm-sub">학생이 <b>“계획서 + 점검 결과 저장”</b>(자유탐구는 <b>제출하기</b>)을 누르면 구글 시트에 쌓이고, 여기서 학번별로 봅니다.</p>
+
+    <form class="tm-bar" id="tmLogin">
+      <input type="email" id="tmEmail" placeholder="선생님 이메일" autocomplete="username">
+      <input type="password" id="tmKey" placeholder="비밀번호" autocomplete="current-password">
+      <button type="submit" class="primary">로그인</button>
+    </form>
+
+    <div class="tm-bar" id="tmTools" hidden>
+      <input type="search" id="tmQ" placeholder="학번 · 이름 · 주제로 찾기">
+      <select id="tmSlot">
+        <option value="">모든 탐구</option>
+        <option>탐구 1</option><option>탐구 2</option><option>탐구 3</option><option>자유탐구</option>
+      </select>
+      <button type="button" id="tmReload">새로 고침 ↻</button>
+    </div>
+
+    <p class="tm-msg" id="tmMsg"></p>
+    <div id="tmList"></div>
+
+    <p class="tm-help">같은 학번이 같은 탐구를 여러 번 내면 <b>가장 최근 것</b>을 위에 두고, 이전 것은 아래에 흐리게 남깁니다.
+      원본 기록은 구글 시트 ‘제출’ 탭에 그대로 있습니다.</p>
   </div>
 </div>
 
@@ -6076,6 +6181,169 @@
       .catch(function () { done('인터넷이 안 되어 선생님께 보내지 못했어요. 연결된 뒤 다시 저장해 주세요.'); });
   }
 
+  /* ---------- 교사모드 (제출 확인) ---------- */
+  // 같은 주소에서 '교사모드'를 누르거나 주소 끝에 #teacher를 붙여 엽니다.
+  // 이메일·비밀번호는 Apps Script가 확인하고, 맞을 때만 제출 목록을 돌려줍니다.
+  // 비밀번호는 이 탭을 닫을 때까지만 기억합니다.
+  var tm = { rows: [], reports: [], email: '', key: '' };
+  var TM_EMAIL = STORE_V + '::teacher-email';
+
+  function tmEl(id) { return document.getElementById(id); }
+  function tmMsg(text, err) { tmEl('tmMsg').textContent = text; tmEl('tmMsg').className = 'tm-msg' + (err ? ' err' : ''); }
+
+  function openTeacher() {
+    tmEl('tmode').hidden = false;
+    document.getElementById('idgate').hidden = true;
+    try { tmEl('tmEmail').value = localStorage.getItem(TM_EMAIL) || ''; } catch (e) {}
+    try { tm.key = sessionStorage.getItem(TM_EMAIL + '::key') || ''; } catch (e) {}
+    tm.email = tmEl('tmEmail').value;
+    if (tm.email && tm.key) tmLoad();
+    else { tmShowLogin(); setTimeout(function () { (tmEl('tmEmail').value ? tmEl('tmKey') : tmEl('tmEmail')).focus(); }, 60); }
+  }
+  function closeTeacher() {
+    tmEl('tmode').hidden = true;
+    if (location.hash === '#teacher') history.replaceState(null, '', location.pathname + location.search);
+  }
+  function tmShowLogin() {
+    tmEl('tmLogin').hidden = false;
+    tmEl('tmTools').hidden = true;
+    tmEl('tmLogout').hidden = true;
+    tmEl('tmWho').textContent = '';
+    tmEl('tmList').innerHTML = '';
+  }
+  function tmLogout() {
+    tm.key = ''; tm.rows = [];
+    try { sessionStorage.removeItem(TM_EMAIL + '::key'); } catch (e) {}
+    tmEl('tmKey').value = '';
+    tmShowLogin();
+    tmMsg('로그아웃했습니다.');
+  }
+
+  function tmLoad() {
+    if (!SUBMIT_URL) { tmMsg('아직 구글 시트가 연결되지 않았습니다. config.js의 submitUrl을 채워 주세요.', true); return; }
+    if (!tm.email || !tm.key) { tmMsg('이메일과 비밀번호를 넣어 주세요.', true); return; }
+    tmMsg('불러오는 중…');
+    fetch(SUBMIT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'list', email: tm.email, key: tm.key }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) {
+          try { sessionStorage.removeItem(TM_EMAIL + '::key'); } catch (e) {}
+          tmShowLogin();
+          tmMsg(d.error || '불러오지 못했습니다.', true);
+          return;
+        }
+        try { localStorage.setItem(TM_EMAIL, tm.email); sessionStorage.setItem(TM_EMAIL + '::key', tm.key); } catch (e) {}
+        tm.rows = d.rows || [];
+        tmEl('tmLogin').hidden = true;
+        tmEl('tmTools').hidden = false;
+        tmEl('tmLogout').hidden = false;
+        tmEl('tmWho').textContent = tm.email + ' 로그인';
+        tmRender();
+      })
+      .catch(function () { tmMsg('불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', true); });
+  }
+
+  function tmWhen(t) {
+    var d = new Date(typeof t === 'number' ? t : Date.parse(t));
+    if (isNaN(d)) return esc(String(t));
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+  function tmChips(c) {
+    c = c || {};
+    return '<span class="tm-chips"><span class="tm-chip ok">통과 ' + (c.ok || 0) + '</span>' +
+      (c.ask ? '<span class="tm-chip ask">확인 ' + c.ask + '</span>' : '') +
+      (c.todo ? '<span class="tm-chip todo">미작성 ' + c.todo + '</span>' : '') +
+      (c.danger ? '<span class="tm-chip danger">위험 ' + c.danger + '</span>' : '') + '</span>';
+  }
+  // 보고서 HTML(학생이 PDF로 저장할 때와 같은 모양)이면 펼칠 때 틀 안에 그립니다.
+  // 예전 제출이나 너무 긴 제출은 글만 담겨 있어 그대로 보여 줍니다.
+  function tmReportBox(r) {
+    if (!/^\s*<!DOCTYPE html/i.test(r.report || '')) return '<pre class="tm-text">' + esc(String(r.report || '')) + '</pre>';
+    tm.reports.push(r.report);
+    return '<div class="tm-rep" data-rep="' + (tm.reports.length - 1) + '">' +
+      '<div class="tm-rep-act"><button type="button" data-print>인쇄 · PDF로 저장</button></div></div>';
+  }
+  function tmOpenReport(wrap) {
+    if (wrap.querySelector('iframe')) return;
+    var f = document.createElement('iframe');
+    f.className = 'tm-frame';
+    f.title = '제출한 보고서';
+    // 스크립트는 막고, 높이를 재고 인쇄하는 것만 허용합니다.
+    f.setAttribute('sandbox', 'allow-same-origin allow-modals');
+    f.srcdoc = tm.reports[+wrap.getAttribute('data-rep')];
+    f.onload = function () {
+      try { f.style.height = (f.contentDocument.documentElement.scrollHeight + 8) + 'px'; } catch (e) {}
+    };
+    wrap.appendChild(f);
+  }
+
+  function tmRender() {
+    tm.reports = [];
+    var q = tmEl('tmQ').value.trim().toLowerCase();
+    var slot = tmEl('tmSlot').value;
+    var list = tm.rows.filter(function (r) {
+      if (slot && r.slot !== slot) return false;
+      return !q || (r.id + ' ' + r.name + ' ' + r.topic).toLowerCase().indexOf(q) !== -1;
+    });
+    // 학번별로 묶고, 그 안에서는 최근 제출이 먼저 오게 합니다.
+    var by = {};
+    list.forEach(function (r) { (by[r.id] = by[r.id] || []).push(r); });
+    var ids = Object.keys(by).sort(function (a, b) { return a.localeCompare(b, 'ko', { numeric: true }); });
+
+    var html = '<p class="tm-tot">학생 <b>' + ids.length + '명</b> · 제출 <b>' + list.length + '건</b></p>';
+    ids.forEach(function (id) {
+      var subs = by[id].slice().sort(function (a, b) { return (b.at > a.at) - (b.at < a.at); });
+      var seen = {};
+      html += '<section class="tm-stu"><div class="tm-stu-head"><span class="tm-stu-id">' + esc(id) + '</span>' +
+        '<span class="tm-stu-name">' + esc(subs[0].name) + '</span>' +
+        '<span class="tm-stu-cnt">' + subs.length + '건</span></div>';
+      subs.forEach(function (r) {
+        var old = seen[r.slot];
+        seen[r.slot] = true;
+        html += '<details class="tm-item' + (old ? ' old' : '') + '"><summary>' +
+          '<span class="tm-slot">' + esc(r.slot) + '</span>' +
+          '<span class="tm-when">' + tmWhen(r.at) + '</span>' +
+          (old ? '<span class="tm-old">이전 제출</span>' : '') +
+          '<span class="tm-topic">' + (r.topic ? esc(r.topic) : '<i>주제 미작성</i>') + '</span>' +
+          tmChips(r.counts) +
+          (r.elapsed ? '<span class="tm-when">걸린 시간 ' + esc(r.elapsed) +
+            (r.fixCount !== '' && r.fixCount != null ? ' · 스스로 고침 ' + esc(String(r.fixCount)) + '회' : '') + '</span>' : '') +
+          '</summary>' + tmReportBox(r) + '</details>';
+      });
+      html += '</section>';
+    });
+    tmEl('tmList').innerHTML = list.length ? html : '';
+    tmMsg(list.length ? '' : (tm.rows.length ? '찾는 조건에 맞는 제출이 없습니다.' : '아직 제출된 계획서가 없습니다.'));
+  }
+
+  tmEl('tmOpen').addEventListener('click', openTeacher);
+  tmEl('tmClose').addEventListener('click', closeTeacher);
+  tmEl('tmLogout').addEventListener('click', tmLogout);
+  tmEl('tmReload').addEventListener('click', tmLoad);
+  tmEl('tmQ').addEventListener('input', tmRender);
+  tmEl('tmSlot').addEventListener('change', tmRender);
+  tmEl('tmLogin').addEventListener('submit', function (e) {
+    e.preventDefault();
+    tm.email = tmEl('tmEmail').value.trim();
+    tm.key = tmEl('tmKey').value;
+    tmLoad();
+  });
+  tmEl('tmList').addEventListener('toggle', function (e) {
+    var w = e.target.open && e.target.querySelector('.tm-rep');
+    if (w) tmOpenReport(w);
+  }, true);
+  tmEl('tmList').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-print]');
+    if (!b) return;
+    var f = b.closest('.tm-rep').querySelector('iframe');
+    if (f) { f.contentWindow.focus(); f.contentWindow.print(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !tmEl('tmode').hidden) closeTeacher();
+  });
+
   document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
   document.getElementById('btnExportPlan').addEventListener('click', function () { doExport(false); });
 
@@ -6132,7 +6400,8 @@
   renderDeviceImg();
   goto(0);
   // 첫 화면에서 학번을 물어봅니다. 시작하면 그 학번의 탐구를 불러오고 자유탐구는 새로 시작합니다.
-  showIdGate();
+  if (location.hash === '#teacher') openTeacher();
+  else showIdGate();
 
   /* ---------- 홈 화면에 추가(PWA) ---------- */
   // 서비스워커를 등록해 두면, 한 번 연 뒤에는 인터넷 없이도 열립니다.
