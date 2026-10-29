@@ -6050,8 +6050,16 @@
       topic: val('topic'), counts: counts, fields: fields,
       elapsed: assess ? fmtElapsed(elapsedMs()) : '',
       fixCount: assess ? freeMeta.fixCount : '',
-      report: buildText(true)
+      report: teacherReport()
     };
+  }
+
+  // 교사용 페이지에서 PDF와 같은 모양으로 보도록 보고서 HTML을 보냅니다.
+  // 그림은 너무 커서 빼고, 시트 한 칸(약 4만 5천 자)을 넘으면 글만 담은 본을 보냅니다.
+  function teacherReport() {
+    var html = buildReport(true).replace(/<img src="data:[^"]*"[^>]*>/g,
+      '<p class="none">실험 장치 그림은 학생이 저장한 파일에 들어 있습니다.</p>');
+    return html.length <= 44000 ? html : buildText(true);
   }
 
   // done(msg): 결과를 한 줄로 알려 줍니다.
