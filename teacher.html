@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>제출 확인 · 교사용</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #FDF6F9; --surface: #FFFFFF; --surface-2: #F9EBF1;
+    --ink: #241920; --ink-soft: #6B5460; --ink-faint: #9A8490;
+    --line: #F0DCE5; --line-strong: #E2C3D1;
+    --accent: #B32D6B; --accent-ink: #8A1F52; --accent-soft: #FBE4EE;
+    --ok: #256B4E; --ok-soft: #E2F0E9; --warn: #8F5400; --warn-soft: #FAF0DD;
+    --danger: #A22633; --danger-soft: #FBE8EA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #170F13; --surface: #20161B; --surface-2: #2A1D24;
+      --ink: #F4E8ED; --ink-soft: #C3AEB8; --ink-faint: #8E7782;
+      --line: #392830; --line-strong: #4E3843;
+      --accent: #F58BB4; --accent-ink: #F9B3CF; --accent-soft: #3A2030;
+      --ok: #7FD1A8; --ok-soft: #1D3328; --warn: #F0C066; --warn-soft: #3A2D16;
+      --danger: #F2919B; --danger-soft: #3D1E23;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif; line-height: 1.55;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 21px; margin: 0 0 4px; }
+  .sub { margin: 0 0 18px; font-size: 13px; color: var(--ink-soft); }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; }
+  input, select, button {
+    font: inherit; font-size: 14px; padding: 8px 11px; border-radius: 7px;
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  }
+  input:focus, select:focus { outline: none; border-color: var(--accent); }
+  button { cursor: pointer; font-weight: 700; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  #q { flex: 1 1 180px; min-width: 0; }
+  #key { flex: 1 1 160px; min-width: 0; }
+  .msg { font-size: 13.5px; color: var(--ink-soft); margin: 10px 0; }
+  .msg.err { color: var(--danger); }
+  .tot { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; }
+  .tot b { color: var(--ink); }
+  .stu {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    margin: 0 0 10px; overflow: hidden;
+  }
+  .stu-head {
+    display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline;
+    padding: 11px 14px; background: var(--surface-2);
+  }
+  .stu-id { font-weight: 800; font-size: 15.5px; }
+  .stu-name { font-weight: 700; }
+  .stu-cnt { margin-left: auto; font-size: 12px; color: var(--ink-soft); }
+  details.sub-item { border-top: 1px solid var(--line); }
+  details.sub-item > summary {
+    list-style: none; cursor: pointer; padding: 10px 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
+  }
+  details.sub-item > summary::-webkit-details-marker { display: none; }
+  details.sub-item > summary::before { content: "▸"; color: var(--ink-faint); }
+  details.sub-item[open] > summary::before { content: "▾"; }
+  .slot {
+    font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent-ink);
+  }
+  .when { font-size: 12.5px; color: var(--ink-soft); }
+  .topic { flex: 1 1 260px; min-width: 0; font-size: 13.5px; overflow-wrap: anywhere; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); }
+  .chip.ask { background: var(--warn-soft); color: var(--warn); }
+  .chip.todo { background: var(--surface-2); color: var(--ink-soft); }
+  .chip.danger { background: var(--danger-soft); color: var(--danger); }
+  .old { font-size: 11.5px; color: var(--ink-faint); }
+  pre.report {
+    margin: 0; padding: 12px 16px 16px; white-space: pre-wrap; overflow-wrap: anywhere;
+    font-family: inherit; font-size: 13.5px; background: var(--surface);
+    border-top: 1px dashed var(--line);
+  }
+  .help { font-size: 12.5px; color: var(--ink-soft); margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>제출 확인 · 교사용</h1>
+  <p class="sub">학생이 <b>“계획서 + 점검 결과 저장”</b>(자유탐구는 <b>제출하기</b>)을 누르면 구글 시트에 쌓이고, 여기서 학번별로 볼 수 있습니다.</p>
+
+  <form class="bar" id="login">
+    <input type="password" id="key" placeholder="교사용 비밀번호" autocomplete="current-password">
+    <button type="submit" class="primary">불러오기</button>
+  </form>
+
+  <div class="bar" id="tools" hidden>
+    <input type="search" id="q" placeholder="학번 · 이름 · 주제로 찾기">
+    <select id="slot">
+      <option value="">모든 탐구</option>
+      <option>탐구 1</option><option>탐구 2</option><option>탐구 3</option><option>자유탐구</option>
+    </select>
+    <button type="button" id="reload">새로 고침 ↻</button>
+  </div>
+
+  <p class="msg" id="msg"></p>
+  <div id="list"></div>
+
+  <p class="help">같은 학번이 같은 탐구를 여러 번 내면 <b>가장 최근 것</b>을 위에 두고, 이전 것은 아래에 흐리게 남깁니다.
+    원본 기록은 구글 시트 ‘제출’ 탭에 그대로 있습니다.</p>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  'use strict';
+  var URL_ = (window.APP_CONFIG && window.APP_CONFIG.submitUrl) || '';
+  var rows = [];
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function when(t) {
+    var d = new Date(typeof t === 'number' ? t : Date.parse(t));
+    if (isNaN(d)) return esc(t);
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+  function msg(text, err) { $('msg').textContent = text; $('msg').className = 'msg' + (err ? ' err' : ''); }
+
+  // 비밀번호는 이 탭을 닫을 때까지만 기억합니다.
+  try { $('key').value = sessionStorage.getItem('teacher-key') || ''; } catch (e) {}
+
+  function load() {
+    if (!URL_) { msg('아직 구글 시트가 연결되지 않았습니다. config.js의 submitUrl을 채워 주세요.', true); return; }
+    var key = $('key').value.trim();
+    if (!key) { msg('비밀번호를 넣어 주세요.', true); $('key').focus(); return; }
+    msg('불러오는 중…');
+    fetch(URL_ + '?action=list&key=' + encodeURIComponent(key))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) { msg(d.error || '불러오지 못했습니다.', true); return; }
+        try { sessionStorage.setItem('teacher-key', key); } catch (e) {}
+        rows = d.rows || [];
+        $('tools').hidden = false;
+        render();
+      })
+      .catch(function () { msg('불러오지 못했습니다. 인터넷 연결과 웹 앱 주소를 확인해 주세요.', true); });
+  }
+
+  function chips(c) {
+    c = c || {};
+    return '<span class="chips">' +
+      '<span class="chip ok">통과 ' + (c.ok || 0) + '</span>' +
+      (c.ask ? '<span class="chip ask">확인 ' + c.ask + '</span>' : '') +
+      (c.todo ? '<span class="chip todo">미작성 ' + c.todo + '</span>' : '') +
+      (c.danger ? '<span class="chip danger">위험 ' + c.danger + '</span>' : '') +
+      '</span>';
+  }
+
+  function render() {
+    var q = $('q').value.trim().toLowerCase();
+    var slot = $('slot').value;
+    var list = rows.filter(function (r) {
+      if (slot && r.slot !== slot) return false;
+      if (!q) return true;
+      return (r.id + ' ' + r.name + ' ' + r.topic).toLowerCase().indexOf(q) !== -1;
+    });
+
+    // 학번별로 묶고, 그 안에서는 최근 제출이 먼저 오게 합니다.
+    var by = {};
+    list.forEach(function (r) { (by[r.id] = by[r.id] || []).push(r); });
+    var ids = Object.keys(by).sort(function (a, b) { return a.localeCompare(b, 'ko', { numeric: true }); });
+
+    var students = ids.length, total = list.length;
+    var html = '<p class="tot">학생 <b>' + students + '명</b> · 제출 <b>' + total + '건</b></p>';
+    ids.forEach(function (id) {
+      var subs = by[id].slice().sort(function (a, b) { return (b.at > a.at) - (b.at < a.at); });
+      var name = subs[0].name;
+      var seen = {};
+      html += '<section class="stu"><div class="stu-head"><span class="stu-id">' + esc(id) + '</span>' +
+        '<span class="stu-name">' + esc(name) + '</span>' +
+        '<span class="stu-cnt">' + subs.length + '건</span></div>';
+      subs.forEach(function (r) {
+        var old = seen[r.slot];
+        seen[r.slot] = true;
+        html += '<details class="sub-item"' + (old ? ' style="opacity:.6"' : '') + '><summary>' +
+          '<span class="slot">' + esc(r.slot) + '</span>' +
+          '<span class="when">' + when(r.at) + '</span>' +
+          (old ? '<span class="old">이전 제출</span>' : '') +
+          '<span class="topic">' + (r.topic ? esc(r.topic) : '<i>주제 미작성</i>') + '</span>' +
+          chips(r.counts) +
+          (r.elapsed ? '<span class="when">걸린 시간 ' + esc(r.elapsed) +
+            (r.fixCount !== '' && r.fixCount != null ? ' · 스스로 고침 ' + esc(r.fixCount) + '회' : '') + '</span>' : '') +
+          '</summary><pre class="report">' + esc(r.report) + '</pre></details>';
+      });
+      html += '</section>';
+    });
+    $('list').innerHTML = total ? html : '';
+    msg(total ? '' : (rows.length ? '찾는 조건에 맞는 제출이 없습니다.' : '아직 제출된 계획서가 없습니다.'));
+  }
+
+  $('login').addEventListener('submit', function (e) { e.preventDefault(); load(); });
+  $('reload').addEventListener('click', load);
+  $('q').addEventListener('input', render);
+  $('slot').addEventListener('change', render);
+  if ($('key').value) load();
+})();
+</script>
+</body>
+</html>

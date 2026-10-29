@@ -1057,20 +1057,6 @@
     color: var(--accent-ink);
   }
 
-  /* 선생님용 요약 열기 버튼 */
-  .intake-teacher {
-    flex-shrink: 0;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--ink-soft);
-    background: var(--surface);
-    border: 1px solid var(--line-strong);
-    border-radius: 6px;
-    padding: 7px 13px;
-    cursor: pointer;
-  }
-  .intake-teacher:hover { border-color: var(--accent); color: var(--accent-ink); }
-
   /* ---------- 안전 데이터 카드 (MSDS 요약) ---------- */
   .msds { display: flex; flex-direction: column; gap: 10px; }
   .msds-card {
@@ -1317,91 +1303,6 @@
     color: var(--accent-ink);
     vertical-align: 1px;
   }
-
-  /* ---------- 선생님용 1차 분석 요약 ---------- */
-  .dash {
-    position: fixed; inset: 0; z-index: 70;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(36, 25, 32, .5);
-    padding: 16px;
-  }
-  .dash-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    width: min(760px, 100%);
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .dash-head {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 16px 18px 12px;
-    border-bottom: 1px solid var(--line);
-  }
-  .dash-title { margin: 0 0 3px; font-size: 15.5px; font-weight: 800; color: var(--ink); }
-  .dash-sub { margin: 0; font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
-  .dash-close {
-    margin-left: auto; flex-shrink: 0;
-    font-size: 14px; color: var(--ink-soft);
-    background: var(--surface-2); border: 1px solid var(--line);
-    border-radius: 6px; width: 30px; height: 30px; cursor: pointer;
-  }
-  .dash-close:hover { color: var(--accent-ink); border-color: var(--accent); }
-  .dash-body { overflow-y: auto; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
-  .dash-act {
-    display: flex; gap: 8px; justify-content: flex-end;
-    padding: 12px 18px; border-top: 1px solid var(--line);
-  }
-  .dash-act .primary {
-    font-size: 13px; font-weight: 700; color: #fff;
-    background: var(--accent); border: 1px solid var(--accent);
-    border-radius: 6px; padding: 7px 15px; cursor: pointer;
-  }
-  .dash-empty { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-  .dash-tot {
-    margin: 0; font-size: 12.5px; color: var(--ink-soft);
-    background: var(--surface-2); border-radius: 7px; padding: 9px 12px; line-height: 1.6;
-  }
-  .dash-tot b { color: var(--ink); }
-  .dash-item {
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--line-strong);
-    border-radius: 0 8px 8px 0;
-    padding: 10px 13px;
-    display: flex; flex-direction: column; gap: 5px;
-  }
-  .dash-item.need { border-left-color: var(--danger); background: var(--danger-soft); }
-  .dash-item.watch { border-left-color: var(--warn); background: var(--warn-soft); }
-  .dash-item.good { border-left-color: var(--ok); }
-  .dash-who {
-    margin: 0; font-size: 13.5px; font-weight: 800; color: var(--ink);
-    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  }
-  .dash-slot {
-    font-family: var(--mono); font-size: 10px; font-weight: 700;
-    padding: 2px 7px; border-radius: 3px;
-    background: var(--surface-2); color: var(--ink-soft);
-  }
-  .dash-flag {
-    font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
-  }
-  .dash-flag.need { background: var(--danger); color: #fff; }
-  .dash-flag.watch { background: var(--warn); color: #fff; }
-  .dash-flag.good { background: var(--ok-soft); color: var(--ok); }
-  .dash-axes { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-  .dash-axis {
-    font-size: 11.5px; padding: 2px 9px; border-radius: 999px;
-    background: var(--surface-2); color: var(--ink-soft);
-  }
-  .dash-axis b { font-weight: 800; color: var(--ink); }
-  .dash-axis.bad { background: var(--danger-soft); color: var(--danger); }
-  .dash-axis.mid { background: var(--warn-soft); color: var(--warn); }
-  .dash-axis.ok  { background: var(--ok-soft); color: var(--ok); }
-  .dash-note { margin: 0; font-size: 12px; line-height: 1.55; color: var(--ink-soft); }
-  .dash-note b { color: var(--ink); }
-  .dash-topic { margin: 0; font-size: 12px; color: var(--ink-faint); overflow-wrap: anywhere; }
 
   /* ---------- report panel ---------- */
 
@@ -1864,7 +1765,7 @@
         <input type="text" id="studentId" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="예) 10315">
         <label for="studentName">이름</label>
         <input type="text" id="studentName" autocomplete="off" maxlength="20" placeholder="예) 김홍길">
-        <span class="idbar-note">공용 기기에서 <b>다른 학번</b>을 넣으면 이전 내용은 지워지고 새로 시작합니다. 학번·이름은 이 기기에만 저장되고, 내려받는 보고서와 파일 이름에만 들어갑니다.</span>
+        <span class="idbar-note">공용 기기에서 <b>다른 학번</b>을 넣으면 이전 내용은 지워지고 새로 시작합니다. 학번·이름은 보고서와 파일 이름에 들어가고, <b>계획서 + 점검 결과</b>를 저장하면 선생님께 함께 제출됩니다.</span>
       </div>
 
       <div class="slotbar" id="slotbar" role="tablist" aria-label="탐구 고르기"></div>
@@ -1873,7 +1774,6 @@
       <div class="intake">
         <label for="upload" class="intake-btn" title="이미 써 둔 계획서(docx · txt · md · html)를 불러와 각 칸에 나눠 넣습니다. 파일은 이 기기 안에서만 열립니다.">계획서 파일 불러오기</label>
         <input type="file" id="upload" accept=".txt,.md,.html,.htm,.docx" hidden>
-        <button type="button" class="intake-teacher" id="dashBtn" title="이 기기에 저장된 계획서들을 학번별로 요약해 보여 줍니다. 선생님용입니다.">선생님용 요약</button>
         <button type="button" class="intake-install" id="installBtn" hidden>홈 화면에 추가</button>
         <button type="button" class="intake-clear" id="clearAll">전체 지우기</button>
       </div>
@@ -2101,7 +2001,7 @@
 
       <p class="privacy">
         <span class="saved" id="savedNote">작성한 내용은 이 기기에 자동 저장됩니다.</span>
-        <b>계획서 칸에는 이름 등 개인정보를 적지 마세요.</b> 학번은 이 기기에서 학생을 구분하는 데만 쓰이며, 이 점검표는 인터넷으로 아무 데도 전송하지 않습니다.
+        <b>계획서 칸에는 이름 등 개인정보를 적지 마세요.</b> <b>“계획서 + 점검 결과 저장”</b>을 누르면 학번·이름과 작성 내용이 <b>선생님의 구글 시트로만</b> 제출됩니다. 그 밖에는 어디로도 보내지 않습니다.
         입력한 내용은 이 브라우저에만 저장되므로, 다른 기기에서는 이어서 쓸 수 없습니다.
       </p>
     </main>
@@ -2151,16 +2051,13 @@
           <label class="sr-only" for="fmt">저장할 파일 형식</label>
           <select id="fmt">
             <option value="pdf">PDF로 저장</option>
-            <option value="html">웹 문서 (.html)</option>
             <option value="doc">한글·워드에서 열기 (.doc)</option>
-            <option value="txt">텍스트 (.txt)</option>
           </select>
           <button class="primary" type="button" id="btnExportFull">계획서 + 점검 결과 저장</button>
           <button type="button" id="btnExportPlan">계획서만 저장</button>
           <p class="panel-note">
-            작성 내용은 <b>이 기기에 자동 저장</b>됩니다. 제출할 때 파일로 내려받으세요.
-            <b>계획서만</b>은 학생이 쓴 내용만, <b>+ 점검 결과</b>는 점검표까지 함께 담습니다.
-            <b>PDF로 저장</b>을 고르면 저장 창에서 <b>“PDF로 저장”</b>을 선택하면 됩니다.
+            작성 내용은 <b>이 기기에 자동 저장</b>됩니다. 파일은 <b>다운로드 폴더</b>에 바로 저장됩니다.
+            <b>계획서만</b>은 학생이 쓴 내용만, <b>+ 점검 결과</b>는 점검표까지 함께 담고 <b>선생님께도 제출</b>됩니다.
           </p>
         </div>
       </div>
@@ -2204,31 +2101,13 @@
       <button type="button" id="gateSkip">학번 없이 시작</button>
       <button type="button" class="primary" id="gateStart">시작하기</button>
     </div>
-    <p class="idgate-note">학번·이름은 이 기기에만 저장되고 인터넷으로 전송하지 않습니다. 내려받는 보고서와 파일 이름에만 들어갑니다.</p>
-  </div>
-</div>
-
-<!-- 선생님용 1차 분석 요약 — 이 기기에 저장된 계획서만 봅니다 -->
-<div class="dash" id="dash" hidden role="dialog" aria-labelledby="dashTitle" aria-modal="true">
-  <div class="dash-card">
-    <div class="dash-head">
-      <div>
-        <p class="dash-title" id="dashTitle">선생님용 1차 분석 요약</p>
-        <p class="dash-sub">이 기기(브라우저)에 저장된 계획서만 읽어 <b>논리 · 변인 통제 · 안전</b> 세 갈래로 요약합니다.
-          아무 데도 전송하지 않습니다.</p>
-      </div>
-      <button type="button" class="dash-close" id="dashClose" aria-label="닫기">✕</button>
-    </div>
-    <div class="dash-body" id="dashBody"></div>
-    <div class="dash-act">
-      <button type="button" class="device-btn" id="dashSave">요약을 파일로 저장</button>
-      <button type="button" class="primary" id="dashOk">닫기</button>
-    </div>
+    <p class="idgate-note">학번·이름은 보고서와 파일 이름에 들어가고, “계획서 + 점검 결과”를 저장할 때 선생님께만 함께 제출됩니다.</p>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="config.js"></script>
 <script>
 (function () {
   'use strict';
@@ -5888,210 +5767,6 @@
       '</div>';
   }
 
-  /* ---------- 선생님용 1차 분석 요약 ----------
-     이 기기(브라우저)에 저장된 계획서를 모두 읽어, 학생 화면과 똑같은 규칙으로
-     한 번 훑고 학번별 요약으로 바꿉니다. 어디로도 전송하지 않습니다.
-
-     세 갈래로 나눠 보여 줍니다.
-       논리    — 주제 · 가설 · 결과 예측
-       변인    — 변인 통제
-       안전    — 현실성과 안전
-     그리고 '집중 지원'(위험·미작성이 많은 학생)을 맨 위로 올립니다. */
-
-  var DASH_AXES = [
-    { key: '논리', groups: ['탐구 주제', '가설', '결과 예측'] },
-    { key: '변인', groups: ['변인 통제'] },
-    { key: '설계', groups: ['탐구 설계'] },
-    { key: '안전', groups: ['현실성과 안전'] }
-  ];
-
-  // 저장된 계획서를 모두 모읍니다.
-  function collectPlans() {
-    var out = [];
-    var re = new RegExp('^' + STORE_V.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
-      '::u:(.*?)::(t1|t2|t3|free)$');
-    try {
-      for (var i = 0; i < localStorage.length; i++) {
-        var k = localStorage.key(i);
-        var m = k && k.match(re);
-        if (!m) continue;
-        var raw = localStorage.getItem(k);
-        if (!raw) continue;
-        var d;
-        try { d = JSON.parse(raw); } catch (e) { continue; }
-        var any = FIELDS.some(function (f) { return (d[f] || '').trim() !== ''; });
-        if (!any) continue;
-        d.hasImg = !!localStorage.getItem(k + '::img');
-        out.push({ id: m[1] === '_' ? '(학번 없음)' : m[1], slot: m[2], data: d });
-      }
-    } catch (e) { /* 저장을 읽을 수 없는 브라우저 */ }
-    return out;
-  }
-
-  // 계획서 한 부를 세 갈래로 요약합니다.
-  function scorePlan(entry) {
-    var r = analyze(entry.data);
-    var by = {};
-    r.groups.forEach(function (g) {
-      var c = { ok: 0, ask: 0, todo: 0, danger: 0 };
-      g.items.forEach(function (it) { c[it[0]]++; });
-      by[g.name] = c;
-    });
-
-    var axes = DASH_AXES.map(function (a) {
-      var c = { ok: 0, ask: 0, todo: 0, danger: 0 };
-      a.groups.forEach(function (n) {
-        var x = by[n] || {};
-        c.ok += x.ok || 0; c.ask += x.ask || 0; c.todo += x.todo || 0; c.danger += x.danger || 0;
-      });
-      var total = c.ok + c.ask + c.todo + c.danger;
-      return { key: a.key, pct: total ? Math.round(c.ok / total * 100) : 0, c: c, total: total };
-    });
-
-    var todo = 0, danger = 0, ask = 0, ok = 0;
-    axes.forEach(function (a) { todo += a.c.todo; danger += a.c.danger; ask += a.c.ask; ok += a.c.ok; });
-
-    // 무엇을 먼저 도와야 하는지 — 한 줄로 정리합니다.
-    var why = [];
-    if (r.mix.length) why.push('<b>섞으면 안 되는 조합</b>이 들어 있습니다');
-    if (r.chem.some(function (c) { return c.ban; })) why.push('<b>학생이 다루면 안 되는 물질</b>이 있습니다');
-    if (danger) why.push('안전 확인이 필요한 항목 ' + danger + '개');
-    var weak = axes.filter(function (a) { return a.total && a.pct < 50; })
-      .map(function (a) { return a.key });
-    if (weak.length) why.push(weak.join(' · ') + '이(가) 절반을 넘지 못했습니다');
-    if (todo) why.push('아직 쓰지 않은 항목 ' + todo + '개');
-    if (!why.length) why.push('형식 점검을 대체로 통과했습니다. ' +
-      (ask ? '더 생각해 볼 항목 ' + ask + '개가 남았습니다.' : '내용의 타당성만 확인해 주세요.'));
-
-    var level = (r.mix.length || danger || todo >= 4) ? 'need'
-              : (ask >= 4 || weak.length) ? 'watch' : 'good';
-
-    // 자유탐구(수행평가)의 과정 기록
-    var meta = entry.data.meta;
-    var proc = '';
-    if (entry.slot === 'free' && meta && meta.startedAt) {
-      proc = '걸린 시간 ' + fmtElapsed((meta.submittedAt || Date.now()) - meta.startedAt) +
-        ' · 스스로 고친 횟수 ' + (meta.fixCount || 0) + '회' +
-        (meta.submitted ? ' · 제출 완료' : ' · <b>아직 제출하지 않음</b>');
-    }
-
-    return { axes: axes, level: level, why: why, r: r, proc: proc, ask: ask, todo: todo, danger: danger };
-  }
-
-  var LEVEL_LABEL = { need: '집중 지원', watch: '살펴보기', good: '괜찮음' };
-  var SLOT_ORDER = { free: 0, t1: 1, t2: 2, t3: 3 };
-
-  function renderDash() {
-    var body = document.getElementById('dashBody');
-    var plans = collectPlans();
-
-    if (!plans.length) {
-      body.innerHTML = '<p class="dash-empty">이 기기에 저장된 계획서가 아직 없습니다.<br>' +
-        '학생이 같은 브라우저에서 계획서를 쓰면 여기에 학번별로 모입니다. ' +
-        '기기마다 따로 저장되므로, <b>다른 기기에서 쓴 계획서는 보이지 않습니다.</b></p>';
-      return;
-    }
-
-    var scored = plans.map(function (p) {
-      var s = scorePlan(p);
-      return { p: p, s: s };
-    }).sort(function (a, b) {
-      var rank = { need: 0, watch: 1, good: 2 };
-      if (rank[a.s.level] !== rank[b.s.level]) return rank[a.s.level] - rank[b.s.level];
-      if (a.p.id !== b.p.id) return a.p.id < b.p.id ? -1 : 1;
-      return SLOT_ORDER[a.p.slot] - SLOT_ORDER[b.p.slot];
-    });
-
-    var need = scored.filter(function (x) { return x.s.level === 'need'; }).length;
-    var watch = scored.filter(function (x) { return x.s.level === 'watch'; }).length;
-    var ids = {};
-    scored.forEach(function (x) { ids[x.p.id] = 1; });
-
-    var html = '<p class="dash-tot">계획서 <b>' + scored.length + '부</b> · 학생 <b>' +
-      Object.keys(ids).length + '명</b>' +
-      ' — 집중 지원 <b>' + need + '명분</b> · 살펴보기 <b>' + watch + '명분</b></p>';
-
-    scored.forEach(function (x) {
-      var axes = x.s.axes.map(function (a) {
-        var cls = !a.total ? '' : a.pct < 50 ? 'bad' : a.pct < 80 ? 'mid' : 'ok';
-        return '<span class="dash-axis ' + cls + '">' + a.key + ' <b>' + a.pct + '%</b></span>';
-      }).join('');
-
-      html += '<div class="dash-item ' + x.s.level + '">' +
-        '<p class="dash-who">' + esc(x.p.id) +
-          '<span class="dash-slot">' + esc(slotOf(x.p.slot).label) + '</span>' +
-          '<span class="dash-flag ' + x.s.level + '">' + LEVEL_LABEL[x.s.level] + '</span></p>' +
-        '<p class="dash-topic">' + (x.p.data.topic ? esc(x.p.data.topic) : '<i>주제 미작성</i>') + '</p>' +
-        '<p class="dash-axes">' + axes + '</p>' +
-        '<p class="dash-note">' + x.s.why.join(' · ') + '</p>' +
-        (x.s.proc ? '<p class="dash-topic">' + x.s.proc + '</p>' : '') +
-        '</div>';
-    });
-
-    html += '<p class="msds-foot">이 요약은 <b>형식 점검을 한 번 훑은 결과</b>입니다. ' +
-      '탐구가 과학적으로 타당한지, 안전한지는 선생님이 직접 확인해야 합니다.</p>';
-
-    body.innerHTML = html;
-  }
-
-  function openDash() {
-    if (!confirm('선생님용 요약을 엽니다.\n\n이 기기에 저장된 모든 학번의 계획서를 요약해서 보여 줍니다.\n계속할까요?'))
-      return;
-    save();   // 지금 쓰고 있는 내용도 요약에 넣습니다
-    renderDash();
-    document.getElementById('dash').hidden = false;
-  }
-
-  function closeDash() { document.getElementById('dash').hidden = true; }
-
-  // 요약을 파일 하나로 저장합니다(반별 기록·상담 자료용).
-  function saveDash() {
-    var t = stamp();
-    var body = document.getElementById('dashBody').innerHTML;
-    var html = '<!doctype html><html lang="ko"><head><meta charset="utf-8">' +
-      '<title>탐구 계획서 1차 분석 요약 ' + t.file + '</title>' +
-      '<style>' +
-      'body{font-family:"Malgun Gothic","맑은 고딕",sans-serif;max-width:800px;margin:32px auto;padding:0 18px;color:#20242a;line-height:1.6}' +
-      'h1{font-size:19px;margin:0 0 4px}.when{color:#79838b;font-size:12.5px;margin:0 0 20px}' +
-      '.dash-item{border:1px solid #e3e7ea;border-left:4px solid #c9ced3;border-radius:0 8px 8px 0;' +
-      'padding:11px 14px;margin:0 0 10px}' +
-      '.dash-item.need{border-left-color:#a22633;background:#fbf3f4}' +
-      '.dash-item.watch{border-left-color:#8f5400;background:#fdf8ee}' +
-      '.dash-item.good{border-left-color:#256b4e}' +
-      '.dash-who{margin:0 0 3px;font-size:14.5px;font-weight:700}' +
-      '.dash-slot,.dash-flag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;' +
-      'background:#eef1f3;color:#55606a;margin-left:7px}' +
-      '.dash-flag.need{background:#a22633;color:#fff}.dash-flag.watch{background:#8f5400;color:#fff}' +
-      '.dash-flag.good{background:#e2f0e9;color:#256b4e}' +
-      '.dash-axes{margin:5px 0}.dash-axis{font-size:12px;padding:2px 9px;border-radius:999px;' +
-      'background:#eef1f3;color:#55606a;margin-right:5px}' +
-      '.dash-axis.bad{background:#fbe8ea;color:#a22633}.dash-axis.mid{background:#faf0dd;color:#8f5400}' +
-      '.dash-axis.ok{background:#e2f0e9;color:#256b4e}' +
-      '.dash-note{margin:3px 0 0;font-size:13px}.dash-topic{margin:0;font-size:12.5px;color:#79838b}' +
-      '.dash-tot{background:#f4f6f7;border-radius:7px;padding:10px 13px;font-size:13px}' +
-      '.msds-foot{font-size:12px;color:#79838b;background:#f4f6f7;border-radius:6px;padding:9px 12px}' +
-      '</style></head><body>' +
-      '<h1>탐구 계획서 1차 분석 요약</h1>' +
-      '<p class="when">' + t.human + ' · 이 기기에 저장된 계획서만 담았습니다</p>' +
-      body +
-      '</body></html>';
-
-    var name = prompt('저장할 파일 이름을 정하세요.\n(확장자는 자동으로 붙습니다)', '1차분석요약_' + t.file);
-    if (name === null) return;
-    name = cleanName(name, false);
-
-    var blob = new Blob(['﻿' + html], { type: 'text/html;charset=utf-8' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = name + '.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    toast('“' + name + '.html” 파일로 저장했습니다.');
-  }
-
   /* ---------- 단계 진행 ---------- */
 
   // 인쇄 중에는 점검표에 모든 단계의 항목을 펼칩니다.
@@ -6344,17 +6019,55 @@
         justSubmitted = true;
       }
       if (kind === 'pdf') toast('PDF 파일을 만드는 중이에요…');
+      // 파일을 만들기 전에 지금 내용으로 제출 자료를 묶어 둡니다.
+      var payload = withReview ? submitPayload() : null;
       saveReport(kind, withReview, name, function (ok) {
         var file = '“' + name + '.' + FORMATS[kind].ext + '”';
-        if (!ok)
-          toast('인터넷이 안 되어 인쇄 창을 열었어요. “PDF로 저장”을 선택하세요. 파일 이름: ' + name);
-        else if (justSubmitted)
-          toast('자유탐구를 ' + file + '(으)로 제출했습니다. 다운로드 폴더를 확인하세요.');
-        else
-          toast(file + ' 파일을 다운로드 폴더에 저장했습니다.');
+        var said = !ok
+          ? '인터넷이 안 되어 인쇄 창을 열었어요. “PDF로 저장”을 선택하세요. 파일 이름: ' + name
+          : justSubmitted
+            ? '자유탐구를 ' + file + '(으)로 저장했습니다.'
+            : file + ' 파일을 다운로드 폴더에 저장했습니다.';
+        toast(said);
+        // '계획서 + 점검 결과'는 선생님께도 보냅니다(교사용 페이지에서 학번별로 봅니다).
+        if (payload) sendToTeacher(payload, function (msg) { toast(said + ' ' + msg); });
       });
     }, isAssess(curSlot) && withReview ? '제출하기' : '확인하고 저장');
   }
+  /* ---------- 선생님께 제출 (구글 시트) ---------- */
+  // config.js의 submitUrl(구글 시트에 붙인 Apps Script 웹 앱)로 보냅니다.
+  // 주소가 비어 있으면 아무것도 보내지 않고 파일 저장만 합니다.
+  var SUBMIT_URL = (window.APP_CONFIG && window.APP_CONFIG.submitUrl) || '';
+
+  function submitPayload() {
+    var counts = { ok: 0, ask: 0, todo: 0, danger: 0 };
+    analyze().groups.forEach(function (g) { g.items.forEach(function (i) { counts[i[0]]++; }); });
+    var fields = {};
+    FIELDS.forEach(function (f) { fields[f] = val(f); });
+    var assess = isAssess(curSlot) && freeMeta && freeMeta.startedAt;
+    return {
+      id: studentId, name: studentName, slot: slotOf(curSlot).label,
+      topic: val('topic'), counts: counts, fields: fields,
+      elapsed: assess ? fmtElapsed(elapsedMs()) : '',
+      fixCount: assess ? freeMeta.fixCount : '',
+      report: buildText(true)
+    };
+  }
+
+  // done(msg): 결과를 한 줄로 알려 줍니다.
+  function sendToTeacher(payload, done) {
+    if (!SUBMIT_URL) return;
+    if (!payload.id) { done('학번이 없어 선생님께는 보내지 않았어요. 위쪽에 학번을 넣고 다시 저장하세요.'); return; }
+    // text/plain으로 보내야 브라우저가 사전 확인 없이 바로 보냅니다.
+    fetch(SUBMIT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        done(d && d.ok ? '선생님께도 제출했습니다. ✅' : '선생님께 보내지 못했어요. 잠시 뒤 다시 저장해 주세요.');
+      })
+      .catch(function () { done('인터넷이 안 되어 선생님께 보내지 못했어요. 연결된 뒤 다시 저장해 주세요.'); });
+  }
+
   document.getElementById('btnExportFull').addEventListener('click', function () { doExport(true); });
   document.getElementById('btnExportPlan').addEventListener('click', function () { doExport(false); });
 
@@ -6374,18 +6087,6 @@
   document.getElementById('deviceTags').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-app]');
     if (b) toggleDeviceTag(b.getAttribute('data-app'));
-  });
-
-  // 선생님용 요약
-  document.getElementById('dashBtn').addEventListener('click', openDash);
-  document.getElementById('dashClose').addEventListener('click', closeDash);
-  document.getElementById('dashOk').addEventListener('click', closeDash);
-  document.getElementById('dashSave').addEventListener('click', saveDash);
-  document.getElementById('dash').addEventListener('click', function (e) {
-    if (e.target.id === 'dash') closeDash();   // 바깥을 누르면 닫습니다
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !document.getElementById('dash').hidden) closeDash();
   });
 
   // 학번 — 위쪽 칸에서 바꾸면 그 학번의 탐구를 불러오고 자유탐구는 새로 시작합니다.

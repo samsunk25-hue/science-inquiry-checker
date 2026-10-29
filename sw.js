@@ -1,9 +1,11 @@
 // 서비스워커 — 앱을 통째로 캐시해 인터넷 없이도 열리게 합니다.
 // 파일이 몇 개뿐이라 설치 시 미리 받아 두고, 이후에는 캐시에서 바로 냅니다.
-const CACHE = 'inquiry-checker-v3';
+const CACHE = 'inquiry-checker-v4';
 const ASSETS = [
   './',
   './index.html',
+  './config.js',
+  './teacher.html',
   './manifest.webmanifest',
   './icon.svg',
   './icon-192.png',
@@ -35,6 +37,18 @@ self.addEventListener('fetch', function (e) {
 
   var isPage = e.request.mode === 'navigate' ||
     (e.request.headers.get('accept') || '').indexOf('text/html') !== -1;
+
+  // 설정(config.js)도 최신을 먼저 받습니다. 제출 주소를 바꾸면 바로 반영되어야 합니다.
+  if (/\/config\.js$/.test(new URL(e.request.url).pathname)) {
+    e.respondWith(
+      fetch(e.request).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, copy); }).catch(function () {});
+        return res;
+      }).catch(function () { return caches.match(e.request); })
+    );
+    return;
+  }
 
   if (isPage) {
     // 화면(HTML)은 최신을 먼저 받아 옵니다. 그래야 업데이트가 바로 보입니다.
